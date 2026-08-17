@@ -1,0 +1,12 @@
+# robots.txt for SAVI / Vinayaka Financials
+User-agent: *
+Allow: /
+
+# Block non-public assets & system endpoints (Section 16.4)
+Disallow: /api/
+Disallow: /scratch/
+Disallow: /css/
+Disallow: /js/
+
+# Sitemap location
+Sitemap: https://vinayakafinancials.com/sitemap.xml

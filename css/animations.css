@@ -1,0 +1,92 @@
+/* ==========================================================================
+   SAVI Corporate Website - Keyframes & Abstract Visuals
+   ========================================================================== */
+
+/* Subtle Fade In */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.6s ease forward;
+}
+
+/* Abstract Graphic Ornaments (Navy & Gold Geometric Art) */
+.hero-abstract-graphic {
+  width: 100%;
+  max-width: 480px;
+  height: 320px;
+  margin: 0 auto;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.abstract-bar-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+  height: 200px;
+}
+
+.abstract-bar {
+  width: 32px;
+  background: linear-gradient(180deg, var(--gold-light) 0%, var(--gold-primary) 100%);
+  border-radius: 4px 4px 0 0;
+  transition: height 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.abstract-bar:nth-child(1) { height: 40%; }
+.abstract-bar:nth-child(2) { height: 65%; }
+.abstract-bar:nth-child(3) { height: 50%; }
+.abstract-bar:nth-child(4) { height: 85%; }
+.abstract-bar:nth-child(5) { height: 100%; }
+
+/* Trace Pulse Line */
+.trace-pulse {
+  position: relative;
+}
+
+.trace-pulse::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold-primary), transparent);
+  animation: pulseLine 2.5s infinite;
+}
+
+@keyframes pulseLine {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Category Filter Tags */
+.category-tag {
+  display: inline-block;
+  padding: 6px 14px;
+  background-color: var(--bg-section-alt);
+  color: var(--navy-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.category-tag:hover, .category-tag.active {
+  background-color: var(--navy-primary);
+  color: #FFFFFF;
+  border-color: var(--navy-primary);
+}

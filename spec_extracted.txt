@@ -1,0 +1,1218 @@
+
+
+
+SAVI
+Complete Website Content & Build Specification
+A product of Vinayaka Financials
+CONFIDENTIAL — This document contains proprietary business information. It is provided to the recipient solely for the purpose of building the Vinayaka Financials website, and must not be shared, republished, or reused for any other purpose.
+How to use this document
+Every section marked as page copy is final, approved text — use it as written. Text shown in a gold-bordered block is literal website copy. Plain text around it is instruction and context for the build.
+Section 16 (Intellectual Property Protection) is mandatory and must be read before any page is built. It defines what must never appear on the public site.
+Anything marked TO BE SUPPLIED needs input from Saakshi before that page can go live. Nothing in this document should be invented or filled in by the developer.
+
+Contents
+1. Brand identity
+2. Voice and tone
+3. Full sitemap
+4. Global elements — header, footer, CTAs
+5. Home
+6. Product — overview
+7. Product — Intelligence Platform
+8. Product — Full Platform
+9. Capabilities
+10. Who it's for
+11. How It Works
+12. Trust Centre — security, data handling, ethics and compliance
+13. Resources
+14. Pricing — request a quote
+15. About — overview, company information, contact
+16. Intellectual property protection — mandatory
+17. Legal pages
+18. SEO and metadata
+19. Technical build requirements
+20. Launch checklist
+
+1. Brand identity
+Logo
+The SAVI mark is a gold/bronze gradient symbol combining an upward arrow, a bull motif, and ascending bar-chart columns — growth, confidence, and data in a single mark. It is shown on the cover of this document.
+Vector source files (SVG/AI) must be requested from Saakshi before production build. Do not trace, redraw, or recreate the mark.
+Clear space: leave a minimum margin equal to the height of the arrowhead on all sides.
+The mark must not be recoloured, stretched, rotated, outlined, or given added effects.
+On dark backgrounds, use the gold mark as supplied. On light backgrounds, use the supplied light-background variant only — do not invert it manually.
+Minimum display size: 32px height. Below this, use a simplified favicon version (to be supplied).
+Colour palette
+Deep navy and gold. The golds below were sampled directly from the supplied logo file and are exact.
+
+
+
+Navy — primary
+
+Gold — primary
+
+Gold — light
+
+Gold — dark
+
+
+#0B1F3A
+
+#B38E4F
+
+#DBB46F
+
+#8B682E
+
+Navy is currently a placeholder value — TO BE SUPPLIED: Saakshi to confirm the exact navy shade before final build.
+Supporting neutrals
+
+
+
+Use
+
+Colour
+
+Where
+
+
+Page background
+
+#FFFFFF
+
+Default background for all content pages
+
+
+Section background
+
+#F7F8FA
+
+Alternating sections, cards, quiet panels
+
+
+Body text
+
+#1A1A1A
+
+All paragraph text
+
+
+Secondary text
+
+#5A5F6B
+
+Captions, labels, footnotes
+
+
+Border / divider
+
+#E4E7EC
+
+Card edges, table rules, separators
+
+Colour usage rules
+Navy and white/near-white carry the page. Gold is an accent only — never a large background fill.
+Gold is reserved for: the logo mark, key figures and statistics, primary button hover/active states, and small emphasis details.
+Never place gold text on a white background at body-text size — it fails contrast requirements. Gold text is permitted only at large display sizes on dark backgrounds.
+All text/background combinations must meet WCAG AA contrast (4.5:1 for body text, 3:1 for large text).
+Typography
+
+
+
+Level
+
+Treatment
+
+Guidance
+
+
+Display / H1
+
+56–64px, bold, navy
+
+One per page, at the top. Short — under 10 words.
+
+
+H2
+
+36–40px, semibold, navy
+
+Section headings
+
+
+H3
+
+24–28px, semibold, navy
+
+Sub-sections within a page
+
+
+Body
+
+17–18px, regular, #1A1A1A
+
+Line height 1.6. Max line length ~70 characters.
+
+
+Small / caption
+
+14–15px, regular, secondary
+
+Labels, footnotes, form hints
+
+Typeface: a clean, modern, neutral sans-serif — Inter is the recommended default (free, excellent screen rendering, full weight range). Alternatives of equivalent character are acceptable. Use a maximum of two weights on any page.
+Do not use: display serifs, condensed faces, rounded/friendly faces, or any font with strong personality. The typography should be invisible — the content is what carries the page.
+Imagery and graphics
+No stock photography of business people, handshakes, meeting rooms, or skylines. It reads as generic and undermines credibility.
+Preferred visual language: abstract geometric graphics in navy and gold, clean data visualisations, and simplified interface illustrations (see Section 16 for strict rules on what interface content may be shown).
+Any chart or figure shown as a graphic must use invented, clearly-labelled sample values — never real client data, and never real internal figures.
+Generous whitespace throughout. Sections should breathe — a minimum of 80px vertical padding between major sections on desktop.
+
+2. Voice and tone
+SAVI's entire product promise is that it does not overstate, guess, or bluff. The website must sound the same way. Every word on the site should be something that could be defended in a room full of chartered accountants.
+The voice is
+Plain-spoken. Short sentences. No jargon where an ordinary word exists.
+Precise. Specific claims, not atmospheric ones. “Every number traces to its source” rather than “unparalleled accuracy”.
+Calm and confident. It does not shout, use exclamation marks, or oversell.
+Respectful of the reader. The audience is senior finance professionals. They should never feel talked down to.
+The voice is not
+Hype-driven. Banned words and phrases: revolutionary, game-changing, cutting-edge, next-generation, world-class, industry-leading, seamless, unlock, supercharge, 10x.
+Vague. Every adjective must be doing real work. If a sentence still reads correctly with the adjective removed, remove it.
+Fear-based. Do not sell by frightening the reader about fraud or penalties.
+Hard rules on claims
+No statistic, percentage, accuracy figure, benchmark result, client count, or performance number may appear anywhere on the website unless Saakshi has explicitly supplied and approved that exact figure in writing.
+No client names, logos, testimonials, case studies, or quotes — none exist yet, and placeholders must not be used.
+No security certification claims of any kind. See Section 12.
+No award, ranking, analyst mention, or press quote.
+No feature described as available unless it is confirmed available. Where a capability is planned, either omit it or label it clearly as planned.
+
+3. Full sitemap
+
+
+
+Page
+
+URL
+
+Purpose
+
+
+Home
+
+/
+
+Primary entry point; pain-first pitch and routing to the rest of the site
+
+
+Product — Overview
+
+/product
+
+Explains the two ways to work with SAVI
+
+
+Intelligence Platform
+
+/product/intelligence-platform
+
+Track 1 in depth
+
+
+Full Platform
+
+/product/full-platform
+
+Track 2 in depth
+
+
+Capabilities
+
+/product/capabilities
+
+What SAVI actually does, grouped by function
+
+
+How It Works
+
+/how-it-works
+
+The proof mechanism — the core differentiator
+
+
+Who It's For
+
+/who-its-for
+
+Buyer segments and the problems each faces
+
+
+Trust Centre
+
+/trust
+
+Security, data handling, ethics and compliance
+
+
+Resources
+
+/resources
+
+Articles and insights
+
+
+Pricing
+
+/pricing
+
+Request-a-quote form
+
+
+About
+
+/about
+
+Overview of Vinayaka Financials
+
+
+Company Information
+
+/about/company
+
+Formal company details
+
+
+Contact
+
+/contact
+
+All contact routes
+
+
+Book a Demo
+
+/demo
+
+Primary conversion page
+
+
+Terms of Use
+
+/legal/terms
+
+Site terms — see Section 17
+
+
+Privacy Policy
+
+/legal/privacy
+
+Required — see Section 17
+
+
+Cookie Policy
+
+/legal/cookies
+
+Required if any analytics used
+
+Careers, Investor Relations, Events, News, and Customer Stories are deliberately excluded. Each would require content that does not currently exist, and an empty section of that kind actively damages credibility with an enterprise buyer. These become natural additions later.
+
+4. Global elements
+Header
+Sticky on scroll, white background, subtle bottom border. Logo left, navigation centre, single CTA button right.
+
+
+
+Nav label
+
+Type
+
+Links to
+
+
+Product
+
+Dropdown
+
+Overview, Intelligence Platform, Full Platform, Capabilities
+
+
+How It Works
+
+Direct
+
+/how-it-works
+
+
+Who It's For
+
+Direct
+
+/who-its-for
+
+
+Trust
+
+Direct
+
+/trust
+
+
+Resources
+
+Direct
+
+/resources
+
+
+Pricing
+
+Direct
+
+/pricing
+
+
+About
+
+Dropdown
+
+Overview, Company Information, Contact
+
+
+Book a Demo
+
+Button (navy fill, gold hover)
+
+/demo
+
+Mobile: collapse to a hamburger menu. The Book a Demo button stays visible outside the menu at all times.
+Footer
+Navy background, white text, gold used only for the logo mark and link hover states. Four columns on desktop, stacked on mobile.
+
+
+
+Column
+
+Contents
+
+
+Product
+
+Overview · Intelligence Platform · Full Platform · Capabilities · How It Works
+
+
+Company
+
+About · Company Information · Trust Centre · Contact
+
+
+Resources
+
+Resources · Book a Demo · Request a Quote
+
+
+Connect
+
+Email · WhatsApp · Instagram · LinkedIn (TO BE SUPPLIED if a page exists)
+
+Footer base line
+SAVI is a product of Vinayaka Financials. © 2026 Vinayaka Financials. All rights reserved. SAVI and the SAVI mark are trademarks of Vinayaka Financials.
+TO BE SUPPLIED: registered business address and registration number, once registration is complete. Many jurisdictions require these on a commercial website — confirm the requirement with Saakshi's legal adviser before launch.
+Calls to action
+
+
+
+CTA
+
+Where
+
+Goes to
+
+
+Book a Demo
+
+Header, home hero, end of every product page
+
+/demo
+
+
+Request a Quote
+
+Pricing page, footer
+
+/pricing
+
+
+See How It Works
+
+Home hero (secondary), product pages
+
+/how-it-works
+
+One primary CTA per page. Never place two competing primary buttons side by side — the secondary action is always a plain text link or outline button.
+
+5. Home
+Sections appear in the order listed. All copy below is final.
+5.1 Hero
+Headline
+Financial intelligence you don't have to double-check.
+Sub-headline
+SAVI sits on top of your existing systems and answers your finance questions instantly — with every number traceable back to its source.
+Buttons
+Primary: Book a Demo  ·  Secondary: See How It Works
+Visual: an abstract navy-and-gold graphic suggesting a figure resolving into its underlying components. Do not use a screenshot of the product — see Section 16.
+5.2 The problem
+Section heading
+The data is already there. The trust isn't.
+Body
+Finance teams at large organisations are not short of data. They are short of answers they can act on without verifying them first. Reports arrive late. Numbers disagree between systems. And the new generation of AI tools makes this worse, not better — because a model that generates a figure can generate a wrong one just as fluently as a right one.
+A number you have to check by hand is not intelligence. It is more work.
+5.3 The difference
+Section heading
+SAVI doesn't generate numbers. It computes them — and shows the proof.
+Body
+Every figure SAVI reports is calculated directly from your own records. Click any number and follow it all the way down: the figure, the formula behind it, the query that produced it, the underlying rows, and the original source record. Nothing is inferred. Nothing is estimated. If the data isn't there, SAVI tells you that instead of filling the gap.
+Layout: three-column supporting row beneath the body copy.
+
+
+
+Column heading
+
+Supporting line
+
+
+Computed, not generated
+
+The AI writes the sentence. Your data produces the number.
+
+
+Traceable to the row
+
+Every figure opens into the records it came from.
+
+
+Honest about gaps
+
+Where data is missing, SAVI says so rather than estimating.
+
+5.4 Two ways to work with SAVI
+Section heading
+Keep your ERP, or replace it.
+Card 1 — Intelligence Platform
+Connect SAVI to the system you already run. Your ERP stays your system of record; SAVI reads from it and answers questions on top. The fastest way to start.
+Card 2 — Full Platform
+Run your finance function entirely on SAVI — ledger, reporting, compliance, and intelligence in one system. For teams ready to consolidate.
+Each card links to its detailed page.
+5.5 Built for complexity
+Section heading
+Multiple entities. Multiple jurisdictions. One clear picture.
+Body
+Most finance tools decide which rules apply to a company by looking at a single country field. Real organisations are not that simple. A company incorporated in one country, operating in three others, owned by a parent in a fifth, and reporting under a sixth standard has four different sets of obligations at once — and getting that wrong is where cross-border finance breaks down.
+SAVI resolves the rules for every entity from four dimensions at once: where it is incorporated, where it operates, who owns it, and who it reports to. Each resolved rule traces back to the specific fact that triggered it.
+5.6 Closing CTA
+Heading
+See it on your own numbers.
+Body
+The fastest way to understand SAVI is to watch it trace a figure back to its source. Book a walkthrough and we'll show you.
+Button: Book a Demo
+
+6. Product — Overview
+Page heading
+One platform. Two ways to adopt it.
+Intro
+SAVI is a financial intelligence platform with a complete ERP underneath it. You can take the intelligence layer on its own and point it at the systems you already run, or you can run everything on SAVI. Both give you the same core promise: every number traced to its source.
+Comparison table
+Render as a two-column comparison. Use the exact rows below.
+
+
+
+
+
+Intelligence Platform
+
+Full Platform
+
+
+Your system of record
+
+Stays your existing ERP
+
+SAVI
+
+
+Set-up effort
+
+Lower — connect and go
+
+Higher — full migration
+
+
+Ask questions with traced answers
+
+Yes
+
+Yes
+
+
+Multi-entity, multi-jurisdiction resolution
+
+Yes
+
+Yes
+
+
+Ledger, invoicing, approvals, reporting
+
+Stays in your existing system
+
+Included
+
+
+Best for
+
+Teams who want intelligence without disruption
+
+Teams consolidating onto one system
+
+Closing
+Not sure which fits? Most organisations start with the Intelligence Platform and move to the Full Platform when they're ready. Tell us about your setup and we'll advise honestly.
+
+7. Product — Intelligence Platform
+Page heading
+Intelligence on top of the systems you already run.
+Intro
+Replacing a finance system is a decision most organisations postpone for years — and they are right to be careful. The Intelligence Platform removes that decision from the equation. Your ERP stays exactly where it is. SAVI reads from it and gives your team answers on top.
+How it fits
+Your existing ERP remains the system of record. SAVI does not take over your ledger.
+SAVI reads your financial data and builds a traceable answer layer above it.
+Every answer opens into the records it came from, inside your own system.
+Your team keeps working the way they already work.
+What you get
+Ask questions about your finances in plain English and get answers computed from your own data
+Full source tracing on every figure — down to the originating record
+Multi-entity and multi-jurisdiction rule resolution across your group
+Honest gap reporting — SAVI states what it cannot answer rather than estimating
+Supported systems
+SAVI is designed to work alongside the major finance systems in use today, including SAP, Oracle, Tally, Zoho, and QuickBooks, as well as data exported directly from your existing reporting.
+BUILD NOTE — do not embellish this line. Do not add logos of these systems, do not claim real-time or automatic syncing, and do not list any system not named above. Direct connectors are still in development; the line above is deliberately worded to be accurate today. Any change to this wording must be approved by Saakshi.
+Closing CTA
+Keep your systems. Add the answers. Book a demo.
+
+8. Product — Full Platform
+Page heading
+Your entire finance function, on one system.
+Intro
+For organisations ready to consolidate, SAVI runs the whole finance operation — the ledger your team works in every day, and the intelligence layer that answers questions about it. One system, one source of truth, and the same traceability promise applied to every figure it produces.
+What's included
+Core accounting
+Double-entry ledger with balance enforced at the point of entry, not corrected afterwards
+Flexible chart of accounts, with structured import
+Validated data import that rejects unbalanced files rather than partially loading them
+Multi-tier approval workflows with role-based permissions
+Reporting and compliance
+Financial reporting with full drill-down to source records
+Indian GST reporting, including GSTR-1, GSTR-3B, e-invoicing, IMS, and reconciliation
+Board-ready report packs
+Oversight
+Fraud and anomaly detection across transactions — duplicate payments, split invoices, and irregular vendor patterns
+Immutable audit trail recording every change, with before and after values
+Intelligence
+Everything included in the Intelligence Platform, applied to your SAVI ledger directly
+BUILD NOTE — this list is exact and has been verified against what the product actually does. Do not add items to it. Do not reword an item to sound broader than it is.
+Closing CTA
+Consolidating your finance stack? Let's talk about what migration would look like.
+
+9. Capabilities
+Page heading
+What SAVI does.
+Intro
+Grouped by the work it supports. Every capability listed here operates on your own data and reports figures traceable to their source.
+Ask and analyse
+Plain-English questions answered from your own financial records
+Full trace from any figure to the records behind it
+Drill-down through reports to underlying transactions
+Accounting and control
+Double-entry ledger with enforced balance at entry
+Chart of accounts management and import
+Multi-tier, role-gated approval workflows
+Immutable audit trail with before and after values on every change
+Risk and assurance
+Fraud and anomaly detection: duplicate payments, split invoices, irregular vendor patterns
+Honest gap reporting — SAVI states what it cannot determine rather than estimating
+Compliance
+Indian GST: GSTR-1, GSTR-3B, e-invoicing, IMS, reconciliation
+Multi-jurisdiction rule resolution across incorporation, operations, ownership, and reporting standard
+Group and cross-border
+Multi-entity structures with ownership relationships
+Per-entity rule resolution with each rule traced to the fact that triggered it
+TO BE SUPPLIED: Saakshi to confirm whether any additional capability should be listed. Nothing may be added to this page without that confirmation.
+
+10. Who It's For
+Page heading
+Built for finance teams carrying real complexity.
+Intro
+SAVI is most valuable where the finance picture is genuinely hard to assemble — several entities, more than one country, and a team that spends more time reconciling numbers than acting on them.
+Groups with overseas subsidiaries
+A parent company in one country with subsidiaries in others faces several sets of rules at once, and a consolidated picture that has to be rebuilt by hand every period. SAVI resolves the applicable rules per entity and traces every consolidated figure back to the entity and record it came from.
+Multi-entity organisations
+Where each entity has its own ledger, its own filings, and its own reporting calendar, the group view is usually the last thing to arrive and the first thing to be questioned. SAVI keeps the entity detail and the group picture connected, so any consolidated number opens into its components.
+Finance teams under audit pressure
+When every reported figure must be defensible, the ability to open a number and show its origin changes the nature of the conversation. SAVI records the lineage as the number is produced, not afterwards.
+Organisations evaluating AI for finance
+Most AI tools in this space generate figures, which means they can generate wrong ones convincingly. SAVI is architected the other way round: the calculation is deterministic and traceable, and the AI is used only to explain what was computed. If you have been asked to assess AI for the finance function and have concerns about reliability, this is the distinction worth examining.
+Closing CTA
+If this sounds like your organisation, a walkthrough is the fastest way to judge it. Book a demo.
+
+11. How It Works
+This is the most important page on the site. The trace must be shown visually as a sequence, not described in a paragraph.
+Page heading
+Ask a question. Follow the answer all the way down.
+Intro
+The difference between SAVI and a general-purpose AI tool is not how the answer is worded. It is where the number came from.
+The four steps
+Render as a numbered visual sequence, one step per row or panel.
+
+
+
+Step
+
+Heading
+
+Copy
+
+
+1
+
+You ask
+
+Ask in plain English — “why did EBITDA drop this quarter?” No query language, no report builder.
+
+
+2
+
+SAVI computes
+
+SAVI queries your actual financial records and calculates the answer. The figure is produced by computation, not by a language model.
+
+
+3
+
+SAVI explains
+
+The AI turns the computed result into a clear written answer. It describes the numbers — it never invents them.
+
+
+4
+
+You verify
+
+Click any figure and follow it down: the figure, the formula, the query, the underlying rows, the source record.
+
+The trace, in full
+Show as a horizontal or vertical chain graphic:
+Figure → Formula → Query → Rows → Source record
+Each element should be visually distinct and connected in sequence. This graphic is the single most important visual on the website.
+Why this matters
+A general-purpose AI model produces text that sounds correct. When the subject is language, that is usually good enough. When the subject is a number in a set of accounts, it is not — because a fluent wrong figure is more dangerous than an obvious one. It gets believed, and it gets acted on.
+SAVI separates the two jobs. The computation is deterministic and reproducible. The AI writes the explanation. That separation is why a figure from SAVI can be checked, and why the answer to “where did this come from?” is always a record, never a guess.
+When SAVI doesn't know
+If the underlying data is missing or insufficient, SAVI reports that plainly instead of producing an estimate. An honest gap is more useful than a confident approximation — and considerably safer.
+BUILD NOTE — no product screenshots on this page. Use a simplified, abstract illustration of the trace sequence. See Section 16.
+
+12. Trust Centre
+Page heading
+How SAVI handles your data.
+Intro
+SAVI is designed to operate inside your environment, on infrastructure you control. Your financial records are yours, they stay yours, and they are never pooled, shared, or reused.
+Data sovereignty
+SAVI is designed to run within your own infrastructure — your financial data does not need to leave your environment.
+Your data is never used to train models for any other organisation.
+Your data is never pooled with, or shared between, clients.
+Access control
+Role-based permissions govern what each user can see and do.
+Every request to the system is authenticated.
+Repeated failed sign-in attempts result in the account being locked.
+Auditability
+Every change to business data is recorded with its before and after values.
+System access and request activity is logged separately from business data changes.
+Audit records are immutable — they cannot be edited or removed after the fact.
+Data integrity
+Accounting entries are validated at the point they are written; unbalanced data is rejected rather than partially accepted.
+Imported files are validated in full before any records are created.
+Every reported figure retains its lineage to the source records it was computed from.
+Ethics and responsible AI
+Our commitment
+SAVI is built on a single principle: it must never be confidently wrong. In financial reporting, a plausible incorrect figure causes more damage than no figure at all, because it is trusted and acted upon. Every design decision in SAVI follows from this.
+What this means in practice
+Numbers are computed from your records. The AI describes results — it does not produce figures.
+Where data is missing or insufficient, SAVI states this rather than estimating.
+Every figure retains a traceable path to its source records.
+SAVI supports financial decision-making. It does not replace professional judgement, and it is not a substitute for advice from a qualified accountant, auditor, or legal adviser.
+BUILD NOTE — CRITICAL. This page must not state, imply, or visually suggest any external security certification, audit, or accreditation. Specifically: no SOC 2, no ISO 27001, no penetration-test claim, no compliance badge or shield graphic, no uptime guarantee, and no phrasing such as “enterprise-grade security”, “bank-level security”, or “certified”. Every statement on this page describes something real. Adding an unearned claim here would be a serious problem, not a marketing flourish.
+TO BE SUPPLIED: if Saakshi later wishes to add a note about certifications being in progress, that wording must come from Saakshi directly.
+
+13. Resources
+Page heading
+Insights on financial intelligence, compliance, and running finance without guesswork.
+Build the page structure and article template now; populate when content is supplied.
+Article template requirements
+Title, publication date, author, estimated reading time
+Body supporting headings, lists, pull quotes, and images
+Related-articles block at the foot
+Social share and clean print styling
+Category tagging, with category filtering on the index page
+Do not create placeholder or sample articles, even temporarily. If no content is available at launch, the Resources link should be removed from the navigation until it is — an empty resources section is more damaging than an absent one.
+TO BE SUPPLIED: article content from Saakshi.
+
+14. Pricing — Request a Quote
+Page heading
+Pricing built around your organisation.
+Intro
+SAVI is priced according to the shape of your business — how many entities you run, how many jurisdictions you operate across, the volume you process, and whether you want the intelligence layer alone or the full platform. Rather than publish a figure that would be wrong for most organisations, we prepare a quote after a short conversation.
+What determines your price
+Show as four simple cards or a clean list.
+
+
+
+Factor
+
+Why it matters
+
+
+Number of legal entities
+
+Each entity carries its own rules, filings, and reporting obligations
+
+
+Jurisdictions of operation
+
+Cross-border structures require more rule resolution
+
+
+Transaction volume
+
+Determines the scale of the deployment
+
+
+Platform choice
+
+Intelligence Platform alone, or the Full Platform
+
+Request-a-quote form
+
+
+
+Field
+
+Type
+
+Required
+
+
+Full name
+
+Text
+
+Yes
+
+
+Work email
+
+Email, validated
+
+Yes
+
+
+Company name
+
+Text
+
+Yes
+
+
+Role / job title
+
+Text
+
+No
+
+
+Country of headquarters
+
+Dropdown
+
+Yes
+
+
+Number of legal entities
+
+Select: 1 · 2–5 · 6–20 · 20+
+
+Yes
+
+
+Jurisdictions of operation
+
+Select: 1 · 2–3 · 4–10 · 10+
+
+Yes
+
+
+Which are you considering?
+
+Select: Intelligence Platform · Full Platform · Not sure yet
+
+Yes
+
+
+Current finance system
+
+Text
+
+No
+
+
+Anything else we should know
+
+Textarea
+
+No
+
+Form submission behaviour
+Submissions route to saakshi@vinayakafinancials.com. No automated price is ever generated or displayed.
+Confirmation message on submit: “Thank you — we've received your details and will be in touch shortly to discuss what would work for your organisation.”
+Spam protection required (see Section 19). Do not use a solution that shows visible advertising or tracks users beyond the form submission.
+The form must state, near the submit button, how the submitted information will be used, with a link to the Privacy Policy.
+No prices, price ranges, “starting from” figures, tier names with numbers attached, or currency amounts anywhere on this page or the site.
+
+15. About
+15.1 About — Overview
+Page heading
+Why we built SAVI.
+Body
+Finance teams are surrounded by systems that produce numbers and short of systems that can prove them. The gap has widened as AI has entered the category: tools that generate financial figures can generate incorrect ones just as convincingly, and in a discipline where every reported number may have to be defended, that is not a small flaw.
+SAVI was built around the opposite principle. The numbers are computed from your own records and carry their lineage with them. The AI explains what was computed; it never produces the figure itself. Where the data does not support an answer, SAVI says so.
+It is a deliberately conservative design for a category that has moved quickly. We think finance is exactly where that conservatism belongs.
+What we're building toward
+A finance function where no reported figure has to be taken on faith — where anyone, at any level, can open a number and see precisely what it is made of.
+15.2 Founder
+TO BE SUPPLIED — Saakshi to provide 3–5 sentences covering: professional background, what led to building SAVI, and what she is focused on now. A professional photograph is optional. Nothing on this page may be written or inferred by the developer.
+15.3 Company Information
+Page heading
+Company information
+Render as a clean definition list.
+
+
+
+Field
+
+Value
+
+
+Company name
+
+Vinayaka Financials
+
+
+Product
+
+SAVI
+
+
+Registered address
+
+TO BE SUPPLIED
+
+
+Business registration number
+
+TO BE SUPPLIED
+
+
+GST registration number
+
+TO BE SUPPLIED, if applicable
+
+
+Contact email
+
+saakshi@vinayakafinancials.com
+
+
+Website
+
+vinayakafinancials.com
+
+This page must not be published with placeholder or invented registration details. If registration is not complete at launch, remove this page from the navigation entirely rather than filling it in.
+15.4 Contact
+Page heading
+Get in touch.
+Intro
+Whether you're evaluating SAVI for your organisation or simply want to understand how the traceability works, we're glad to talk.
+
+
+
+Channel
+
+Detail
+
+Link
+
+
+Email
+
+saakshi@vinayakafinancials.com
+
+mailto:saakshi@vinayakafinancials.com
+
+
+WhatsApp
+
++91 82900 06889
+
+https://wa.me/918290006889
+
+
+Instagram
+
+@vinayakafinancials
+
+https://instagram.com/vinayakafinancials
+
+Include the Book a Demo call to action prominently on this page.
+15.5 Book a Demo
+Page heading
+See SAVI on real numbers.
+Intro
+A walkthrough takes about thirty minutes. We'll show you a figure being traced from a report all the way back to the record it came from, and answer whatever you want to ask about how it works.
+Form fields
+Full name — required
+Work email — required, validated
+Company name — required
+Role / job title — optional
+Number of legal entities — optional
+What would you like to see? — textarea, optional
+Confirmation message
+Thank you — we've received your request and will be in touch shortly to arrange a time.
+
+16. Intellectual property protection — mandatory
+This section is not optional. Read it before building any page. SAVI's competitive advantage lies in how it is built, and the website must market the product without disclosing how it works.
+16.1 What must never appear on the website
+Product screenshots showing real interface detail, data structures, field names, table layouts, menu structures, or system messages.
+Architecture diagrams, data-flow diagrams, database schema, or entity-relationship diagrams of any kind.
+Names of the specific technologies, frameworks, databases, libraries, AI models, or hosting infrastructure SAVI is built on.
+Code samples, query examples, configuration files, or API endpoints.
+API documentation, developer documentation, or integration guides — these are supplied to clients under agreement, never published.
+Descriptions of how the traceability mechanism is implemented internally. Describe what it does for the user; never how it is constructed.
+Benchmark methodology, test-question sets, accuracy-measurement approach, or evaluation criteria.
+Internal terminology, module names, or component names used in the product.
+Any file, document, or specification not explicitly intended for public release — including this document.
+16.2 Product visuals — the rule
+The site needs to feel like a real product without handing over the blueprint. The rule is simple: show the outcome, never the mechanism.
+Use abstract or simplified illustrations rather than real interface captures.
+Where an interface impression is needed, use a stylised representation with invented sample values, generic labels, and no real structural detail.
+Never use a real company's data, a real client's data, or genuine internal figures — even blurred or partially obscured.
+All numbers appearing in any graphic must be clearly invented and, where sensible, labelled as illustrative.
+Any product visual must be approved by Saakshi before it goes live. If in doubt, leave it out and use an abstract graphic instead.
+16.3 Legal protections to put in place
+These sit outside the website build but protect what the website exposes. Flagged here so they are not overlooked.
+Trademark registration for the SAVI name and the logo mark. This is the strongest practical protection for brand identity and should be filed before significant public promotion. Saakshi to take advice on the correct classes.
+Copyright notice in the footer of every page (wording given in Section 4).
+Terms of Use for the website, explicitly prohibiting scraping, automated data collection, reverse engineering, and reproduction of site content.
+A confidentiality agreement signed before any live demonstration of the product. A demo shows far more than the website does, and should not be given to an unidentified party without one.
+Watermarking on any material shared during sales conversations, with the recipient's name where practical.
+Saakshi should confirm the trademark and agreement points with a qualified legal adviser. They are flagged here as practical protections, not as legal advice.
+16.4 Technical measures on the site
+Serve all images at display resolution only. Do not upload high-resolution source files or design assets to the public server.
+Strip metadata (EXIF and similar) from every image before upload — it can carry file paths, device details, and software information.
+Do not leave source maps, build artefacts, comments, or development files on the production server.
+Ensure no directory listing is enabled anywhere on the site.
+robots.txt should block indexing of any non-public directory. Saakshi should decide separately whether to block AI training crawlers — this can be set in robots.txt.
+Contact and demo form submissions must go to Saakshi directly and must not be stored in any third-party system without her explicit approval.
+Do not rely on disabling right-click, blocking text selection, or similar browser tricks. They do not prevent copying, they are trivially bypassed, and they make the site feel amateurish to exactly the audience it needs to impress. Protection comes from what is not published in the first place.
+16.5 Developer obligations
+This document and all materials supplied for the build are confidential and are provided for the purpose of building the Vinayaka Financials website only.
+Site content, copy, design, and assets must not be reused, republished, added to a portfolio, or shared without Saakshi's written permission.
+Any credentials, access details, or accounts supplied for the build must not be shared with any third party.
+Access to the live site and hosting is to be handed over in full to Saakshi on completion, with no retained accounts.
+The finished site, including all custom code and design assets produced for it, is the property of Vinayaka Financials.
+Saakshi should confirm these terms in the written engagement agreement with the developer, not rely on this document alone.
+
+17. Legal pages
+Legal page text must not be written by the developer, generated from a template, or copied from another website. Copying another company's legal pages is both a copyright issue and legally risky, because the terms will not match how this business actually operates.
+Required at launch
+
+
+
+Page
+
+Status
+
+Notes
+
+
+Privacy Policy
+
+Required before launch
+
+Any site collecting names and emails through a form needs one. Must describe what is collected, why, how long it is kept, and how to request deletion.
+
+
+Terms of Use
+
+Required before launch
+
+Governs use of the website. Include the anti-scraping and anti-reverse-engineering terms from Section 16.3.
+
+
+Cookie Policy
+
+Required if analytics used
+
+Needed if any analytics or tracking is added. If no tracking is used, this can be omitted and the Privacy Policy should say so.
+
+Not required at launch
+Refund Policy, Service Level Agreement, Data Processing Agreement, and Master Service Agreement — these govern the client relationship, not the website, and are handled during contracting.
+TO BE SUPPLIED: final legal text from Saakshi, prepared with her legal adviser. Build the page shells and apply the text when supplied. Do not launch the site with placeholder legal text in place.
+
+18. SEO and metadata
+Page titles and descriptions
+
+
+
+Page
+
+Title tag
+
+Meta description
+
+
+Home
+
+SAVI — Financial intelligence you can verify
+
+Financial intelligence that computes every number from your own data and traces it back to its source. Built for multi-entity, cross-border finance teams.
+
+
+Product
+
+SAVI — Product overview
+
+Two ways to adopt SAVI: an intelligence layer on top of your existing ERP, or the full platform as your system of record.
+
+
+Intelligence Platform
+
+Intelligence Platform — SAVI
+
+Add traceable financial intelligence on top of the finance systems you already run, without replacing them.
+
+
+Full Platform
+
+Full Platform — SAVI
+
+Run your finance function on one system: ledger, reporting, compliance, and intelligence, with every figure traceable.
+
+
+How It Works
+
+How SAVI works — from figure to source record
+
+Ask in plain English, get an answer computed from your own records, and trace any figure to the row it came from.
+
+
+Trust Centre
+
+Trust Centre — SAVI
+
+How SAVI handles your financial data: sovereignty, access control, auditability, and responsible AI.
+
+
+Pricing
+
+Pricing — SAVI
+
+SAVI is priced around your organisation's entities, jurisdictions, and volume. Request a quote.
+
+
+About
+
+About — Vinayaka Financials
+
+Why we built SAVI: financial intelligence that proves its numbers instead of asking to be trusted.
+
+Technical SEO requirements
+One H1 per page, matching the page heading given in this document.
+Descriptive alt text on every image. For abstract graphics, describe the concept, not the shapes.
+Clean, readable URLs exactly as specified in Section 3.
+XML sitemap generated and submitted; robots.txt configured per Section 16.4.
+Open Graph and Twitter Card metadata on every page, using the logo mark as the default share image.
+Structured data (Organization schema) on the home page, with the company name, logo, and contact details.
+Canonical tags on all pages to prevent duplicate indexing.
+
+19. Technical build requirements
+Performance
+Target: largest contentful paint under 2.5 seconds on a standard connection.
+All images compressed and served in a modern format (WebP or AVIF) with appropriate fallbacks.
+Lazy-load images below the fold.
+Minimise third-party scripts — each one added must be justified.
+Responsiveness and accessibility
+Fully responsive across mobile, tablet, and desktop. Test at 360px, 768px, 1280px, and 1920px widths.
+WCAG 2.1 AA compliance: contrast ratios, keyboard navigation, focus states, and screen-reader labels on all form fields.
+All interactive elements reachable and operable by keyboard alone.
+Forms must have visible labels — placeholder text alone is not sufficient.
+Security
+HTTPS enforced across the entire site, with HTTP redirecting to HTTPS.
+Security headers configured: HSTS, X-Content-Type-Options, X-Frame-Options, and a Content Security Policy.
+Form submissions protected against spam and automated abuse.
+All software, plugins, and dependencies on current versions at handover.
+Admin access secured with strong, unique credentials and two-factor authentication where the platform supports it.
+Browser support
+Current and previous major versions of Chrome, Safari, Firefox, and Edge. Mobile Safari and Chrome on Android.
+Analytics
+TO BE SUPPLIED: Saakshi to decide whether analytics are used at all, and if so which provider. If analytics are added, a Cookie Policy and consent mechanism are required (see Section 17). A privacy-respecting provider is preferable given the audience.
+Handover requirements
+Full source code and design assets delivered to Saakshi.
+All hosting, domain, and platform accounts registered in Vinayaka Financials' name and handed over in full.
+Written documentation covering how to edit page content, publish a Resources article, and access form submissions.
+No accounts or access retained by the developer after handover.
+
+20. Launch checklist
+Confirm every item before the site goes live.
+Content
+No accuracy figures, percentages, or performance statistics anywhere on the site
+No client names, logos, testimonials, or case studies
+No security certification claims, badges, or shields
+No prices or price ranges
+No placeholder or sample content remaining anywhere
+Founder section supplied and approved, or the section removed
+Company Information page complete with real details, or removed from navigation
+Resources section populated, or removed from navigation
+Legal
+Privacy Policy in place with final approved text
+Terms of Use in place, including anti-scraping and anti-reverse-engineering terms
+Cookie Policy in place if any analytics are used
+Footer copyright and trademark line present on every page
+Intellectual property
+No screenshots revealing real interface structure or data
+No architecture, schema, or technology-stack disclosure
+No API or developer documentation published
+Image metadata stripped; no high-resolution source files on the server
+No source maps, build artefacts, or development files on the production server
+Technical
+HTTPS enforced sitewide with security headers configured
+All forms tested end to end, with submissions confirmed arriving correctly
+Responsive layout verified at all four test widths
+Accessibility checks passed
+Performance targets met
+All links tested, including footer and external links
+Sitemap submitted and robots.txt configured
+Handover
+All accounts in Vinayaka Financials' name
+Source code and assets delivered
+Content-editing documentation supplied
+Developer access removed
+
+Points of contact
+Saakshi Sharma — Founder, Vinayaka Financials
+saakshi@vinayakafinancials.com  ·  WhatsApp +91 82900 06889
+All questions about scope, wording, or anything marked TO BE SUPPLIED should go to Saakshi directly. Nothing in this document should be filled in, expanded, or invented without her confirmation.

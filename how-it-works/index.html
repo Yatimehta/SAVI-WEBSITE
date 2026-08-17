@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How SAVI works — from figure to source record</title>
+  <meta name="description" content="Ask in plain English, get an answer computed from your own records, and trace any figure to the row it came from.">
+  <link rel="canonical" href="https://vinayakafinancials.com/how-it-works">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/animations.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="brand-logo">
+        <svg class="logo-mark" viewBox="0 0 160 40" fill="none">
+          <defs>
+            <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#DBB46F" />
+              <stop offset="50%" stop-color="#B38E4F" />
+              <stop offset="100%" stop-color="#8B682E" />
+            </linearGradient>
+          </defs>
+          <rect x="0" y="24" width="6" height="12" rx="1" fill="url(#goldGrad)" />
+          <rect x="9" y="18" width="6" height="18" rx="1" fill="url(#goldGrad)" />
+          <rect x="18" y="10" width="6" height="26" rx="1" fill="url(#goldGrad)" />
+          <path d="M27 18 L35 6 L43 18 L37 18 L37 36 L31 36 L31 18 Z" fill="url(#goldGrad)" />
+          <text x="52" y="28" font-family="'Inter', sans-serif" font-weight="800" font-size="24" fill="#0B1F3A" letter-spacing="1">SAVI</text>
+        </svg>
+      </a>
+
+      <button class="mobile-nav-toggle" aria-label="Toggle Navigation">&#9776;</button>
+
+      <nav>
+        <ul class="main-nav">
+          <li class="nav-item">
+            <a href="/product" class="nav-link">Product &#9662;</a>
+            <ul class="dropdown-menu">
+              <li><a href="/product" class="dropdown-link">Overview</a></li>
+              <li><a href="/product/intelligence-platform" class="dropdown-link">Intelligence Platform</a></li>
+              <li><a href="/product/full-platform" class="dropdown-link">Full Platform</a></li>
+              <li><a href="/product/capabilities" class="dropdown-link">Capabilities</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a href="/how-it-works" class="nav-link active">How It Works</a></li>
+          <li class="nav-item"><a href="/who-its-for" class="nav-link">Who It's For</a></li>
+          <li class="nav-item"><a href="/trust" class="nav-link">Trust</a></li>
+          <li class="nav-item"><a href="/resources" class="nav-link">Resources</a></li>
+          <li class="nav-item"><a href="/pricing" class="nav-link">Pricing</a></li>
+          <li class="nav-item">
+            <a href="/about" class="nav-link">About &#9662;</a>
+            <ul class="dropdown-menu">
+              <li><a href="/about" class="dropdown-link">Overview</a></li>
+              <li><a href="/about/company" class="dropdown-link">Company Information</a></li>
+              <li><a href="/contact" class="dropdown-link">Contact</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+
+      <div>
+        <a href="/demo" class="btn btn-primary">Book a Demo</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Section 1: Intro -->
+  <section class="section">
+    <div class="container container-narrow text-center">
+      <h1>Ask a question. Follow the answer all the way down.</h1>
+      <p class="lead-text">The difference between SAVI and a general-purpose AI tool is not how the answer is worded. It is where the number came from.</p>
+    </div>
+  </section>
+
+  <!-- Section 2: The Four Steps Modern Visual Sequence -->
+  <section class="section section-alt">
+    <div class="container">
+      <h2 class="text-center" style="margin-bottom: 56px;">The four steps</h2>
+
+      <div class="grid grid-2" style="gap: 32px;">
+        <div class="card card-accent-gold">
+          <div class="step-badge">1</div>
+          <h3 class="card-title">You ask</h3>
+          <p>Ask in plain English — “why did EBITDA drop this quarter?” No query language, no report builder.</p>
+        </div>
+
+        <div class="card card-accent-navy">
+          <div class="step-badge">2</div>
+          <h3 class="card-title">SAVI computes</h3>
+          <p>SAVI queries your actual financial records and calculates the answer. The figure is produced by computation, not by a language model.</p>
+        </div>
+
+        <div class="card card-accent-navy">
+          <div class="step-badge">3</div>
+          <h3 class="card-title">SAVI explains</h3>
+          <p>The AI turns the computed result into a clear written answer. It describes the numbers — it never invents them.</p>
+        </div>
+
+        <div class="card card-accent-gold">
+          <div class="step-badge">4</div>
+          <h3 class="card-title">You verify</h3>
+          <p>Click any figure and follow it down: the figure, the formula, the query, the underlying rows, the source record.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 3: The Trace visual hero graphic -->
+  <section class="section section-navy">
+    <div class="container text-center">
+      <h2 style="color: #FFFFFF;">The Trace, in Full</h2>
+      <p style="color: #E2E8F0; max-width: 600px; margin: 0 auto 40px;">Click through each node to see how every number moves from computed figure to originating source record.</p>
+
+      <div class="trace-container">
+        <div class="trace-chain">
+          <div class="trace-node active" data-trace-step="figure">
+            <div class="trace-node-number">1</div>
+            <div class="trace-node-title">Figure</div>
+          </div>
+          <div class="trace-arrow">&rarr;</div>
+          <div class="trace-node" data-trace-step="formula">
+            <div class="trace-node-number">2</div>
+            <div class="trace-node-title">Formula</div>
+          </div>
+          <div class="trace-arrow">&rarr;</div>
+          <div class="trace-node" data-trace-step="query">
+            <div class="trace-node-number">3</div>
+            <div class="trace-node-title">Query</div>
+          </div>
+          <div class="trace-arrow">&rarr;</div>
+          <div class="trace-node" data-trace-step="rows">
+            <div class="trace-node-number">4</div>
+            <div class="trace-node-title">Rows</div>
+          </div>
+          <div class="trace-arrow">&rarr;</div>
+          <div class="trace-node" data-trace-step="source">
+            <div class="trace-node-number">5</div>
+            <div class="trace-node-title">Source Record</div>
+          </div>
+        </div>
+
+        <div id="trace-detail-content" style="margin-top: 36px;">
+          <div style="background: rgba(0,0,0,0.35); border: 1px solid var(--border-dark); border-radius: 8px; padding: 24px; text-align: left;">
+            <h4 style="color: var(--gold-primary); font-size: 1.125rem; margin-bottom: 8px;">Figure (Computed Output)</h4>
+            <p style="font-family: monospace; font-size: 0.9375rem; background: #071526; padding: 12px 16px; border-radius: 6px; color: #DBB46F; margin-bottom: 12px;">EBITDA (Q2 2026): ₹ 42,850,000</p>
+            <p style="font-size: 0.9375rem; color: #E2E8F0; margin: 0;">The reported metric is displayed clearly. Clicking the figure opens the exact formula and lineage used to generate it.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 4: Why this matters & When SAVI doesn't know -->
+  <section class="section">
+    <div class="container container-narrow">
+      <h2 class="text-center" style="margin-bottom: 24px;">Why this matters</h2>
+      <p>A general-purpose AI model produces text that sounds correct. When the subject is language, that is usually good enough. When the subject is a number in a set of accounts, it is not — because a fluent wrong figure is more dangerous than an obvious one. It gets believed, and it gets acted on.</p>
+      <p>SAVI separates the two jobs. The computation is deterministic and reproducible. The AI writes the explanation. That separation is why a figure from SAVI can be checked, and why the answer to “where did this come from?” is always a record, never a guess.</p>
+
+      <div class="gold-note-box" style="margin-top: 48px;">
+        <h3 class="card-title">When SAVI doesn't know</h3>
+        <p class="body-text" style="margin: 0;">If the underlying data is missing or insufficient, SAVI reports that plainly instead of producing an estimate. An honest gap is more useful than a confident approximation — and considerably safer.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Closing CTA -->
+  <section class="section section-navy text-center">
+    <div class="container container-narrow">
+      <h2 style="color: #FFFFFF;">Experience the Trace on your numbers</h2>
+      <p style="color: #E2E8F0; margin-bottom: 32px;">Book a walkthrough to see SAVI trace financial data end-to-end.</p>
+      <a href="/demo" class="btn btn-gold">Book a Demo</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-column-title">Product</div>
+          <ul class="footer-links">
+            <li><a href="/product">Overview</a></li>
+            <li><a href="/product/intelligence-platform">Intelligence Platform</a></li>
+            <li><a href="/product/full-platform">Full Platform</a></li>
+            <li><a href="/product/capabilities">Capabilities</a></li>
+            <li><a href="/how-it-works">How It Works</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-column-title">Company</div>
+          <ul class="footer-links">
+            <li><a href="/about">About</a></li>
+            <li><a href="/about/company">Company Information</a></li>
+            <li><a href="/trust">Trust Centre</a></li>
+            <li><a href="/contact">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-column-title">Resources & Pricing</div>
+          <ul class="footer-links">
+            <li><a href="/resources">Resources</a></li>
+            <li><a href="/demo">Book a Demo</a></li>
+            <li><a href="/pricing">Request a Quote</a></li>
+            <li><a href="/legal/privacy">Privacy Policy</a></li>
+            <li><a href="/legal/terms">Terms of Use</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-column-title">Connect</div>
+          <ul class="footer-links">
+            <li><a href="mailto:saakshi@vinayakafinancials.com">saakshi@vinayakafinancials.com</a></li>
+            <li><a href="https://wa.me/918290006889" target="_blank" rel="noopener">WhatsApp +91 82900 06889</a></li>
+            <li><a href="https://instagram.com/vinayakafinancials" target="_blank" rel="noopener">Instagram @vinayakafinancials</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-baseline">
+        <div>SAVI is a product of Vinayaka Financials. &copy; 2026 Vinayaka Financials. All rights reserved. SAVI and the SAVI mark are trademarks of Vinayaka Financials.</div>
+        <div>
+          <a href="/legal/privacy" style="color: #848995; margin-right: 16px;">Privacy</a>
+          <a href="/legal/terms" style="color: #848995; margin-right: 16px;">Terms</a>
+          <a href="/legal/cookies" style="color: #848995;">Cookies</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+  <script src="/js/trace-anim.js"></script>
+</body>
+</html>
