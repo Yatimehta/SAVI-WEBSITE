@@ -1,0 +1,84 @@
+/* ==========================================================================
+   SAVI Corporate Website - Reusable Motion & Depth System
+   Product of Vinayaka Financials
+   ========================================================================== */
+
+/* 1. Scroll Reveal Utility System */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+[data-reveal].is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 2. Layered 3D Tilt Card Component */
+.tilt-card {
+  --rx: 0deg;
+  --ry: 0deg;
+  --tx: 0px;
+  --ty: 12px;
+  transform-style: preserve-3d;
+  transition: transform 0.15s ease-out, box-shadow 0.2s ease-out;
+  will-change: transform, box-shadow;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .tilt-card:hover {
+    transform: perspective(1000px) translateY(-6px) rotateX(var(--rx)) rotateY(var(--ry));
+    box-shadow: var(--tx) var(--ty) 40px rgba(11, 31, 58, 0.18);
+  }
+}
+
+/* 3. Pinned Step Sequence Component */
+.pin-sequence {
+  position: relative;
+  width: 100%;
+}
+
+.pin-viewport {
+  position: sticky;
+  top: 120px;
+  width: 100%;
+}
+
+.pin-step {
+  opacity: 0.35;
+  transform: scale(0.97);
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+}
+
+.pin-step.active {
+  opacity: 1;
+  transform: scale(1);
+  border-top-color: var(--gold-primary);
+  box-shadow: 0 12px 36px rgba(11, 31, 58, 0.12);
+}
+
+/* 4. Accessibility Override for prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .tilt-card {
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .pin-viewport {
+    position: static !important;
+  }
+
+  .pin-step {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}

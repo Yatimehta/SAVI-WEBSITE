@@ -6,9 +6,11 @@
   <title>Trust Centre — SAVI</title>
   <meta name="description" content="How SAVI handles your financial data: sovereignty, access control, auditability, data integrity, and responsible AI.">
   <link rel="canonical" href="https://vinayakafinancials.com/trust">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/motion.css">
 </head>
 <body>
 
@@ -47,15 +49,11 @@
           </li>
           <li class="nav-item"><a href="/how-it-works" class="nav-link">How It Works</a></li>
           <li class="nav-item"><a href="/who-its-for" class="nav-link">Who It's For</a></li>
-          <li class="nav-item"><a href="/trust" class="nav-link active">Trust</a></li>
-          <li class="nav-item"><a href="/resources" class="nav-link">Resources</a></li>
-          <li class="nav-item"><a href="/pricing" class="nav-link">Pricing</a></li>
+          <li class="nav-item"><a href="/trust" class="nav-link active">Trust</a></li>          <li class="nav-item"><a href="/pricing" class="nav-link">Pricing</a></li>
           <li class="nav-item">
             <a href="/about" class="nav-link">About &#9662;</a>
             <ul class="dropdown-menu">
-              <li><a href="/about" class="dropdown-link">Overview</a></li>
-              <li><a href="/about/company" class="dropdown-link">Company Information</a></li>
-              <li><a href="/contact" class="dropdown-link">Contact</a></li>
+              <li><a href="/about" class="dropdown-link">Overview</a></li>              <li><a href="/contact" class="dropdown-link">Contact</a></li>
             </ul>
           </li>
         </ul>
@@ -69,7 +67,7 @@
 
   <!-- Section 1: Intro -->
   <section class="section">
-    <div class="container container-narrow text-center">
+    <div class="container container-narrow text-center" data-reveal>
       <h1>How SAVI handles your data.</h1>
       <p class="lead-text">SAVI is designed to operate inside your environment, on infrastructure you control. Your financial records are yours, they stay yours, and they are never pooled, shared, or reused.</p>
     </div>
@@ -80,7 +78,7 @@
     <div class="container">
       <div class="grid grid-2" style="gap: 32px;">
         <!-- Data sovereignty -->
-        <div class="card">
+        <div class="card tilt-card" data-reveal data-reveal-delay="0">
           <h3 class="card-title">Data sovereignty</h3>
           <ul style="padding-left: 20px; line-height: 1.8;">
             <li>SAVI is designed to run within your own infrastructure — your financial data does not need to leave your environment.</li>
@@ -90,7 +88,7 @@
         </div>
 
         <!-- Access control -->
-        <div class="card">
+        <div class="card tilt-card" data-reveal data-reveal-delay="100">
           <h3 class="card-title">Access control</h3>
           <ul style="padding-left: 20px; line-height: 1.8;">
             <li>Role-based permissions govern what each user can see and do.</li>
@@ -100,7 +98,7 @@
         </div>
 
         <!-- Auditability -->
-        <div class="card">
+        <div class="card tilt-card" data-reveal data-reveal-delay="200">
           <h3 class="card-title">Auditability</h3>
           <ul style="padding-left: 20px; line-height: 1.8;">
             <li>Every change to business data is recorded with its before and after values.</li>
@@ -110,7 +108,7 @@
         </div>
 
         <!-- Data integrity -->
-        <div class="card">
+        <div class="card tilt-card" data-reveal data-reveal-delay="300">
           <h3 class="card-title">Data integrity</h3>
           <ul style="padding-left: 20px; line-height: 1.8;">
             <li>Accounting entries are validated at the point they are written; unbalanced data is rejected rather than partially accepted.</li>
@@ -124,7 +122,7 @@
 
   <!-- Section 3: Ethics and Responsible AI -->
   <section class="section">
-    <div class="container container-narrow">
+    <div class="container container-narrow" data-reveal data-reveal-delay="0">
       <h2 class="text-center" style="margin-bottom: 24px;">Ethics and responsible AI</h2>
       
       <div class="gold-note-box">
@@ -159,17 +157,13 @@
         <div>
           <div class="footer-column-title">Company</div>
           <ul class="footer-links">
-            <li><a href="/about">About</a></li>
-            <li><a href="/about/company">Company Information</a></li>
-            <li><a href="/trust">Trust Centre</a></li>
+            <li><a href="/about">About</a></li>            <li><a href="/trust">Trust Centre</a></li>
             <li><a href="/contact">Contact</a></li>
           </ul>
         </div>
         <div>
-          <div class="footer-column-title">Resources & Pricing</div>
-          <ul class="footer-links">
-            <li><a href="/resources">Resources</a></li>
-            <li><a href="/demo">Book a Demo</a></li>
+          <div class="footer-column-title">Pricing</div>
+          <ul class="footer-links">            <li><a href="/demo">Book a Demo</a></li>
             <li><a href="/pricing">Request a Quote</a></li>
             <li><a href="/legal/privacy">Privacy Policy</a></li>
             <li><a href="/legal/terms">Terms of Use</a></li>
@@ -197,5 +191,6 @@
   </footer>
 
   <script src="/js/main.js"></script>
+  <script src="/js/motion.js"></script>
 </body>
 </html>

@@ -6,9 +6,11 @@
   <title>SAVI — Product Overview</title>
   <meta name="description" content="Two ways to adopt SAVI: an intelligence layer on top of your existing ERP, or the full platform as your system of record.">
   <link rel="canonical" href="https://vinayakafinancials.com/product">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/motion.css">
 </head>
 <body>
 
@@ -47,15 +49,11 @@
           </li>
           <li class="nav-item"><a href="/how-it-works" class="nav-link">How It Works</a></li>
           <li class="nav-item"><a href="/who-its-for" class="nav-link">Who It's For</a></li>
-          <li class="nav-item"><a href="/trust" class="nav-link">Trust</a></li>
-          <li class="nav-item"><a href="/resources" class="nav-link">Resources</a></li>
-          <li class="nav-item"><a href="/pricing" class="nav-link">Pricing</a></li>
+          <li class="nav-item"><a href="/trust" class="nav-link">Trust</a></li>          <li class="nav-item"><a href="/pricing" class="nav-link">Pricing</a></li>
           <li class="nav-item">
             <a href="/about" class="nav-link">About &#9662;</a>
             <ul class="dropdown-menu">
-              <li><a href="/about" class="dropdown-link">Overview</a></li>
-              <li><a href="/about/company" class="dropdown-link">Company Information</a></li>
-              <li><a href="/contact" class="dropdown-link">Contact</a></li>
+              <li><a href="/about" class="dropdown-link">Overview</a></li>              <li><a href="/contact" class="dropdown-link">Contact</a></li>
             </ul>
           </li>
         </ul>
@@ -69,13 +67,13 @@
 
   <!-- Page Content -->
   <section class="section">
-    <div class="container container-narrow text-center">
+    <div class="container container-narrow text-center" data-reveal>
       <h1>One platform. Two ways to adopt it.</h1>
       <p class="lead-text">SAVI is a financial intelligence platform with a complete ERP underneath it. You can take the intelligence layer on its own and point it at the systems you already run, or you can run everything on SAVI. Both give you the same core promise: every number traced to its source.</p>
     </div>
 
     <!-- Modern FinTech Card-Based Comparison Grid -->
-    <div class="container">
+    <div class="container" data-reveal data-reveal-delay="100">
       <div class="comparison-grid">
         <!-- Row 1: System of record -->
         <div class="comparison-row">
@@ -177,17 +175,13 @@
         <div>
           <div class="footer-column-title">Company</div>
           <ul class="footer-links">
-            <li><a href="/about">About</a></li>
-            <li><a href="/about/company">Company Information</a></li>
-            <li><a href="/trust">Trust Centre</a></li>
+            <li><a href="/about">About</a></li>            <li><a href="/trust">Trust Centre</a></li>
             <li><a href="/contact">Contact</a></li>
           </ul>
         </div>
         <div>
-          <div class="footer-column-title">Resources & Pricing</div>
-          <ul class="footer-links">
-            <li><a href="/resources">Resources</a></li>
-            <li><a href="/demo">Book a Demo</a></li>
+          <div class="footer-column-title">Pricing</div>
+          <ul class="footer-links">            <li><a href="/demo">Book a Demo</a></li>
             <li><a href="/pricing">Request a Quote</a></li>
             <li><a href="/legal/privacy">Privacy Policy</a></li>
             <li><a href="/legal/terms">Terms of Use</a></li>
@@ -215,5 +209,6 @@
   </footer>
 
   <script src="/js/main.js"></script>
+  <script src="/js/motion.js"></script>
 </body>
 </html>

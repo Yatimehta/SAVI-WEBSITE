@@ -21,6 +21,7 @@
   <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/css/components.css">
   <link rel="stylesheet" href="/css/animations.css">
+  <link rel="stylesheet" href="/css/motion.css">
 
   <!-- Organization Schema -->
   <script type="application/ld+json">
@@ -80,15 +81,11 @@
           </li>
           <li class="nav-item"><a href="/how-it-works" class="nav-link">How It Works</a></li>
           <li class="nav-item"><a href="/who-its-for" class="nav-link">Who It's For</a></li>
-          <li class="nav-item"><a href="/trust" class="nav-link">Trust</a></li>
-          <li class="nav-item"><a href="/resources" class="nav-link">Resources</a></li>
-          <li class="nav-item"><a href="/pricing" class="nav-link">Pricing</a></li>
+          <li class="nav-item"><a href="/trust" class="nav-link">Trust</a></li>          <li class="nav-item"><a href="/pricing" class="nav-link">Pricing</a></li>
           <li class="nav-item">
             <a href="/about" class="nav-link">About &#9662;</a>
             <ul class="dropdown-menu">
-              <li><a href="/about" class="dropdown-link">Overview</a></li>
-              <li><a href="/about/company" class="dropdown-link">Company Information</a></li>
-              <li><a href="/contact" class="dropdown-link">Contact</a></li>
+              <li><a href="/about" class="dropdown-link">Overview</a></li>              <li><a href="/contact" class="dropdown-link">Contact</a></li>
             </ul>
           </li>
         </ul>
@@ -101,35 +98,49 @@
   </header>
 
   <!-- Hero Section -->
-  <section class="section">
-    <div class="container grid grid-2" style="align-items: center;">
-      <div>
-        <h1>Financial intelligence you don't have to double-check.</h1>
+  <section class="section hero-section">
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <h1 class="hero-title">Financial intelligence you don't have to double-check.</h1>
         <p class="lead-text">SAVI sits on top of your existing systems and answers your finance questions instantly — with every number traceable back to its source.</p>
-        <div style="display: flex; gap: 16px; flex-wrap: wrap; margin-top: 24px;">
+        <div class="hero-ctas">
           <a href="/demo" class="btn btn-primary">Book a Demo</a>
           <a href="/how-it-works" class="btn btn-secondary">See How It Works &rarr;</a>
         </div>
       </div>
-      <div>
-        <!-- Abstract Geometric Data Art in Navy & Gold (Zero stock photos / Zero real screenshots) -->
-        <div class="hero-abstract-graphic">
-          <svg viewBox="0 0 400 300" width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect width="400" height="300" rx="12" fill="#0B1F3A"/>
+
+      <div class="hero-visual-wrapper">
+        <!-- Layer 1 (Back): Soft radial mesh gradient -->
+        <div class="hero-layer-back"></div>
+
+        <!-- Layer 2 (Middle): Bar-chart & lineage trace vector graphic -->
+        <div class="hero-layer-mid">
+          <svg viewBox="0 0 440 320" width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="440" height="320" rx="16" fill="#0B1F3A"/>
             <!-- Abstract Grid Lines -->
-            <line x1="40" y1="240" x2="360" y2="240" stroke="#1E3454" stroke-width="1"/>
-            <line x1="40" y1="180" x2="360" y2="180" stroke="#1E3454" stroke-width="1"/>
-            <line x1="40" y1="120" x2="360" y2="120" stroke="#1E3454" stroke-width="1"/>
-            <!-- Abstract Graphic Columns (Sample Illustrative Values Only) -->
-            <rect x="60" y="160" width="32" height="80" rx="4" fill="url(#goldGrad)" opacity="0.6"/>
-            <rect x="120" y="120" width="32" height="120" rx="4" fill="url(#goldGrad)" opacity="0.8"/>
-            <rect x="180" y="90" width="32" height="150" rx="4" fill="url(#goldGrad)"/>
-            <rect x="240" y="140" width="32" height="100" rx="4" fill="url(#goldGrad)" opacity="0.7"/>
-            <rect x="300" y="70" width="32" height="170" rx="4" fill="url(#goldGrad)"/>
+            <line x1="40" y1="260" x2="400" y2="260" stroke="#1E3454" stroke-width="1.5" stroke-dasharray="4 4"/>
+            <line x1="40" y1="190" x2="400" y2="190" stroke="#1E3454" stroke-width="1.5" stroke-dasharray="4 4"/>
+            <line x1="40" y1="120" x2="400" y2="120" stroke="#1E3454" stroke-width="1.5" stroke-dasharray="4 4"/>
+            <!-- Abstract Graphic Columns (Sample Illustrative Data) -->
+            <rect x="65" y="170" width="36" height="90" rx="4" fill="url(#goldGrad)" opacity="0.55"/>
+            <rect x="135" y="130" width="36" height="130" rx="4" fill="url(#goldGrad)" opacity="0.75"/>
+            <rect x="205" y="95" width="36" height="165" rx="4" fill="url(#goldGrad)"/>
+            <rect x="275" y="150" width="36" height="110" rx="4" fill="url(#goldGrad)" opacity="0.65"/>
+            <rect x="345" y="75" width="36" height="185" rx="4" fill="url(#goldGrad)"/>
             <!-- Lineage Trace Vector Line -->
-            <path d="M 76 160 L 136 120 L 196 90 L 256 140 L 316 70" stroke="#DBB46F" stroke-width="3" stroke-dasharray="4 4"/>
-            <circle cx="316" cy="70" r="6" fill="#DBB46F"/>
+            <path d="M 83 170 L 153 130 L 223 95 L 293 150 L 363 75" stroke="#DBB46F" stroke-width="3" stroke-dasharray="5 5"/>
+            <circle cx="363" cy="75" r="7" fill="#DBB46F" stroke="#0B1F3A" stroke-width="2"/>
           </svg>
+        </div>
+
+        <!-- Layer 3 (Front): Floating Trace Card -->
+        <div class="hero-layer-front hero-trace-card">
+          <div class="trace-card-badge">SAMPLE TRACE (ILLUSTRATIVE)</div>
+          <div class="trace-card-metric">EBITDA: ₹ 42,850,000</div>
+          <div class="trace-card-meta">
+            <span class="trace-status-dot"></span>
+            Traceable to 1,482 source rows
+          </div>
         </div>
       </div>
     </div>
@@ -151,15 +162,15 @@
         <h2>Computed from your data. Explained by AI. Traced to the source.</h2>
       </div>
       <div class="grid grid-3">
-        <div class="card">
+        <div class="card tilt-card" data-reveal data-reveal-delay="0">
           <h3 class="card-title">Calculated, not generated</h3>
           <p>Every figure SAVI reports is computed deterministically from your underlying financial records. The AI explains the result — it never invents the number.</p>
         </div>
-        <div class="card">
+        <div class="card tilt-card" data-reveal data-reveal-delay="100">
           <h3 class="card-title">Traceable to the row</h3>
           <p>Click any figure in any answer or report to see the formula, the query, the filtered rows, and the originating transaction inside your system of record.</p>
         </div>
-        <div class="card">
+        <div class="card tilt-card" data-reveal data-reveal-delay="200">
           <h3 class="card-title">Honest about gaps</h3>
           <p>When underlying data is missing or incomplete, SAVI states the gap clearly instead of estimating. An explicit unknown is safer than a confident guess.</p>
         </div>
@@ -221,14 +232,14 @@
       </div>
 
       <div class="grid grid-2">
-        <div class="card" style="border-top: 4px solid var(--gold-primary);">
+        <div class="card tilt-card" style="border-top: 4px solid var(--gold-primary);" data-reveal data-reveal-delay="0">
           <h3 class="card-title">Intelligence Platform</h3>
           <p class="card-subtitle">Intelligence on top of your existing ERP</p>
           <p>Keep your existing finance system exactly where it is. SAVI reads from your current ERP and provides a traceable answer layer above it. Your team gets instant, verified answers without system migration.</p>
           <a href="/product/intelligence-platform" class="btn btn-secondary" style="margin-top: 16px;">Explore Intelligence Platform &rarr;</a>
         </div>
 
-        <div class="card" style="border-top: 4px solid var(--navy-primary);">
+        <div class="card tilt-card" style="border-top: 4px solid var(--navy-primary);" data-reveal data-reveal-delay="100">
           <h3 class="card-title">Full Platform</h3>
           <p class="card-subtitle">Your entire finance operation on one system</p>
           <p>For organizations consolidating onto a single platform. Includes core accounting ledger, GST compliance, multi-tier approvals, fraud detection, and the intelligence engine built right in.</p>
@@ -273,17 +284,13 @@
         <div>
           <div class="footer-column-title">Company</div>
           <ul class="footer-links">
-            <li><a href="/about">About</a></li>
-            <li><a href="/about/company">Company Information</a></li>
-            <li><a href="/trust">Trust Centre</a></li>
+            <li><a href="/about">About</a></li>            <li><a href="/trust">Trust Centre</a></li>
             <li><a href="/contact">Contact</a></li>
           </ul>
         </div>
         <div>
-          <div class="footer-column-title">Resources & Pricing</div>
-          <ul class="footer-links">
-            <li><a href="/resources">Resources</a></li>
-            <li><a href="/demo">Book a Demo</a></li>
+          <div class="footer-column-title">Pricing</div>
+          <ul class="footer-links">            <li><a href="/demo">Book a Demo</a></li>
             <li><a href="/pricing">Request a Quote</a></li>
             <li><a href="/legal/privacy">Privacy Policy</a></li>
             <li><a href="/legal/terms">Terms of Use</a></li>
@@ -312,5 +319,6 @@
 
   <script src="/js/main.js"></script>
   <script src="/js/trace-anim.js"></script>
+  <script src="/js/motion.js"></script>
 </body>
 </html>

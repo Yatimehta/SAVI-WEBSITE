@@ -6,9 +6,11 @@
   <title>Who It's For — SAVI</title>
   <meta name="description" content="SAVI is built for finance teams carrying real complexity: overseas subsidiaries, multi-entity structures, audit pressure, and teams evaluating AI.">
   <link rel="canonical" href="https://vinayakafinancials.com/who-its-for">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/motion.css">
 </head>
 <body>
 
@@ -47,15 +49,11 @@
           </li>
           <li class="nav-item"><a href="/how-it-works" class="nav-link">How It Works</a></li>
           <li class="nav-item"><a href="/who-its-for" class="nav-link active">Who It's For</a></li>
-          <li class="nav-item"><a href="/trust" class="nav-link">Trust</a></li>
-          <li class="nav-item"><a href="/resources" class="nav-link">Resources</a></li>
-          <li class="nav-item"><a href="/pricing" class="nav-link">Pricing</a></li>
+          <li class="nav-item"><a href="/trust" class="nav-link">Trust</a></li>          <li class="nav-item"><a href="/pricing" class="nav-link">Pricing</a></li>
           <li class="nav-item">
             <a href="/about" class="nav-link">About &#9662;</a>
             <ul class="dropdown-menu">
-              <li><a href="/about" class="dropdown-link">Overview</a></li>
-              <li><a href="/about/company" class="dropdown-link">Company Information</a></li>
-              <li><a href="/contact" class="dropdown-link">Contact</a></li>
+              <li><a href="/about" class="dropdown-link">Overview</a></li>              <li><a href="/contact" class="dropdown-link">Contact</a></li>
             </ul>
           </li>
         </ul>
@@ -69,7 +67,7 @@
 
   <!-- Section 1: Intro -->
   <section class="section">
-    <div class="container container-narrow text-center">
+    <div class="container container-narrow text-center" data-reveal>
       <h1>Built for finance teams carrying real complexity.</h1>
       <p class="lead-text">SAVI is most valuable where the finance picture is genuinely hard to assemble — several entities, more than one country, and a team that spends more time reconciling numbers than acting on them.</p>
     </div>
@@ -79,22 +77,22 @@
   <section class="section section-alt">
     <div class="container">
       <div class="grid grid-2" style="gap: 32px;">
-        <div class="card">
+        <div class="card tilt-card" data-reveal data-reveal-delay="0">
           <h3 class="card-title">Groups with overseas subsidiaries</h3>
           <p>A parent company in one country with subsidiaries in others faces several sets of rules at once, and a consolidated picture that has to be rebuilt by hand every period. SAVI resolves the applicable rules per entity and traces every consolidated figure back to the entity and record it came from.</p>
         </div>
 
-        <div class="card">
+        <div class="card tilt-card" data-reveal data-reveal-delay="100">
           <h3 class="card-title">Multi-entity organisations</h3>
           <p>Where each entity has its own ledger, its own filings, and its own reporting calendar, the group view is usually the last thing to arrive and the first thing to be questioned. SAVI keeps the entity detail and the group picture connected, so any consolidated number opens into its components.</p>
         </div>
 
-        <div class="card">
+        <div class="card tilt-card" data-reveal data-reveal-delay="200">
           <h3 class="card-title">Finance teams under audit pressure</h3>
           <p>When every reported figure must be defensible, the ability to open a number and show its origin changes the nature of the conversation. SAVI records the lineage as the number is produced, not afterwards.</p>
         </div>
 
-        <div class="card">
+        <div class="card tilt-card" data-reveal data-reveal-delay="300">
           <h3 class="card-title">Organisations evaluating AI for finance</h3>
           <p>Most AI tools in this space generate figures, which means they can generate wrong ones convincingly. SAVI is architected the other way round: the calculation is deterministic and traceable, and the AI is used only to explain what was computed. If you have been asked to assess AI for the finance function and have concerns about reliability, this is the distinction worth examining.</p>
         </div>
@@ -128,17 +126,13 @@
         <div>
           <div class="footer-column-title">Company</div>
           <ul class="footer-links">
-            <li><a href="/about">About</a></li>
-            <li><a href="/about/company">Company Information</a></li>
-            <li><a href="/trust">Trust Centre</a></li>
+            <li><a href="/about">About</a></li>            <li><a href="/trust">Trust Centre</a></li>
             <li><a href="/contact">Contact</a></li>
           </ul>
         </div>
         <div>
-          <div class="footer-column-title">Resources & Pricing</div>
-          <ul class="footer-links">
-            <li><a href="/resources">Resources</a></li>
-            <li><a href="/demo">Book a Demo</a></li>
+          <div class="footer-column-title">Pricing</div>
+          <ul class="footer-links">            <li><a href="/demo">Book a Demo</a></li>
             <li><a href="/pricing">Request a Quote</a></li>
             <li><a href="/legal/privacy">Privacy Policy</a></li>
             <li><a href="/legal/terms">Terms of Use</a></li>
@@ -166,5 +160,6 @@
   </footer>
 
   <script src="/js/main.js"></script>
+  <script src="/js/motion.js"></script>
 </body>
 </html>

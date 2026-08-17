@@ -6,9 +6,11 @@
   <title>Pricing — SAVI</title>
   <meta name="description" content="SAVI is priced around your organisation's entities, jurisdictions, and volume. Request a quote.">
   <link rel="canonical" href="https://vinayakafinancials.com/pricing">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/motion.css">
 </head>
 <body>
 
@@ -47,15 +49,11 @@
           </li>
           <li class="nav-item"><a href="/how-it-works" class="nav-link">How It Works</a></li>
           <li class="nav-item"><a href="/who-its-for" class="nav-link">Who It's For</a></li>
-          <li class="nav-item"><a href="/trust" class="nav-link">Trust</a></li>
-          <li class="nav-item"><a href="/resources" class="nav-link">Resources</a></li>
-          <li class="nav-item"><a href="/pricing" class="nav-link active">Pricing</a></li>
+          <li class="nav-item"><a href="/trust" class="nav-link">Trust</a></li>          <li class="nav-item"><a href="/pricing" class="nav-link active">Pricing</a></li>
           <li class="nav-item">
             <a href="/about" class="nav-link">About &#9662;</a>
             <ul class="dropdown-menu">
-              <li><a href="/about" class="dropdown-link">Overview</a></li>
-              <li><a href="/about/company" class="dropdown-link">Company Information</a></li>
-              <li><a href="/contact" class="dropdown-link">Contact</a></li>
+              <li><a href="/about" class="dropdown-link">Overview</a></li>              <li><a href="/contact" class="dropdown-link">Contact</a></li>
             </ul>
           </li>
         </ul>
@@ -69,7 +67,7 @@
 
   <!-- Section 1: Intro -->
   <section class="section">
-    <div class="container container-narrow text-center">
+    <div class="container container-narrow text-center" data-reveal>
       <h1>Pricing built around your organisation.</h1>
       <p class="lead-text">SAVI is priced according to the shape of your business — how many entities you run, how many jurisdictions you operate across, the volume you process, and whether you want the intelligence layer alone or the full platform. Rather than publish a figure that would be wrong for most organisations, we prepare a quote after a short conversation.</p>
     </div>
@@ -81,19 +79,19 @@
       <h2 class="text-center" style="margin-bottom: 40px;">What determines your price</h2>
       
       <div class="grid grid-4">
-        <div class="card">
+        <div class="card tilt-card" data-reveal data-reveal-delay="0">
           <h3 class="card-title">Number of legal entities</h3>
           <p class="caption">Each entity carries its own rules, filings, and reporting obligations</p>
         </div>
-        <div class="card">
+        <div class="card tilt-card" data-reveal data-reveal-delay="100">
           <h3 class="card-title">Jurisdictions of operation</h3>
           <p class="caption">Cross-border structures require more rule resolution</p>
         </div>
-        <div class="card">
+        <div class="card tilt-card" data-reveal data-reveal-delay="200">
           <h3 class="card-title">Transaction volume</h3>
           <p class="caption">Determines the scale of the deployment</p>
         </div>
-        <div class="card">
+        <div class="card tilt-card" data-reveal data-reveal-delay="300">
           <h3 class="card-title">Platform choice</h3>
           <p class="caption">Intelligence Platform alone, or the Full Platform</p>
         </div>
@@ -108,7 +106,7 @@
       
       <div id="form-status-message" style="display: none;"></div>
 
-      <form id="quote-form" class="card" style="padding: 40px;">
+      <form id="quote-form" class="card" style="padding: 40px;" data-reveal data-reveal-delay="100">
         <div class="grid grid-2">
           <div class="form-group">
             <label class="form-label" for="quote-name">Full name <span class="required">*</span></label>
@@ -215,17 +213,13 @@
         <div>
           <div class="footer-column-title">Company</div>
           <ul class="footer-links">
-            <li><a href="/about">About</a></li>
-            <li><a href="/about/company">Company Information</a></li>
-            <li><a href="/trust">Trust Centre</a></li>
+            <li><a href="/about">About</a></li>            <li><a href="/trust">Trust Centre</a></li>
             <li><a href="/contact">Contact</a></li>
           </ul>
         </div>
         <div>
-          <div class="footer-column-title">Resources & Pricing</div>
-          <ul class="footer-links">
-            <li><a href="/resources">Resources</a></li>
-            <li><a href="/demo">Book a Demo</a></li>
+          <div class="footer-column-title">Pricing</div>
+          <ul class="footer-links">            <li><a href="/demo">Book a Demo</a></li>
             <li><a href="/pricing">Request a Quote</a></li>
             <li><a href="/legal/privacy">Privacy Policy</a></li>
             <li><a href="/legal/terms">Terms of Use</a></li>
@@ -253,6 +247,7 @@
   </footer>
 
   <script src="/js/main.js"></script>
+  <script src="/js/motion.js"></script>
   <script src="/js/captcha.js"></script>
   <script src="/js/form-handler.js"></script>
 </body>

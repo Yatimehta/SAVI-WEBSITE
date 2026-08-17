@@ -6,10 +6,12 @@
   <title>How SAVI works — from figure to source record</title>
   <meta name="description" content="Ask in plain English, get an answer computed from your own records, and trace any figure to the row it came from.">
   <link rel="canonical" href="https://vinayakafinancials.com/how-it-works">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/css/components.css">
   <link rel="stylesheet" href="/css/animations.css">
+  <link rel="stylesheet" href="/css/motion.css">
 </head>
 <body>
 
@@ -48,15 +50,11 @@
           </li>
           <li class="nav-item"><a href="/how-it-works" class="nav-link active">How It Works</a></li>
           <li class="nav-item"><a href="/who-its-for" class="nav-link">Who It's For</a></li>
-          <li class="nav-item"><a href="/trust" class="nav-link">Trust</a></li>
-          <li class="nav-item"><a href="/resources" class="nav-link">Resources</a></li>
-          <li class="nav-item"><a href="/pricing" class="nav-link">Pricing</a></li>
+          <li class="nav-item"><a href="/trust" class="nav-link">Trust</a></li>          <li class="nav-item"><a href="/pricing" class="nav-link">Pricing</a></li>
           <li class="nav-item">
             <a href="/about" class="nav-link">About &#9662;</a>
             <ul class="dropdown-menu">
-              <li><a href="/about" class="dropdown-link">Overview</a></li>
-              <li><a href="/about/company" class="dropdown-link">Company Information</a></li>
-              <li><a href="/contact" class="dropdown-link">Contact</a></li>
+              <li><a href="/about" class="dropdown-link">Overview</a></li>              <li><a href="/contact" class="dropdown-link">Contact</a></li>
             </ul>
           </li>
         </ul>
@@ -78,29 +76,29 @@
 
   <!-- Section 2: The Four Steps Modern Visual Sequence -->
   <section class="section section-alt">
-    <div class="container">
+    <div class="container pin-sequence">
       <h2 class="text-center" style="margin-bottom: 56px;">The four steps</h2>
 
-      <div class="grid grid-2" style="gap: 32px;">
-        <div class="card card-accent-gold">
+      <div class="grid grid-2 pin-viewport" style="gap: 32px;">
+        <div class="card card-accent-gold pin-step" data-reveal data-reveal-delay="0">
           <div class="step-badge">1</div>
           <h3 class="card-title">You ask</h3>
           <p>Ask in plain English — “why did EBITDA drop this quarter?” No query language, no report builder.</p>
         </div>
 
-        <div class="card card-accent-navy">
+        <div class="card card-accent-navy pin-step" data-reveal data-reveal-delay="100">
           <div class="step-badge">2</div>
           <h3 class="card-title">SAVI computes</h3>
           <p>SAVI queries your actual financial records and calculates the answer. The figure is produced by computation, not by a language model.</p>
         </div>
 
-        <div class="card card-accent-navy">
+        <div class="card card-accent-navy pin-step" data-reveal data-reveal-delay="200">
           <div class="step-badge">3</div>
           <h3 class="card-title">SAVI explains</h3>
           <p>The AI turns the computed result into a clear written answer. It describes the numbers — it never invents them.</p>
         </div>
 
-        <div class="card card-accent-gold">
+        <div class="card card-accent-gold pin-step" data-reveal data-reveal-delay="300">
           <div class="step-badge">4</div>
           <h3 class="card-title">You verify</h3>
           <p>Click any figure and follow it down: the figure, the formula, the query, the underlying rows, the source record.</p>
@@ -115,29 +113,29 @@
       <h2 style="color: #FFFFFF;">The Trace, in Full</h2>
       <p style="color: #E2E8F0; max-width: 600px; margin: 0 auto 40px;">Click through each node to see how every number moves from computed figure to originating source record.</p>
 
-      <div class="trace-container">
+      <div class="trace-container" data-reveal>
         <div class="trace-chain">
-          <div class="trace-node active" data-trace-step="figure">
+          <div class="trace-node tilt-card active" data-trace-step="figure">
             <div class="trace-node-number">1</div>
             <div class="trace-node-title">Figure</div>
           </div>
           <div class="trace-arrow">&rarr;</div>
-          <div class="trace-node" data-trace-step="formula">
+          <div class="trace-node tilt-card" data-trace-step="formula">
             <div class="trace-node-number">2</div>
             <div class="trace-node-title">Formula</div>
           </div>
           <div class="trace-arrow">&rarr;</div>
-          <div class="trace-node" data-trace-step="query">
+          <div class="trace-node tilt-card" data-trace-step="query">
             <div class="trace-node-number">3</div>
             <div class="trace-node-title">Query</div>
           </div>
           <div class="trace-arrow">&rarr;</div>
-          <div class="trace-node" data-trace-step="rows">
+          <div class="trace-node tilt-card" data-trace-step="rows">
             <div class="trace-node-number">4</div>
             <div class="trace-node-title">Rows</div>
           </div>
           <div class="trace-arrow">&rarr;</div>
-          <div class="trace-node" data-trace-step="source">
+          <div class="trace-node tilt-card" data-trace-step="source">
             <div class="trace-node-number">5</div>
             <div class="trace-node-title">Source Record</div>
           </div>
@@ -194,17 +192,13 @@
         <div>
           <div class="footer-column-title">Company</div>
           <ul class="footer-links">
-            <li><a href="/about">About</a></li>
-            <li><a href="/about/company">Company Information</a></li>
-            <li><a href="/trust">Trust Centre</a></li>
+            <li><a href="/about">About</a></li>            <li><a href="/trust">Trust Centre</a></li>
             <li><a href="/contact">Contact</a></li>
           </ul>
         </div>
         <div>
-          <div class="footer-column-title">Resources & Pricing</div>
-          <ul class="footer-links">
-            <li><a href="/resources">Resources</a></li>
-            <li><a href="/demo">Book a Demo</a></li>
+          <div class="footer-column-title">Pricing</div>
+          <ul class="footer-links">            <li><a href="/demo">Book a Demo</a></li>
             <li><a href="/pricing">Request a Quote</a></li>
             <li><a href="/legal/privacy">Privacy Policy</a></li>
             <li><a href="/legal/terms">Terms of Use</a></li>
@@ -233,5 +227,6 @@
 
   <script src="/js/main.js"></script>
   <script src="/js/trace-anim.js"></script>
+  <script src="/js/motion.js"></script>
 </body>
 </html>

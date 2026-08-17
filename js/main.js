@@ -37,4 +37,35 @@ document.addEventListener('DOMContentLoaded', () => {
       link.classList.add('active');
     }
   });
+
+  // 4. Hero Floating Trace Card Mousemove Parallax (Desktop Only)
+  const heroCard = document.querySelector('.hero-trace-card');
+  const heroWrapper = document.querySelector('.hero-visual-wrapper');
+
+  if (heroCard && heroWrapper) {
+    const isDesktop = window.innerWidth > 992;
+    const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (isDesktop && !isTouch && !prefersReducedMotion) {
+      heroWrapper.addEventListener('mousemove', (e) => {
+        const rect = heroWrapper.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        // Soft 3D tilt max 6-8 degrees
+        const rotX = (((y - centerY) / centerY) * -7).toFixed(2);
+        const rotY = (((x - centerX) / centerX) * 7).toFixed(2);
+
+        heroCard.style.transform = `perspective(1000px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateZ(10px)`;
+      });
+
+      heroWrapper.addEventListener('mouseleave', () => {
+        heroCard.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
+      });
+    }
+  }
 });
+
