@@ -14,6 +14,14 @@ const PORT = process.env.PORT || 3005;
 // Trust reverse proxy (Railway / Cloudflare) for rate limiting & IP detection
 app.set('trust proxy', 1);
 
+// Prevent browser/proxy stale caching of HTML, CSS, JS
+app.use((req, res, next) => {
+  res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  res.set('Pragma', 'no-cache');
+  res.set('Expires', '0');
+  next();
+});
+
 // ─────────────────────────────────────────────
 // Postgres setup (DATABASE_URL injected by Railway)
 // ─────────────────────────────────────────────
