@@ -30,9 +30,18 @@
   --text-heading: #FFFFFF;
   --text-secondary: #CBD5E1;
   --text-muted: #94A3B8;
+  --link-color: #38BDF8;
+  --link-hover: #E5C378;
   --border-color: rgba(255, 255, 255, 0.14);
   --border-card: rgba(229, 195, 120, 0.28);
   --border-dark: rgba(255, 255, 255, 0.1);
+
+  /* Form Inputs (Crisp White Text on Midnight Inputs) */
+  --input-bg: #0C1B35;
+  --input-border: rgba(255, 255, 255, 0.24);
+  --input-text: #FFFFFF;
+  --input-placeholder: #8FA3BF;
+  --form-label-color: #E2E8F0;
 
   /* Header & Navigation */
   --header-bg: rgba(10, 22, 43, 0.94);
@@ -91,9 +100,18 @@
   --text-heading: #0B1F3A;
   --text-secondary: #475569;
   --text-muted: #64748B;
+  --link-color: #0B1F3A;
+  --link-hover: #B38E4F;
   --border-color: #E2E8F0;
   --border-card: #CBD5E1;
   --border-dark: #1E3454;
+
+  /* Form Inputs (Light Mode) */
+  --input-bg: #FFFFFF;
+  --input-border: #CBD5E1;
+  --input-text: #0F172A;
+  --input-placeholder: #94A3B8;
+  --form-label-color: #0B1F3A;
 
   --header-bg: rgba(255, 255, 255, 0.95);
   --header-border: rgba(11, 31, 58, 0.08);
@@ -133,13 +151,13 @@ body {
 }
 
 a {
-  color: var(--navy-primary);
+  color: var(--link-color);
   text-decoration: none;
   transition: all var(--transition-fast);
 }
 
 a:hover {
-  color: var(--gold-dark);
+  color: var(--link-hover);
 }
 
 img, svg {
