@@ -31,9 +31,25 @@
   text-decoration: none;
 }
 
-.logo-mark {
-  height: 40px;
+.brand-logo-img {
+  height: 42px;
   width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 8px rgba(179, 142, 79, 0.3));
+  transition: transform var(--transition-fast);
+}
+
+.brand-logo:hover .brand-logo-img {
+  transform: scale(1.06);
+}
+
+.brand-logo-text {
+  font-family: var(--font-family);
+  font-weight: 800;
+  font-size: 1.5rem;
+  letter-spacing: 0.06em;
+  color: var(--navy-primary);
+  display: inline-block;
 }
 
 .main-nav {
@@ -197,22 +213,119 @@
   box-shadow: var(--shadow-gold);
 }
 
-/* 3. Modern Card-Based UI (Fintech Style) */
+/* 3. Modern Card & Flashcard UI (Gold Border Luxury Fintech Style) */
 .card {
   background-color: var(--bg-card);
-  border: 1px solid var(--border-color);
+  border: 1.5px solid rgba(219, 180, 111, 0.45);
   border-radius: var(--radius-card);
   padding: 36px;
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 4px 20px rgba(11, 31, 58, 0.05), 0 0 15px rgba(179, 142, 79, 0.06);
   transition: all var(--transition-normal);
   position: relative;
   overflow: hidden;
 }
 
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold-light), var(--gold-primary), var(--gold-dark));
+  opacity: 0.85;
+  transition: opacity var(--transition-fast);
+}
+
 .card:hover {
   transform: translateY(-6px);
-  box-shadow: var(--shadow-lg);
-  border-color: #D0D5DD;
+  box-shadow: 0 16px 36px rgba(11, 31, 58, 0.12), 0 0 28px rgba(219, 180, 111, 0.25);
+  border-color: rgba(219, 180, 111, 0.9);
+}
+
+.card:hover::before {
+  opacity: 1;
+}
+
+/* Flashcard Specific Component */
+.flashcard {
+  background: #FFFFFF;
+  border: 1.5px solid rgba(219, 180, 111, 0.55);
+  border-radius: 14px;
+  padding: 28px;
+  box-shadow: 0 8px 24px rgba(11, 31, 58, 0.06), 0 0 18px rgba(179, 142, 79, 0.1);
+  transition: all var(--transition-normal);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.flashcard:hover {
+  border-color: #DBB46F;
+  box-shadow: 0 14px 34px rgba(11, 31, 58, 0.12), 0 0 26px rgba(219, 180, 111, 0.3);
+  transform: translateY(-5px);
+}
+
+.flashcard-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.flashcard-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background: rgba(179, 142, 79, 0.12);
+  color: var(--navy-primary);
+  border: 1px solid rgba(219, 180, 111, 0.4);
+}
+
+.flashcard-badge.badge-critical {
+  background: rgba(239, 68, 68, 0.12);
+  color: #DC2626;
+  border-color: rgba(239, 68, 68, 0.35);
+}
+
+.flashcard-badge.badge-info {
+  background: rgba(16, 185, 129, 0.12);
+  color: #059669;
+  border-color: rgba(16, 185, 129, 0.35);
+}
+
+.flashcard-badge.badge-gold {
+  background: rgba(219, 180, 111, 0.18);
+  color: var(--gold-dark);
+  border-color: var(--gold-light);
+}
+
+.flashcard-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--navy-primary);
+  margin-bottom: 10px;
+}
+
+.flashcard-body {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.flashcard-stat {
+  font-family: monospace;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--gold-dark);
+  margin-top: 12px;
 }
 
 /* Card Top Gold Accent Bar */
@@ -244,7 +357,7 @@
   padding: 32px;
   border-radius: var(--radius-card);
   margin-bottom: 32px;
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 4px 16px rgba(179, 142, 79, 0.12);
 }
 
 /* 4. Sequence Step Badges & Trace Flow */
@@ -523,4 +636,209 @@ textarea.form-control {
   .footer-grid {
     grid-template-columns: 1fr;
   }
+}
+
+/* 9. Live Dashboard Showcase & Screen Mockups */
+.dashboard-preview-frame {
+  position: relative;
+  border-radius: 16px;
+  background: #081426;
+  border: 1.5px solid rgba(219, 180, 111, 0.4);
+  box-shadow: 0 20px 60px rgba(7, 21, 38, 0.35), 0 0 30px rgba(179, 142, 79, 0.15);
+  overflow: hidden;
+  transition: all var(--transition-normal);
+}
+
+.dashboard-preview-frame:hover {
+  border-color: rgba(219, 180, 111, 0.85);
+  box-shadow: 0 24px 70px rgba(7, 21, 38, 0.45), 0 0 45px rgba(219, 180, 111, 0.25);
+  transform: translateY(-4px);
+}
+
+.dashboard-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px;
+  background: rgba(11, 31, 58, 0.9);
+  border-bottom: 1px solid rgba(219, 180, 111, 0.25);
+}
+
+.dashboard-window-dots {
+  display: flex;
+  gap: 7px;
+}
+
+.dashboard-window-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #2A3B53;
+}
+
+.dashboard-window-dot:nth-child(1) { background: #FF5F56; }
+.dashboard-window-dot:nth-child(2) { background: #FFBD2E; }
+.dashboard-window-dot:nth-child(3) { background: #27C93F; }
+
+.dashboard-window-title {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--gold-light);
+  letter-spacing: 0.04em;
+}
+
+.dashboard-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+/* 10. Fraud Detection & Benford's Law Section */
+.fraud-showcase-container {
+  background: linear-gradient(180deg, #071526 0%, #0B1F3A 100%);
+  border: 1.5px solid rgba(219, 180, 111, 0.35);
+  border-radius: 20px;
+  padding: 48px 40px;
+  color: #FFFFFF;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4), 0 0 35px rgba(179, 142, 79, 0.12);
+  margin: 40px 0;
+}
+
+.fraud-header-stat {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 24px;
+  padding: 24px 28px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(219, 180, 111, 0.3);
+  border-radius: 12px;
+  margin-bottom: 32px;
+}
+
+.fraud-score-badge {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.fraud-score-num {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #F59E0B;
+  line-height: 1;
+  text-shadow: 0 0 20px rgba(245, 158, 11, 0.3);
+}
+
+.fraud-score-meta h4 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #F59E0B;
+  margin-bottom: 4px;
+  letter-spacing: 0.05em;
+}
+
+.fraud-score-meta p {
+  font-size: 0.875rem;
+  color: #94A3B8;
+  margin: 0;
+}
+
+.fraud-stat-pills {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+@media (max-width: 900px) {
+  .fraud-stat-pills {
+    grid-template-columns: repeat(2, 1fr);
+    width: 100%;
+  }
+}
+
+.fraud-stat-pill {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(219, 180, 111, 0.25);
+  border-radius: 8px;
+  padding: 12px 16px;
+  text-align: right;
+}
+
+.fraud-stat-pill-label {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: #94A3B8;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 4px;
+}
+
+.fraud-stat-pill-val {
+  font-family: monospace;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+
+/* Findings Flashcards */
+.finding-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.finding-card {
+  background: rgba(11, 31, 58, 0.6);
+  border: 1px solid rgba(219, 180, 111, 0.3);
+  border-radius: 10px;
+  padding: 20px 24px;
+  transition: all var(--transition-fast);
+}
+
+.finding-card:hover {
+  border-color: var(--gold-light);
+  background: rgba(11, 31, 58, 0.85);
+  transform: translateX(4px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+}
+
+.finding-card-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.finding-card-title {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: #FFFFFF;
+}
+
+.finding-card-desc {
+  font-size: 0.9375rem;
+  color: #CBD5E1;
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+.finding-action-box {
+  background: rgba(0, 0, 0, 0.25);
+  border-left: 3px solid var(--gold-primary);
+  padding: 10px 14px;
+  border-radius: 0 6px 6px 0;
+  font-size: 0.875rem;
+  color: #E2E8F0;
+}
+
+.finding-action-box strong {
+  color: var(--gold-light);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: block;
+  margin-bottom: 2px;
 }

@@ -8,10 +8,10 @@
     "dev": "node server.js"
   },
   "dependencies": {
-    "better-sqlite3": "^13.0.3",
     "dotenv": "^17.4.2",
     "express": "^4.19.2",
     "express-rate-limit": "^8.6.2",
-    "nodemailer": "^9.0.5"
+    "pg": "^8.23.0",
+    "resend": "^6.20.0"
   }
 }

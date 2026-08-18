@@ -1,101 +1,101 @@
-// Load environment variables from .env (no-op if file absent — env vars still work)
+// Load environment variables from .env (no-op if file absent: env vars still work)
 require('dotenv').config();
 
 const express    = require('express');
 const path       = require('path');
 const fs         = require('fs');
-const nodemailer = require('nodemailer');
-const Database   = require('better-sqlite3');
+const { Resend } = require('resend');
+const { Pool }   = require('pg');
 const { rateLimit } = require('express-rate-limit');
 
 const app  = express();
 const PORT = process.env.PORT || 3005;
 
-// ─────────────────────────────────────────────
-// SQLite setup
-// ─────────────────────────────────────────────
-const db = new Database(path.join(__dirname, 'submissions.db'));
-
-db.exec(`
-  CREATE TABLE IF NOT EXISTS submissions (
-    id              INTEGER PRIMARY KEY AUTOINCREMENT,
-    form_type       TEXT,
-    name            TEXT,
-    email           TEXT,
-    company         TEXT,
-    role            TEXT,
-    entities        TEXT,
-    jurisdictions   TEXT,
-    platform        TEXT,
-    current_system  TEXT,
-    message         TEXT,
-    created_at      TEXT DEFAULT (datetime('now')),
-    email_sent      INTEGER NOT NULL DEFAULT 0
-  );
-`);
-
-const insertSubmission = db.prepare(`
-  INSERT INTO submissions
-    (form_type, name, email, company, role, entities, jurisdictions, platform, current_system, message)
-  VALUES
-    (@form_type, @name, @email, @company, @role, @entities, @jurisdictions, @platform, @current_system, @message)
-`);
-
-const markEmailSent = db.prepare(`
-  UPDATE submissions SET email_sent = 1 WHERE id = ?
-`);
+// Trust reverse proxy (Railway / Cloudflare) for rate limiting & IP detection
+app.set('trust proxy', 1);
 
 // ─────────────────────────────────────────────
-// Nodemailer transporter (lazy — only used when request comes in)
+// Postgres setup (DATABASE_URL injected by Railway)
 // ─────────────────────────────────────────────
-function createTransporter() {
-  return nodemailer.createTransport({
-    host:   process.env.SMTP_HOST,
-    port:   parseInt(process.env.SMTP_PORT || '587', 10),
-    secure: parseInt(process.env.SMTP_PORT || '587', 10) === 465,
-    auth: {
-      user: process.env.SMTP_USER,
-      pass: process.env.SMTP_PASS,
-    },
-  });
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: process.env.DATABASE_URL && process.env.DATABASE_URL.includes('railway.internal')
+    ? false                          // private Railway network: no SSL needed
+    : { rejectUnauthorized: false }, // external/local connections
+});
+
+async function initDb() {
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS submissions (
+      id             SERIAL PRIMARY KEY,
+      form_type      TEXT,
+      name           TEXT,
+      email          TEXT,
+      company        TEXT,
+      role           TEXT,
+      entities       TEXT,
+      jurisdictions  TEXT,
+      platform       TEXT,
+      current_system TEXT,
+      message        TEXT,
+      created_at     TIMESTAMPTZ DEFAULT NOW(),
+      email_sent     BOOLEAN NOT NULL DEFAULT FALSE
+    );
+  `);
+  console.log('[DB] Submissions table ready');
 }
 
+// ─────────────────────────────────────────────
+// Resend Email Sender (HTTPS API on port 443)
+// ─────────────────────────────────────────────
 async function sendSubmissionEmail(fields) {
-  const transporter = createTransporter();
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    throw new Error('RESEND_API_KEY is not configured');
+  }
+
+  const resend = new Resend(apiKey);
+  const fromAddress = process.env.RESEND_FROM_EMAIL || 'SAVI Enquiries <onboarding@resend.dev>';
   const subject = fields.form_type === 'quote'
-    ? `[SAVI] New Quote Request — ${fields.company}`
-    : `[SAVI] New Demo Request — ${fields.company}`;
+    ? `[SAVI] New Quote Request: ${fields.company}`
+    : `[SAVI] New Demo Request: ${fields.company}`;
 
   const text = [
     `Form type:       ${fields.form_type || 'demo'}`,
     `Name:            ${fields.name}`,
     `Email:           ${fields.email}`,
     `Company:         ${fields.company}`,
-    `Role:            ${fields.role || '—'}`,
-    `Entities:        ${fields.entities || '—'}`,
-    `Jurisdictions:   ${fields.jurisdictions || '—'}`,
-    `Platform:        ${fields.platform || '—'}`,
-    `Current system:  ${fields.current_system || '—'}`,
-    `Message:         ${fields.message || '—'}`,
+    `Role:            ${fields.role || 'N/A'}`,
+    `Entities:        ${fields.entities || 'N/A'}`,
+    `Jurisdictions:   ${fields.jurisdictions || 'N/A'}`,
+    `Platform:        ${fields.platform || 'N/A'}`,
+    `Current system:  ${fields.current_system || 'N/A'}`,
+    `Message:         ${fields.message || 'N/A'}`,
   ].join('\n');
 
-  await transporter.sendMail({
-    from:    process.env.SMTP_FROM || process.env.SMTP_USER,
-    to:      'saakshi@vinayakafinancials.com',
+  const { data, error } = await resend.emails.send({
+    from: fromAddress,
+    to:   'saakshi@vinayakafinancials.com',
     subject,
     text,
   });
+
+  if (error) {
+    throw new Error(error.message || JSON.stringify(error));
+  }
+
+  return data;
 }
 
 // ─────────────────────────────────────────────
-// Rate limiter — 5 submissions per IP per 15 min
+// Rate limiter: 5 submissions per IP per 15 min
 // ─────────────────────────────────────────────
 const submitLimiter = rateLimit({
   windowMs:        15 * 60 * 1000,
   max:             5,
   standardHeaders: 'draft-7',
   legacyHeaders:   false,
-  message:         { success: false, error: 'Too many submissions from this IP — please try again later.' },
+  message:         { success: false, error: 'Too many submissions from this IP: please try again later.' },
 });
 
 // ─────────────────────────────────────────────
@@ -150,25 +150,32 @@ app.post('/api/submit-form', submitLimiter, async (req, res) => {
     message:        message       || '',
   };
 
-  // (b) Write to SQLite FIRST — this is the safety net
+  // (b) Write to Postgres FIRST: safety net
   let rowId;
   try {
-    const result = insertSubmission.run(fields);
-    rowId = result.lastInsertRowid;
-    console.log(`[FORM] Submission saved to DB — id=${rowId}, from=${email}`);
+    const result = await pool.query(
+      `INSERT INTO submissions
+         (form_type, name, email, company, role, entities, jurisdictions, platform, current_system, message)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)
+       RETURNING id`,
+      [fields.form_type, fields.name, fields.email, fields.company, fields.role,
+       fields.entities, fields.jurisdictions, fields.platform, fields.current_system, fields.message]
+    );
+    rowId = result.rows[0].id;
+    console.log(`[FORM] Submission saved to DB: id=${rowId}, from=${email}`);
   } catch (dbErr) {
-    console.error('[FORM] DB write failed:', dbErr);
+    console.error('[FORM] DB write failed:', dbErr.message);
     return res.status(500).json({ success: false, error: 'Failed to save your submission. Please try again.' });
   }
 
-  // (c) Attempt email — do NOT block the success response on this
+  // (c) Attempt email
   try {
     await sendSubmissionEmail(fields);
     // (d) Mark email_sent = true
-    markEmailSent.run(rowId);
+    await pool.query('UPDATE submissions SET email_sent = TRUE WHERE id = $1', [rowId]);
     console.log(`[FORM] Email sent for submission id=${rowId}`);
   } catch (emailErr) {
-    // (f) Log server-side, never expose SMTP details to client
+    // (f) Log server-side only: never expose SMTP details to client
     console.error(`[FORM] Email delivery failed for submission id=${rowId}:`, emailErr.message);
   }
 
@@ -177,15 +184,15 @@ app.post('/api/submit-form', submitLimiter, async (req, res) => {
     success:   true,
     recipient: 'saakshi@vinayakafinancials.com',
     message:   fields.form_type === 'quote'
-      ? "Thank you — we've received your details and will be in touch shortly to discuss what would work for your organisation."
-      : "Thank you — we've received your request and will be in touch shortly to arrange a time.",
+      ? "Thank you: we've received your details and will be in touch shortly to discuss what would work for your organisation."
+      : "Thank you: we've received your request and will be in touch shortly to arrange a time.",
   });
 });
 
 // ─────────────────────────────────────────────
 // GET /admin/submissions  (password-protected via ?key= or X-Admin-Key header)
 // ─────────────────────────────────────────────
-app.get('/admin/submissions', (req, res) => {
+app.get('/admin/submissions', async (req, res) => {
   const providedKey = req.query.key || req.headers['x-admin-key'];
   const secretKey   = process.env.ADMIN_SECRET;
 
@@ -196,8 +203,12 @@ app.get('/admin/submissions', (req, res) => {
     return res.status(401).json({ error: 'Unauthorized.' });
   }
 
-  const rows = db.prepare('SELECT * FROM submissions ORDER BY id DESC').all();
-  return res.json({ count: rows.length, submissions: rows });
+  try {
+    const result = await pool.query('SELECT * FROM submissions ORDER BY id DESC');
+    return res.json({ count: result.rows.length, submissions: result.rows });
+  } catch (err) {
+    return res.status(500).json({ error: 'Database query failed.' });
+  }
 });
 
 // ─────────────────────────────────────────────
@@ -211,23 +222,23 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Clean URL router (Section 3 Sitemap)
 // ─────────────────────────────────────────────
 const routes = {
-  '/':                         'index.html',
-  '/product':                  'product/index.html',
+  '/':                              'index.html',
+  '/product':                       'product/index.html',
   '/product/intelligence-platform': 'product/intelligence-platform/index.html',
-  '/product/full-platform':    'product/full-platform/index.html',
-  '/product/capabilities':     'product/capabilities/index.html',
-  '/how-it-works':             'how-it-works/index.html',
-  '/who-its-for':              'who-its-for/index.html',
-  '/trust':                    'trust/index.html',
-  '/resources':                'resources/index.html',
-  '/pricing':                  'pricing/index.html',
-  '/about':                    'about/index.html',
-  '/about/company':            'about/company/index.html',
-  '/contact':                  'contact/index.html',
-  '/demo':                     'demo/index.html',
-  '/legal/privacy':            'legal/privacy/index.html',
-  '/legal/terms':              'legal/terms/index.html',
-  '/legal/cookies':            'legal/cookies/index.html',
+  '/product/full-platform':         'product/full-platform/index.html',
+  '/product/capabilities':          'product/capabilities/index.html',
+  '/how-it-works':                  'how-it-works/index.html',
+  '/who-its-for':                   'who-its-for/index.html',
+  '/trust':                         'trust/index.html',
+  '/resources':                     'resources/index.html',
+  '/pricing':                       'pricing/index.html',
+  '/about':                         'about/index.html',
+  '/about/company':                 'about/company/index.html',
+  '/contact':                       'contact/index.html',
+  '/demo':                          'demo/index.html',
+  '/legal/privacy':                 'legal/privacy/index.html',
+  '/legal/terms':                   'legal/terms/index.html',
+  '/legal/cookies':                 'legal/cookies/index.html',
 };
 
 Object.entries(routes).forEach(([route, file]) => {
@@ -257,8 +268,13 @@ app.use((req, res, next) => {
 });
 
 // ─────────────────────────────────────────────
-// Start
+// Start (async so we can await DB init)
 // ─────────────────────────────────────────────
-app.listen(PORT, () => {
-  console.log(`SAVI Corporate Website running at http://localhost:${PORT}`);
+initDb().then(() => {
+  app.listen(PORT, () => {
+    console.log(`SAVI Corporate Website running at http://localhost:${PORT}`);
+  });
+}).catch(err => {
+  console.error('Failed to initialise database:', err.message);
+  process.exit(1);
 });
