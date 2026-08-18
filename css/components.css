@@ -7,14 +7,15 @@
   position: sticky;
   top: 0;
   z-index: 1000;
-  background-color: rgba(255, 255, 255, 0.96);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--border-color);
+  background-color: var(--header-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--header-border);
   transition: all var(--transition-normal);
 }
 
 .site-header.scrolled {
-  box-shadow: 0 4px 24px rgba(11, 31, 58, 0.08);
+  box-shadow: var(--shadow-md);
 }
 
 .header-inner {
@@ -35,27 +36,30 @@
   height: 42px;
   width: auto;
   object-fit: contain;
-  filter: drop-shadow(0 2px 8px rgba(179, 142, 79, 0.3));
+  filter: drop-shadow(0 2px 10px rgba(14, 165, 233, 0.35));
   transition: transform var(--transition-fast);
 }
 
 .brand-logo:hover .brand-logo-img {
-  transform: scale(1.06);
+  transform: scale(1.08) rotate(3deg);
 }
 
 .brand-logo-text {
-  font-family: var(--font-family);
+  font-family: var(--font-serif);
   font-weight: 800;
   font-size: 1.5rem;
-  letter-spacing: 0.06em;
-  color: var(--navy-primary);
+  letter-spacing: 0.08em;
+  color: var(--text-heading);
   display: inline-block;
+  background: linear-gradient(135deg, #FFFFFF 30%, var(--gold-light) 70%, var(--cyan-accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .main-nav {
   display: flex;
   align-items: center;
-  gap: 2.25rem;
+  gap: 2rem;
   list-style: none;
 }
 
@@ -64,17 +68,19 @@
 }
 
 .nav-link {
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 500;
-  color: var(--navy-primary);
+  color: var(--text-body);
   padding: 8px 0;
   display: flex;
   align-items: center;
   gap: 4px;
+  transition: color var(--transition-fast);
 }
 
 .nav-link:hover, .nav-link.active {
-  color: var(--gold-primary);
+  color: var(--cyan-accent);
+  text-shadow: 0 0 12px var(--cyan-glow);
 }
 
 .dropdown-menu {
@@ -82,10 +88,10 @@
   top: 100%;
   left: 0;
   min-width: 240px;
-  background-color: #FFFFFF;
+  background-color: var(--navy-card);
   border: 1px solid var(--border-color);
   box-shadow: var(--shadow-lg);
-  border-radius: 8px;
+  border-radius: 12px;
   padding: 10px 0;
   list-style: none;
   opacity: 0;
@@ -93,6 +99,7 @@
   transform: translateY(12px);
   transition: all var(--transition-fast);
   z-index: 1010;
+  backdrop-filter: blur(20px);
 }
 
 .nav-item:hover .dropdown-menu,
@@ -107,12 +114,57 @@
   padding: 12px 24px;
   font-size: 0.9375rem;
   font-weight: 500;
-  color: var(--navy-primary);
+  color: var(--text-body);
+  transition: all var(--transition-fast);
 }
 
 .dropdown-link:hover {
-  background-color: var(--bg-section-alt);
-  color: var(--gold-primary);
+  background-color: rgba(14, 165, 233, 0.12);
+  color: var(--cyan-accent);
+  padding-left: 28px;
+}
+
+/* Header Action Group (Theme Switcher + CTA) */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* Theme Switcher Button */
+.theme-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-color);
+  color: var(--text-body);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  backdrop-filter: blur(8px);
+}
+
+.theme-toggle-btn:hover {
+  background: rgba(14, 165, 233, 0.15);
+  border-color: var(--cyan-accent);
+  color: var(--text-heading);
+  transform: translateY(-1px);
+  box-shadow: 0 0 15px var(--cyan-glow);
+}
+
+.theme-icon {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.theme-label-text {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 
 .mobile-nav-toggle {
@@ -841,4 +893,203 @@ textarea.form-control {
   letter-spacing: 0.05em;
   display: block;
   margin-bottom: 2px;
+}
+
+/* ==========================================================================
+   7. Water Wave Dynamic Canvas & Ambient Backgrounds
+   ========================================================================== */
+.savi-wave-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.85;
+}
+
+.hero-section {
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 20%, rgba(14, 165, 233, 0.12) 0%, rgba(6, 11, 25, 0.95) 75%);
+}
+
+.hero-grid {
+  position: relative;
+  z-index: 2;
+}
+
+/* ==========================================================================
+   8. 3D Floating Financial & Modern Art Tokens (₹, $, €, £, Gold Bullion)
+   ========================================================================== */
+.float-3d-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 3;
+  perspective: 1200px;
+  transform-style: preserve-3d;
+}
+
+.float-3d-token {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 18px;
+  background: rgba(14, 29, 56, 0.75);
+  border: 1px solid rgba(14, 165, 233, 0.35);
+  border-radius: 30px;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5), 0 0 24px rgba(14, 165, 233, 0.25);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  pointer-events: auto;
+  cursor: grab;
+  transition: transform 0.15s cubic-bezier(0.2, 0, 0.2, 1), box-shadow 0.3s ease;
+  user-select: none;
+  animation: floatOrb 6s ease-in-out infinite alternate;
+}
+
+.float-3d-token:hover {
+  transform: scale(1.12) translateZ(30px) !important;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.6), 0 0 32px rgba(212, 175, 55, 0.45);
+  border-color: var(--gold-light);
+}
+
+.token-symbol {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+
+.token-gold-coin {
+  background: linear-gradient(135deg, #FDF6B2 0%, #D4AF37 50%, #997A15 100%);
+  color: #050B17;
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
+}
+
+.token-cyan-prism {
+  background: linear-gradient(135deg, #E0F2FE 0%, #0EA5E9 50%, #0369A1 100%);
+  color: #FFFFFF;
+  box-shadow: 0 0 15px rgba(14, 165, 233, 0.6);
+}
+
+.token-silver-bar {
+  background: linear-gradient(135deg, #FFFFFF 0%, #94A3B8 50%, #475569 100%);
+  color: #050B17;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+}
+
+.token-meta {
+  display: flex;
+  flex-direction: column;
+}
+
+.token-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--cyan-accent);
+  font-weight: 700;
+}
+
+.token-value {
+  font-family: monospace;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+
+/* Individual Token Placements */
+.token-pos-1 {
+  top: 12%;
+  left: -20px;
+  animation-delay: 0s;
+}
+
+.token-pos-2 {
+  bottom: 18%;
+  left: 5%;
+  animation-delay: -2s;
+}
+
+.token-pos-3 {
+  top: 15%;
+  right: -15px;
+  animation-delay: -3.5s;
+}
+
+.token-pos-4 {
+  bottom: 12%;
+  right: 8%;
+  animation-delay: -1.5s;
+}
+
+/* ==========================================================================
+   9. Luminous Modern Art Accents & Cyber-Grid Styling
+   ========================================================================== */
+.luminous-card {
+  background: rgba(14, 29, 56, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: var(--radius-card);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+  transition: all var(--transition-normal);
+}
+
+.luminous-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at 50% 50%, rgba(14, 165, 233, 0.12), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.luminous-card:hover {
+  border-color: var(--cyan-accent);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.6), 0 0 30px var(--cyan-glow);
+  transform: translateY(-4px);
+}
+
+.luminous-card:hover::before {
+  opacity: 1;
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--cyan-accent);
+  box-shadow: 0 0 10px var(--cyan-accent);
+  animation: pulseCyan 2s infinite;
+  display: inline-block;
+}
+
+@keyframes pulseCyan {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(14, 165, 233, 0.7); }
+  70% { transform: scale(1.1); box-shadow: 0 0 0 8px rgba(14, 165, 233, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(14, 165, 233, 0); }
+}
+
+@keyframes floatOrb {
+  0% { transform: translateY(0) rotate(0deg); }
+  100% { transform: translateY(-16px) rotate(4deg); }
 }
