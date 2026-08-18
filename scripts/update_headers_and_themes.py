@@ -6,15 +6,12 @@ HEADER_ACTIONS_HTML = '''      <div class="header-actions">
           <span class="theme-icon">🌌</span>
           <span class="theme-label-text">Midnight</span>
         </button>
-        <a href="/demo" class="btn btn-primary">Book a Demo</a>
+        <a href="https://razorpay.me/@saakshisharma4719" target="_blank" rel="noopener" class="btn btn-outline-gold" style="padding: 9px 18px; font-size: 0.875rem;">Pay Online</a>
+        <a href="/demo" class="btn btn-primary" style="padding: 9px 20px; font-size: 0.875rem;">Book a Demo</a>
       </div>'''
 
-SCRIPTS_HTML = '''  <script src="/js/main.js"></script>
-  <script src="/js/theme.js"></script>
-  <script src="/js/wave-bg.js"></script>
-  <script src="/js/floating-3d.js"></script>'''
-
 html_files = [
+    "index.html",
     "about/index.html",
     "about/company/index.html",
     "contact/index.html",
@@ -35,33 +32,29 @@ html_files = [
 
 for file_path in html_files:
     if not os.path.exists(file_path):
-        print(f"Skipping missing: {file_path}")
         continue
         
     with open(file_path, "r", encoding="utf-8") as f:
         content = f.read()
 
-    # 1. Add Home button to main-nav if not already present
-    if '<li class="nav-item"><a href="/" class="nav-link' not in content:
-        content = re.sub(
-            r'(<ul class="main-nav">)',
-            r'\1\n          <li class="nav-item"><a href="/" class="nav-link">Home</a></li>',
-            content
-        )
-
-    # 2. Add header-actions (theme button + demo CTA)
-    # Replace plain <div><a href="/demo" class="btn btn-primary">Book a Demo</a></div>
+    # 1. Update header-actions (Theme toggle + Pay Online + Book a Demo)
+    content = re.sub(
+        r'<div class="header-actions">[\s\S]*?<\/div>\s*<\/div>\s*<\/header>',
+        HEADER_ACTIONS_HTML + '\n    </div>\n  </header>',
+        content
+    )
+    # Also handle if plain div was there
     content = re.sub(
         r'<div>\s*<a href="/demo" class="btn btn-primary">Book a Demo</a>\s*</div>',
         HEADER_ACTIONS_HTML,
         content
     )
 
-    # 3. Ensure theme.js, wave-bg.js, floating-3d.js are loaded
-    if '/js/theme.js' not in content:
+    # 2. Add Razorpay payment link to footer if not already present
+    if 'https://razorpay.me/@saakshisharma4719' not in content:
         content = re.sub(
-            r'<script src="/js/main\.js"></script>',
-            SCRIPTS_HTML,
+            r'(<li><a href="/pricing">Request a Quote</a></li>)',
+            r'\1\n            <li><a href="https://razorpay.me/@saakshisharma4719" target="_blank" rel="noopener">Pay Online (Razorpay)</a></li>',
             content
         )
 
@@ -70,4 +63,4 @@ for file_path in html_files:
         
     print(f"Updated {file_path}")
 
-print("All files processed.")
+print("All files updated successfully.")

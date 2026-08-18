@@ -265,16 +265,47 @@
   box-shadow: var(--shadow-gold);
 }
 
+.btn-outline-gold {
+  background: transparent;
+  color: var(--gold-primary);
+  border: 1.5px solid var(--gold-primary);
+  border-radius: var(--radius-btn);
+  font-weight: 600;
+  transition: all var(--transition-fast);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-outline-gold:hover {
+  background: var(--gold-primary);
+  color: #050B17;
+  box-shadow: 0 0 20px var(--gold-glow);
+  transform: translateY(-2px);
+}
+
 /* 3. Modern Card & Flashcard UI (Gold Border Luxury Fintech Style) */
 .card {
   background-color: var(--bg-card);
-  border: 1.5px solid rgba(219, 180, 111, 0.45);
+  border: 1px solid var(--border-card);
   border-radius: var(--radius-card);
   padding: 36px;
-  box-shadow: 0 4px 20px rgba(11, 31, 58, 0.05), 0 0 15px rgba(179, 142, 79, 0.06);
+  box-shadow: var(--shadow-md);
   transition: all var(--transition-normal);
   position: relative;
   overflow: hidden;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  color: var(--text-body);
+}
+
+.card p, .card .caption {
+  color: var(--text-secondary);
+}
+
+.card .card-title, .card h2, .card h3, .card h4 {
+  color: var(--text-heading);
 }
 
 .card::before {
@@ -290,9 +321,9 @@
 }
 
 .card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 16px 36px rgba(11, 31, 58, 0.12), 0 0 28px rgba(219, 180, 111, 0.25);
-  border-color: rgba(219, 180, 111, 0.9);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg), 0 0 24px var(--gold-glow);
+  border-color: var(--gold-primary);
 }
 
 .card:hover::before {
@@ -301,16 +332,26 @@
 
 /* Flashcard Specific Component */
 .flashcard {
-  background: #FFFFFF;
-  border: 1.5px solid rgba(219, 180, 111, 0.55);
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
   border-radius: 14px;
   padding: 28px;
-  box-shadow: 0 8px 24px rgba(11, 31, 58, 0.06), 0 0 18px rgba(179, 142, 79, 0.1);
+  box-shadow: var(--shadow-sm);
   transition: all var(--transition-normal);
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  backdrop-filter: blur(16px);
+  color: var(--text-body);
+}
+
+.flashcard .flashcard-title {
+  color: var(--text-heading);
+}
+
+.flashcard .flashcard-body {
+  color: var(--text-secondary);
 }
 
 .flashcard:hover {
@@ -940,54 +981,54 @@ textarea.form-control {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 10px 18px;
-  background: rgba(14, 29, 56, 0.75);
-  border: 1px solid rgba(14, 165, 233, 0.35);
+  padding: 8px 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
   border-radius: 30px;
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5), 0 0 24px rgba(14, 165, 233, 0.25);
+  box-shadow: var(--shadow-md);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   pointer-events: auto;
   cursor: grab;
   transition: transform 0.15s cubic-bezier(0.2, 0, 0.2, 1), box-shadow 0.3s ease;
   user-select: none;
-  animation: floatOrb 6s ease-in-out infinite alternate;
+  animation: floatOrb 7s ease-in-out infinite alternate;
 }
 
 .float-3d-token:hover {
-  transform: scale(1.12) translateZ(30px) !important;
-  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.6), 0 0 32px rgba(212, 175, 55, 0.45);
-  border-color: var(--gold-light);
+  transform: scale(1.08) translateZ(20px) !important;
+  box-shadow: var(--shadow-lg), 0 0 25px var(--gold-glow);
+  border-color: var(--gold-primary);
 }
 
 .token-symbol {
-  width: 34px;
-  height: 34px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: var(--font-serif);
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   font-weight: 800;
 }
 
 .token-gold-coin {
-  background: linear-gradient(135deg, #FDF6B2 0%, #D4AF37 50%, #997A15 100%);
+  background: linear-gradient(135deg, #FDF3D6 0%, var(--gold-primary) 60%, var(--gold-dark) 100%);
   color: #050B17;
-  box-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
+  box-shadow: 0 0 12px var(--gold-glow);
 }
 
 .token-cyan-prism {
-  background: linear-gradient(135deg, #E0F2FE 0%, #0EA5E9 50%, #0369A1 100%);
+  background: linear-gradient(135deg, #E0F2FE 0%, var(--cyan-accent) 60%, #0369A1 100%);
   color: #FFFFFF;
-  box-shadow: 0 0 15px rgba(14, 165, 233, 0.6);
+  box-shadow: 0 0 12px var(--cyan-glow);
 }
 
 .token-silver-bar {
-  background: linear-gradient(135deg, #FFFFFF 0%, #94A3B8 50%, #475569 100%);
+  background: linear-gradient(135deg, #FFFFFF 0%, #CBD5E1 60%, #64748B 100%);
   color: #050B17;
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
 }
 
 .token-meta {
@@ -996,43 +1037,49 @@ textarea.form-control {
 }
 
 .token-label {
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--cyan-accent);
+  color: var(--gold-primary);
   font-weight: 700;
 }
 
 .token-value {
-  font-family: monospace;
-  font-size: 0.95rem;
+  font-family: var(--font-family);
+  font-size: 0.9rem;
   font-weight: 700;
-  color: #FFFFFF;
+  color: var(--text-heading);
 }
 
-/* Individual Token Placements */
+/* Precise Perimeter Placements (Never overlapping content) */
 .token-pos-1 {
-  top: 12%;
-  left: -20px;
+  top: 6%;
+  left: 2%;
   animation-delay: 0s;
 }
 
 .token-pos-2 {
-  bottom: 18%;
-  left: 5%;
-  animation-delay: -2s;
+  bottom: 8%;
+  left: 3%;
+  animation-delay: -2.5s;
 }
 
 .token-pos-3 {
-  top: 15%;
-  right: -15px;
-  animation-delay: -3.5s;
+  top: 8%;
+  right: 2%;
+  animation-delay: -4s;
 }
 
 .token-pos-4 {
-  bottom: 12%;
-  right: 8%;
+  bottom: 10%;
+  right: 3%;
   animation-delay: -1.5s;
+}
+
+@media (max-width: 1100px) {
+  .float-3d-wrapper {
+    display: none !important;
+  }
 }
 
 /* ==========================================================================

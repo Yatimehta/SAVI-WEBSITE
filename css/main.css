@@ -7,59 +7,59 @@
 
 /* 1. CSS Custom Properties / Multi-Theme Tokens */
 :root, [data-theme="midnight"] {
-  /* Brand Theme: Midnight Luxury (Deep Indigo, Sapphire, Auroral Cyan & Warm Gold) */
+  /* Brand Theme: Midnight Luxury (Deep Oceanic Navy, Platinum Highlights, Calming Gold) */
   --theme-name: "midnight";
   --navy-primary: #0B1F3A;
   --navy-deep: #050B17;
   --navy-surface: #0A1428;
-  --navy-card: #0E1D38;
-  --gold-primary: #D4AF37;
-  --gold-light: #F3E5AB;
-  --gold-dark: #997A15;
-  --gold-glow: rgba(212, 175, 55, 0.28);
-  --cyan-accent: #0EA5E9;
-  --cyan-glow: rgba(14, 165, 233, 0.35);
-  --white-glow: rgba(255, 255, 255, 0.12);
+  --navy-card: rgba(13, 27, 54, 0.85);
+  --gold-primary: #E5C378;
+  --gold-light: #FDF3D6;
+  --gold-dark: #C29B38;
+  --gold-glow: rgba(229, 195, 120, 0.2);
+  --cyan-accent: #38BDF8;
+  --cyan-glow: rgba(56, 189, 248, 0.25);
+  --white-glow: rgba(255, 255, 255, 0.08);
 
-  /* Neutrals */
-  --bg-page: #060B19;
-  --bg-section-alt: #081022;
-  --bg-card: rgba(14, 29, 56, 0.75);
-  --bg-card-hover: rgba(20, 40, 75, 0.9);
-  --text-body: #E2E8F0;
+  /* High-Contrast Eye-Soothing Neutrals */
+  --bg-page: #050B17;
+  --bg-section-alt: #081226;
+  --bg-card: rgba(14, 28, 56, 0.82);
+  --bg-card-hover: rgba(20, 42, 82, 0.95);
+  --text-body: #F1F5F9;
   --text-heading: #FFFFFF;
-  --text-secondary: #94A3B8;
-  --text-muted: #64748B;
-  --border-color: rgba(14, 165, 233, 0.18);
-  --border-card: rgba(255, 255, 255, 0.12);
-  --border-dark: #1E293B;
+  --text-secondary: #CBD5E1;
+  --text-muted: #94A3B8;
+  --border-color: rgba(255, 255, 255, 0.14);
+  --border-card: rgba(229, 195, 120, 0.28);
+  --border-dark: rgba(255, 255, 255, 0.1);
 
   /* Header & Navigation */
-  --header-bg: rgba(6, 11, 25, 0.85);
-  --header-border: rgba(14, 165, 233, 0.15);
+  --header-bg: rgba(5, 11, 23, 0.92);
+  --header-border: rgba(255, 255, 255, 0.12);
 
   /* Typography */
   --font-family: 'Outfit', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-serif: 'Cinzel', 'Playfair Display', Georgia, serif;
   --font-editorial: 'Playfair Display', 'Cinzel', Georgia, serif;
-  --line-height-body: 1.7;
-  --line-height-heading: 1.15;
+  --line-height-body: 1.75;
+  --line-height-heading: 1.18;
 
   /* Spacing */
-  --section-padding-desktop: 120px;
-  --section-padding-tablet: 80px;
-  --section-padding-mobile: 60px;
+  --section-padding-desktop: 110px;
+  --section-padding-tablet: 75px;
+  --section-padding-mobile: 55px;
 
   /* Layout Containers */
   --container-max-width: 1280px;
   --container-padding: 32px;
 
   /* Shadows & Glassmorphism */
-  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.35);
-  --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.45);
-  --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.6);
-  --shadow-gold: 0 8px 32px rgba(212, 175, 55, 0.25);
-  --shadow-cyan: 0 8px 32px rgba(14, 165, 233, 0.3);
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 8px 28px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 16px 44px rgba(0, 0, 0, 0.5);
+  --shadow-gold: 0 8px 30px rgba(229, 195, 120, 0.2);
+  --shadow-cyan: 0 8px 30px rgba(56, 189, 248, 0.2);
   --radius-card: 16px;
   --radius-btn: 10px;
 
@@ -69,37 +69,37 @@
 }
 
 [data-theme="dark"] {
-  /* Brand Theme: Obsidian Cyber Dark */
+  /* Brand Theme: Obsidian Velvet Dark */
   --theme-name: "dark";
-  --navy-primary: #0D1117;
-  --navy-deep: #010409;
-  --navy-surface: #0D1117;
-  --navy-card: #161B22;
-  --gold-primary: #E5A93B;
-  --gold-light: #FCD34D;
-  --gold-dark: #B45309;
-  --gold-glow: rgba(229, 169, 59, 0.25);
+  --navy-primary: #0F172A;
+  --navy-deep: #020617;
+  --navy-surface: #0F172A;
+  --navy-card: rgba(30, 41, 59, 0.85);
+  --gold-primary: #FBBF24;
+  --gold-light: #FEF08A;
+  --gold-dark: #D97706;
+  --gold-glow: rgba(251, 191, 36, 0.2);
   --cyan-accent: #38BDF8;
-  --cyan-glow: rgba(56, 189, 248, 0.35);
-  --white-glow: rgba(255, 255, 255, 0.15);
+  --cyan-glow: rgba(56, 189, 248, 0.25);
+  --white-glow: rgba(255, 255, 255, 0.08);
 
-  --bg-page: #030712;
-  --bg-section-alt: #0B0F19;
-  --bg-card: rgba(22, 27, 34, 0.85);
-  --bg-card-hover: rgba(30, 41, 59, 0.95);
-  --text-body: #F1F5F9;
+  --bg-page: #020617;
+  --bg-section-alt: #0B1120;
+  --bg-card: rgba(24, 34, 53, 0.85);
+  --bg-card-hover: rgba(36, 50, 78, 0.95);
+  --text-body: #F8FAFC;
   --text-heading: #FFFFFF;
-  --text-secondary: #94A3B8;
-  --text-muted: #64748B;
-  --border-color: rgba(56, 189, 248, 0.2);
-  --border-card: rgba(255, 255, 255, 0.1);
-  --border-dark: #1F2937;
+  --text-secondary: #CBD5E1;
+  --text-muted: #94A3B8;
+  --border-color: rgba(255, 255, 255, 0.15);
+  --border-card: rgba(251, 191, 36, 0.25);
+  --border-dark: rgba(255, 255, 255, 0.1);
 
-  --header-bg: rgba(3, 7, 18, 0.88);
-  --header-border: rgba(56, 189, 248, 0.18);
-  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.5);
-  --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.65);
-  --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.8);
+  --header-bg: rgba(2, 6, 23, 0.92);
+  --header-border: rgba(255, 255, 255, 0.12);
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.65);
 }
 
 [data-theme="light"] {
@@ -117,10 +117,10 @@
   --cyan-glow: rgba(2, 132, 199, 0.2);
   --white-glow: rgba(255, 255, 255, 0.8);
 
-  --bg-page: #FFFFFF;
-  --bg-section-alt: #F8FAFC;
+  --bg-page: #F8FAFC;
+  --bg-section-alt: #F1F5F9;
   --bg-card: #FFFFFF;
-  --bg-card-hover: #F1F5F9;
+  --bg-card-hover: #F8FAFC;
   --text-body: #1E293B;
   --text-heading: #0B1F3A;
   --text-secondary: #475569;
@@ -129,7 +129,7 @@
   --border-card: #CBD5E1;
   --border-dark: #1E3454;
 
-  --header-bg: rgba(255, 255, 255, 0.92);
+  --header-bg: rgba(255, 255, 255, 0.94);
   --header-border: rgba(11, 31, 58, 0.08);
   --shadow-sm: 0 2px 8px rgba(11, 31, 58, 0.06);
   --shadow-md: 0 8px 24px rgba(11, 31, 58, 0.08);
