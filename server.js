@@ -267,14 +267,10 @@ app.use((req, res, next) => {
   next();
 });
 
-// ─────────────────────────────────────────────
-// Start (async so we can await DB init)
-// ─────────────────────────────────────────────
-initDb().then(() => {
+initDb().catch(err => {
+  console.warn('[DB Warning] PostgreSQL connection failed (e.g. local environment without Railway internal network):', err.message);
+}).finally(() => {
   app.listen(PORT, () => {
     console.log(`SAVI Corporate Website running at http://localhost:${PORT}`);
   });
-}).catch(err => {
-  console.error('Failed to initialise database:', err.message);
-  process.exit(1);
 });
