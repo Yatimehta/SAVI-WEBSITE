@@ -232,6 +232,7 @@ const routes = {
   '/trust':                         'trust/index.html',
   '/resources':                     'resources/index.html',
   '/pricing':                       'pricing/index.html',
+  '/download':                      'download/index.html',
   '/about':                         'about/index.html',
   '/about/company':                 'about/company/index.html',
   '/contact':                       'contact/index.html',

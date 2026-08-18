@@ -27,7 +27,8 @@ html_files = [
     "who-its-for/index.html",
     "legal/privacy/index.html",
     "legal/terms/index.html",
-    "legal/cookies/index.html"
+    "legal/cookies/index.html",
+    "download/index.html"
 ]
 
 for file_path in html_files:
@@ -37,30 +38,24 @@ for file_path in html_files:
     with open(file_path, "r", encoding="utf-8") as f:
         content = f.read()
 
-    # 1. Update header-actions (Theme toggle + Pay Online + Book a Demo)
+    # 1. Add Download link to main-nav if not present
+    if '<a href="/download"' not in content:
+        content = re.sub(
+            r'(<li class="nav-item"><a href="/pricing" class="nav-link.*?">Pricing</a></li>)',
+            r'\1\n          <li class="nav-item"><a href="/download" class="nav-link">Download</a></li>',
+            content
+        )
+
+    # 2. Update header-actions
     content = re.sub(
         r'<div class="header-actions">[\s\S]*?<\/div>\s*<\/div>\s*<\/header>',
         HEADER_ACTIONS_HTML + '\n    </div>\n  </header>',
         content
     )
-    # Also handle if plain div was there
-    content = re.sub(
-        r'<div>\s*<a href="/demo" class="btn btn-primary">Book a Demo</a>\s*</div>',
-        HEADER_ACTIONS_HTML,
-        content
-    )
-
-    # 2. Add Razorpay payment link to footer if not already present
-    if 'https://razorpay.me/@saakshisharma4719' not in content:
-        content = re.sub(
-            r'(<li><a href="/pricing">Request a Quote</a></li>)',
-            r'\1\n            <li><a href="https://razorpay.me/@saakshisharma4719" target="_blank" rel="noopener">Pay Online (Razorpay)</a></li>',
-            content
-        )
 
     with open(file_path, "w", encoding="utf-8") as f:
         f.write(content)
         
     print(f"Updated {file_path}")
 
-print("All files updated successfully.")
+print("All navigation & themes synced.")

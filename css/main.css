@@ -5,14 +5,14 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Inter:wght@400;500;600;700&display=swap');
 
-/* 1. CSS Custom Properties / Multi-Theme Tokens */
+/* 1. CSS Custom Properties / Multi-Theme Tokens (Midnight & Pure Light) */
 :root, [data-theme="midnight"] {
-  /* Brand Theme: Midnight Luxury (Deep Oceanic Navy, Platinum Highlights, Calming Gold) */
+  /* Brand Theme: Midnight Luxury (Calm Deep Navy, Warm Platinum & Amber Gold) */
   --theme-name: "midnight";
   --navy-primary: #0B1F3A;
-  --navy-deep: #050B17;
-  --navy-surface: #0A1428;
-  --navy-card: rgba(13, 27, 54, 0.85);
+  --navy-deep: #081324;
+  --navy-surface: #0E1D36;
+  --navy-card: rgba(16, 33, 62, 0.9);
   --gold-primary: #E5C378;
   --gold-light: #FDF3D6;
   --gold-dark: #C29B38;
@@ -22,10 +22,10 @@
   --white-glow: rgba(255, 255, 255, 0.08);
 
   /* High-Contrast Eye-Soothing Neutrals */
-  --bg-page: #050B17;
-  --bg-section-alt: #081226;
-  --bg-card: rgba(14, 28, 56, 0.82);
-  --bg-card-hover: rgba(20, 42, 82, 0.95);
+  --bg-page: #0A162B;
+  --bg-section-alt: #0D1E3A;
+  --bg-card: rgba(16, 33, 62, 0.88);
+  --bg-card-hover: rgba(22, 45, 84, 0.95);
   --text-body: #F1F5F9;
   --text-heading: #FFFFFF;
   --text-secondary: #CBD5E1;
@@ -35,7 +35,7 @@
   --border-dark: rgba(255, 255, 255, 0.1);
 
   /* Header & Navigation */
-  --header-bg: rgba(5, 11, 23, 0.92);
+  --header-bg: rgba(10, 22, 43, 0.94);
   --header-border: rgba(255, 255, 255, 0.12);
 
   /* Typography */
@@ -55,9 +55,9 @@
   --container-padding: 32px;
 
   /* Shadows & Glassmorphism */
-  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.25);
-  --shadow-md: 0 8px 28px rgba(0, 0, 0, 0.35);
-  --shadow-lg: 0 16px 44px rgba(0, 0, 0, 0.5);
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 8px 28px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 16px 44px rgba(0, 0, 0, 0.45);
   --shadow-gold: 0 8px 30px rgba(229, 195, 120, 0.2);
   --shadow-cyan: 0 8px 30px rgba(56, 189, 248, 0.2);
   --radius-card: 16px;
@@ -68,42 +68,8 @@
   --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-[data-theme="dark"] {
-  /* Brand Theme: Obsidian Velvet Dark */
-  --theme-name: "dark";
-  --navy-primary: #0F172A;
-  --navy-deep: #020617;
-  --navy-surface: #0F172A;
-  --navy-card: rgba(30, 41, 59, 0.85);
-  --gold-primary: #FBBF24;
-  --gold-light: #FEF08A;
-  --gold-dark: #D97706;
-  --gold-glow: rgba(251, 191, 36, 0.2);
-  --cyan-accent: #38BDF8;
-  --cyan-glow: rgba(56, 189, 248, 0.25);
-  --white-glow: rgba(255, 255, 255, 0.08);
-
-  --bg-page: #020617;
-  --bg-section-alt: #0B1120;
-  --bg-card: rgba(24, 34, 53, 0.85);
-  --bg-card-hover: rgba(36, 50, 78, 0.95);
-  --text-body: #F8FAFC;
-  --text-heading: #FFFFFF;
-  --text-secondary: #CBD5E1;
-  --text-muted: #94A3B8;
-  --border-color: rgba(255, 255, 255, 0.15);
-  --border-card: rgba(251, 191, 36, 0.25);
-  --border-dark: rgba(255, 255, 255, 0.1);
-
-  --header-bg: rgba(2, 6, 23, 0.92);
-  --header-border: rgba(255, 255, 255, 0.12);
-  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.35);
-  --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.5);
-  --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.65);
-}
-
 [data-theme="light"] {
-  /* Brand Theme: Pearl Executive Light */
+  /* Brand Theme: Pearl Executive Light (Pure Bright White Background) */
   --theme-name: "light";
   --navy-primary: #0B1F3A;
   --navy-deep: #071526;
@@ -117,10 +83,10 @@
   --cyan-glow: rgba(2, 132, 199, 0.2);
   --white-glow: rgba(255, 255, 255, 0.8);
 
-  --bg-page: #F8FAFC;
-  --bg-section-alt: #F1F5F9;
+  --bg-page: #FFFFFF;
+  --bg-section-alt: #F8FAFC;
   --bg-card: #FFFFFF;
-  --bg-card-hover: #F8FAFC;
+  --bg-card-hover: #F1F5F9;
   --text-body: #1E293B;
   --text-heading: #0B1F3A;
   --text-secondary: #475569;
@@ -129,7 +95,7 @@
   --border-card: #CBD5E1;
   --border-dark: #1E3454;
 
-  --header-bg: rgba(255, 255, 255, 0.94);
+  --header-bg: rgba(255, 255, 255, 0.95);
   --header-border: rgba(11, 31, 58, 0.08);
   --shadow-sm: 0 2px 8px rgba(11, 31, 58, 0.06);
   --shadow-md: 0 8px 24px rgba(11, 31, 58, 0.08);

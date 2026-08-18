@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Download SAVI & Enterprise Licensing | Vinayaka Financials</title>
+  <meta name="description" content="Official enterprise download, dynamic quotation, and organization-bound license provisioning portal for SAVI by Vinayaka Financials.">
+  <link rel="canonical" href="https://vinayakafinancials.com/download">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Download SAVI & Enterprise Licensing | Vinayaka Financials">
+  <meta property="og:description" content="Official enterprise licensing and download portal for SAVI.">
+  <meta property="og:url" content="https://vinayakafinancials.com/download">
+  <meta property="og:type" content="website">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/animations.css">
+  <link rel="stylesheet" href="/css/motion.css">
+
+  <style>
+    /* Portal Specific Styling */
+    .portal-progress-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 900px;
+      margin: 0 auto 40px auto;
+      position: relative;
+      padding: 0 10px;
+    }
+    .portal-progress-line {
+      position: absolute;
+      top: 50%;
+      left: 30px;
+      right: 30px;
+      height: 2px;
+      background: var(--border-color);
+      z-index: 1;
+      transform: translateY(-50%);
+    }
+    .portal-step-node {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--bg-card);
+      border: 2px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      position: relative;
+      z-index: 2;
+      transition: all var(--transition-fast);
+    }
+    .portal-step-node.active {
+      border-color: var(--gold-primary);
+      background: var(--gold-primary);
+      color: #050B17;
+      box-shadow: 0 0 16px var(--gold-glow);
+    }
+    .portal-step-node.completed {
+      border-color: var(--cyan-accent);
+      background: var(--cyan-accent);
+      color: #FFFFFF;
+    }
+    .portal-step-view {
+      display: none;
+      animation: fadeIn 0.4s ease;
+    }
+    .portal-step-view.active {
+      display: block;
+    }
+    .edition-select-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin: 28px 0;
+    }
+    @media (max-width: 768px) {
+      .edition-select-grid { grid-template-columns: 1fr; }
+    }
+    .edition-select-card {
+      background: var(--bg-card);
+      border: 2px solid var(--border-card);
+      border-radius: 16px;
+      padding: 32px 28px;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      position: relative;
+    }
+    .edition-select-card:hover {
+      border-color: var(--gold-primary);
+      transform: translateY(-3px);
+    }
+    .edition-select-card.selected {
+      border-color: var(--gold-primary);
+      box-shadow: 0 0 24px var(--gold-glow);
+      background: rgba(229, 195, 120, 0.08);
+    }
+    .edition-select-card.selected::after {
+      content: '✓ Selected';
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--gold-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .quote-summary-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 0.95rem;
+    }
+    .quote-total-row {
+      border-top: 2px solid var(--gold-primary);
+      border-bottom: none;
+      margin-top: 16px;
+      padding-top: 16px;
+      font-size: 1.15rem;
+      font-weight: 700;
+    }
+    .quote-total-price {
+      font-family: var(--font-serif);
+      font-size: 1.4rem;
+      color: var(--gold-primary);
+    }
+    .license-cert-box {
+      background: #060D19;
+      border: 2px solid var(--gold-primary);
+      border-radius: 16px;
+      padding: 36px;
+      color: #FFFFFF;
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5), 0 0 32px var(--gold-glow);
+      margin: 32px 0;
+      position: relative;
+    }
+    .license-key-pill {
+      font-family: monospace;
+      font-size: 1.25rem;
+      font-weight: 700;
+      background: rgba(229, 195, 120, 0.15);
+      border: 1px dashed var(--gold-primary);
+      padding: 16px;
+      border-radius: 8px;
+      color: var(--gold-light);
+      word-break: break-all;
+      margin: 20px 0;
+      letter-spacing: 0.05em;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="brand-logo" aria-label="SAVI Home">
+        <img src="/img/savi-logo-transparent.png" alt="SAVI Logo" class="brand-logo-img" width="42" height="42">
+        <span class="brand-logo-text">SAVI</span>
+      </a>
+
+      <button class="mobile-nav-toggle" aria-label="Toggle Navigation" aria-expanded="false">&#9776;</button>
+
+      <nav>
+        <ul class="main-nav">
+          <li class="nav-item"><a href="/" class="nav-link">Home</a></li>
+          <li class="nav-item">
+            <a href="/product" class="nav-link">Product &#9662;</a>
+            <ul class="dropdown-menu">
+              <li><a href="/product" class="dropdown-link">Overview</a></li>
+              <li><a href="/product/intelligence-platform" class="dropdown-link">Intelligence Platform</a></li>
+              <li><a href="/product/full-platform" class="dropdown-link">Full Platform</a></li>
+              <li><a href="/product/capabilities" class="dropdown-link">Capabilities</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a href="/how-it-works" class="nav-link">How It Works</a></li>
+          <li class="nav-item"><a href="/who-its-for" class="nav-link">Who It's For</a></li>
+          <li class="nav-item"><a href="/trust" class="nav-link">Trust</a></li>
+          <li class="nav-item"><a href="/pricing" class="nav-link">Pricing</a></li>
+          <li class="nav-item"><a href="/download" class="nav-link active" style="color: var(--gold-primary);">Download</a></li>
+          <li class="nav-item">
+            <a href="/about" class="nav-link">About &#9662;</a>
+            <ul class="dropdown-menu">
+              <li><a href="/about" class="dropdown-link">Overview</a></li>
+              <li><a href="/contact" class="dropdown-link">Contact</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+
+            <div class="header-actions">
+        <button type="button" class="theme-toggle-btn" aria-label="Toggle Theme">
+          <span class="theme-icon">🌌</span>
+          <span class="theme-label-text">Midnight</span>
+        </button>
+        <a href="https://razorpay.me/@saakshisharma4719" target="_blank" rel="noopener" class="btn btn-outline-gold" style="padding: 9px 18px; font-size: 0.875rem;">Pay Online</a>
+        <a href="/demo" class="btn btn-primary" style="padding: 9px 20px; font-size: 0.875rem;">Book a Demo</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Portal Workflow Section -->
+  <section class="section hero-section" style="min-height: 85vh; padding-top: 60px;">
+    <canvas id="savi-wave-canvas" class="savi-wave-canvas" aria-hidden="true"></canvas>
+
+    <div class="container container-narrow" style="position: relative; z-index: 2;">
+      
+      <!-- Progress Bar Tracker -->
+      <div class="portal-progress-bar" aria-label="Provisioning Steps">
+        <div class="portal-progress-line"></div>
+        <div class="portal-step-node active" title="Step 1: Welcome">1</div>
+        <div class="portal-step-node" title="Step 2: Sign Up">2</div>
+        <div class="portal-step-node" title="Step 3: Platform Edition">3</div>
+        <div class="portal-step-node" title="Step 4: Questionnaire">4</div>
+        <div class="portal-step-node" title="Step 5: Quotation">5</div>
+        <div class="portal-step-node" title="Step 6: Confirmation">6</div>
+        <div class="portal-step-node" title="Step 7: Payment Gateway">7</div>
+        <div class="portal-step-node" title="Step 8: Payment Verification">8</div>
+        <div class="portal-step-node" title="Step 9: License Key">9</div>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- STEP 1: Welcome & Verification -->
+      <!-- ========================================== -->
+      <div id="step-view-1" class="portal-step-view active">
+        <div class="card text-center" style="padding: 48px 36px;">
+          <div style="display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 20px; background: rgba(229, 195, 120, 0.15); border: 1px solid rgba(229, 195, 120, 0.3); margin-bottom: 20px; font-size: 0.8rem; font-weight: 700; color: var(--gold-primary); letter-spacing: 0.08em; text-transform: uppercase;">
+            <span class="pulse-dot"></span> Official Enterprise Portal · Vinayaka Financials
+          </div>
+          <h1 style="font-size: 2.4rem; margin-bottom: 16px;">Download SAVI Enterprise</h1>
+          <p class="lead-text" style="max-width: 650px; margin: 0 auto 32px auto;">Acquire your enterprise deployment package, tailor your multi-entity tier, settle licensing via Razorpay, and receive an instant cryptographically bound license key for your organization.</p>
+
+          <div class="grid grid-3" style="text-align: left; margin-bottom: 36px;">
+            <div style="padding: 16px; background: rgba(255,255,255,0.03); border-radius: 10px; border: 1px solid var(--border-color);">
+              <h4 style="font-size: 1rem; color: var(--text-heading); margin-bottom: 6px;">1. Representative Sign-Up</h4>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0;">Register your company and executive contact.</p>
+            </div>
+            <div style="padding: 16px; background: rgba(255,255,255,0.03); border-radius: 10px; border: 1px solid var(--border-color);">
+              <h4 style="font-size: 1rem; color: var(--text-heading); margin-bottom: 6px;">2. Dynamic Quotation</h4>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0;">Instant transparent pricing tailored to your entities.</p>
+            </div>
+            <div style="padding: 16px; background: rgba(255,255,255,0.03); border-radius: 10px; border: 1px solid var(--border-color);">
+              <h4 style="font-size: 1rem; color: var(--text-heading); margin-bottom: 6px;">3. Locked License Key</h4>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0;">Instant key bound strictly to your registered company.</p>
+            </div>
+          </div>
+
+          <button id="btn-start-flow" class="btn btn-gold" style="padding: 16px 40px; font-size: 1.1rem;">Begin Download & Registration &rarr;</button>
+        </div>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- STEP 2: Sign Up & Organization Registration -->
+      <!-- ========================================== -->
+      <div id="step-view-2" class="portal-step-view">
+        <div class="card" style="padding: 40px;">
+          <div style="font-size: 0.8rem; font-weight: 700; color: var(--gold-primary); text-transform: uppercase; margin-bottom: 8px;">Step 2 of 9 · Organization Verification</div>
+          <h2 style="margin-bottom: 12px;">Create Your Executive Account</h2>
+          <p style="color: var(--text-secondary); margin-bottom: 28px;">Your license key will be cryptographically bound to the legal company name entered below.</p>
+
+          <form id="portal-account-form">
+            <div class="grid grid-2">
+              <div class="form-group">
+                <label class="form-label" for="portal-rep-name">Representative Full Name <span class="required">*</span></label>
+                <input type="text" id="portal-rep-name" class="form-control" required placeholder="Jane Doe">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="portal-email">Corporate Email Address <span class="required">*</span></label>
+                <input type="email" id="portal-email" class="form-control" required placeholder="jane.doe@enterprise.com">
+              </div>
+            </div>
+
+            <div class="grid grid-2">
+              <div class="form-group">
+                <label class="form-label" for="portal-org-name">Legal Organization / Company Name <span class="required">*</span></label>
+                <input type="text" id="portal-org-name" class="form-control" required placeholder="Acme Global Holdings Ltd.">
+                <small style="color: var(--gold-primary); font-size: 0.75rem;">Important: The generated license will ONLY operate under this exact entity name.</small>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="portal-phone">Contact Phone / WhatsApp <span class="required">*</span></label>
+                <input type="tel" id="portal-phone" class="form-control" required placeholder="+91 98765 43210">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="portal-role">Your Role / Job Title <span class="required">*</span></label>
+              <input type="text" id="portal-role" class="form-control" required placeholder="Chief Financial Officer / VP Finance / Controller">
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 32px;">
+              <button type="button" class="btn btn-secondary" data-step-back="1">&larr; Back</button>
+              <button type="submit" class="btn btn-primary">Save & Choose SAVI Edition &rarr;</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- STEP 3: Platform Edition Selection -->
+      <!-- ========================================== -->
+      <div id="step-view-3" class="portal-step-view">
+        <div class="card" style="padding: 40px;">
+          <div style="font-size: 0.8rem; font-weight: 700; color: var(--gold-primary); text-transform: uppercase; margin-bottom: 8px;">Step 3 of 9 · Platform Edition</div>
+          <h2 style="margin-bottom: 12px;">Select Your SAVI Platform Edition</h2>
+          <p style="color: var(--text-secondary); margin-bottom: 24px;">Choose whether you want the pure deterministic intelligence layer on top of your existing ERP, or the complete autonomous platform.</p>
+
+          <div class="edition-select-grid">
+            <div class="edition-select-card selected" data-edition="intelligence">
+              <h3 style="font-size: 1.3rem; margin-bottom: 8px; color: var(--text-heading);">SAVI Intelligence Layer</h3>
+              <div style="font-size: 0.85rem; color: var(--gold-primary); font-weight: 700; margin-bottom: 12px;">Sits on top of SAP, Oracle, NetSuite, Tally</div>
+              <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">Answers finance questions instantly with deterministic computation and 100% full traceability back to source ledgers. No ERP migration required.</p>
+            </div>
+
+            <div class="edition-select-card" data-edition="full-platform">
+              <h3 style="font-size: 1.3rem; margin-bottom: 8px; color: var(--text-heading);">SAVI Full Platform</h3>
+              <div style="font-size: 0.85rem; color: var(--gold-primary); font-weight: 700; margin-bottom: 12px;">Complete Autonomous Multi-Entity Ledger</div>
+              <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">Full autonomous transactional engine, intercompany settlement, automated regulatory consolidation, multi-currency ledger, and AI intelligence.</p>
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 32px;">
+            <button type="button" class="btn btn-secondary" data-step-back="2">&larr; Back</button>
+            <button type="button" id="btn-step3-next" class="btn btn-primary">Continue to Questionnaire &rarr;</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- STEP 4: Configuration Questionnaire -->
+      <!-- ========================================== -->
+      <div id="step-view-4" class="portal-step-view">
+        <div class="card" style="padding: 40px;">
+          <div style="font-size: 0.8rem; font-weight: 700; color: var(--gold-primary); text-transform: uppercase; margin-bottom: 8px;">Step 4 of 9 · Architecture & Sizing</div>
+          <h2 style="margin-bottom: 12px;">Configure Sizing & Preferences</h2>
+          <p style="color: var(--text-secondary); margin-bottom: 28px;">Specify your organizational structure so we calculate your precise deterministic quote.</p>
+
+          <form id="portal-question-form">
+            <div class="grid grid-2">
+              <div class="form-group">
+                <label class="form-label" for="q-entities">Number of Legal Entities <span class="required">*</span></label>
+                <select id="q-entities" class="form-control" required>
+                  <option value="1">1 Entity (Single Subsidiary)</option>
+                  <option value="2–5" selected>2–5 Entities (Multi-Entity)</option>
+                  <option value="6–20">6–20 Entities (Group Corporate)</option>
+                  <option value="20+">20+ Entities (Enterprise Conglomerate)</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="q-jurisdictions">Operating Jurisdictions / Countries <span class="required">*</span></label>
+                <select id="q-jurisdictions" class="form-control" required>
+                  <option value="1">Single Jurisdiction (Domestic)</option>
+                  <option value="2" selected>2–3 Jurisdictions (Cross-Border)</option>
+                  <option value="5+">5+ Jurisdictions (Global Multi-Currency)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="grid grid-3">
+              <div class="form-group">
+                <label class="form-label" for="q-system">Current Primary System <span class="required">*</span></label>
+                <select id="q-system" class="form-control" required>
+                  <option value="SAP S/4HANA" selected>SAP S/4HANA / ECC</option>
+                  <option value="Oracle ERP Cloud">Oracle ERP Cloud / NetSuite</option>
+                  <option value="Microsoft Dynamics 365">Microsoft Dynamics 365</option>
+                  <option value="Tally Prime / Zoho Books">Tally Prime / Zoho Books</option>
+                  <option value="Custom Database">Custom Database / Data Lake</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="q-volume">Monthly Transaction Volume <span class="required">*</span></label>
+                <select id="q-volume" class="form-control" required>
+                  <option value="Under 10,000">Under 10,000 tx/mo</option>
+                  <option value="10,000–50,000" selected>10,000–50,000 tx/mo</option>
+                  <option value="50,000–500,000">50,000–500,000 tx/mo</option>
+                  <option value="500,000+">500,000+ tx/mo</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="q-deployment">Deployment Preference <span class="required">*</span></label>
+                <select id="q-deployment" class="form-control" required>
+                  <option value="cloud-vpc" selected>Dedicated Cloud VPC</option>
+                  <option value="on-prem">On-Premise / Air-Gapped Cluster</option>
+                  <option value="hybrid">Hybrid Deployment</option>
+                </select>
+              </div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 32px;">
+              <button type="button" class="btn btn-secondary" data-step-back="3">&larr; Back</button>
+              <button type="submit" class="btn btn-primary">Generate Instant Quotation &rarr;</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- STEP 5: Dynamic Instant Quotation -->
+      <!-- ========================================== -->
+      <div id="step-view-5" class="portal-step-view">
+        <div class="card" style="padding: 40px;">
+          <div style="font-size: 0.8rem; font-weight: 700; color: var(--gold-primary); text-transform: uppercase; margin-bottom: 8px;">Step 5 of 9 · Formal Quotation</div>
+          <h2 style="margin-bottom: 12px;">Your Customized SAVI Quotation</h2>
+          <p style="color: var(--text-secondary); margin-bottom: 24px;">Prepared specifically for your organization based on selected entities and platform specifications.</p>
+
+          <div id="quote-summary-details" style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: 12px; padding: 24px; margin-bottom: 28px;">
+            <!-- Rendered dynamically by js/portal-flow.js -->
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 32px;">
+            <button type="button" class="btn btn-secondary" data-step-back="4">&larr; Edit Parameters</button>
+            <button type="button" id="btn-step5-next" class="btn btn-gold">Approve Quotation & Continue to Download &rarr;</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- STEP 6: Download & Payment Confirmation -->
+      <!-- ========================================== -->
+      <div id="step-view-6" class="portal-step-view">
+        <div class="card text-center" style="padding: 48px 36px;">
+          <div style="font-size: 0.8rem; font-weight: 700; color: var(--gold-primary); text-transform: uppercase; margin-bottom: 8px;">Step 6 of 9 · Licensing Terms & Checkout</div>
+          <h2 style="margin-bottom: 16px;">Ready to Provision & Settle License</h2>
+          <p style="color: var(--text-secondary); max-width: 600px; margin: 0 auto 32px auto;">Clicking below will connect you to our secure Razorpay gateway to complete your invoice settlement and generate your organization-locked key.</p>
+
+          <div style="max-width: 500px; margin: 0 auto 32px auto; text-align: left; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: 10px; padding: 20px;">
+            <div style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 8px;">✓ Commercial SLA & 99.99% Deterministic Guarantee</div>
+            <div style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 8px;">✓ Cryptographically Bound to Registered Legal Entity</div>
+            <div style="font-size: 0.85rem; color: var(--text-secondary);">✓ Instant Package (.zip / Docker / Helm) Provisioning</div>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; max-width: 500px; margin: 0 auto;">
+            <button type="button" class="btn btn-secondary" data-step-back="5">&larr; Back</button>
+            <button type="button" id="btn-step6-next" class="btn btn-gold">Proceed to Secure Gateway &rarr;</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- STEP 7: Secure Razorpay Payment Gateway -->
+      <!-- ========================================== -->
+      <div id="step-view-7" class="portal-step-view">
+        <div class="card text-center" style="padding: 48px 36px;">
+          <div style="font-size: 0.8rem; font-weight: 700; color: var(--gold-primary); text-transform: uppercase; margin-bottom: 8px;">Step 7 of 9 · Secure Payment</div>
+          <h2 style="margin-bottom: 16px;">Vinayaka Financials Payment Gateway</h2>
+          <p style="color: var(--text-secondary); max-width: 580px; margin: 0 auto 24px auto;">You can complete payment via UPI, Credit/Debit Cards, Corporate Cards, or Net Banking on our official Razorpay checkout page.</p>
+
+          <div id="payment-step-meta" style="max-width: 480px; margin: 0 auto 28px auto;">
+            <!-- Rendered dynamically by js/portal-flow.js -->
+          </div>
+
+          <button type="button" id="btn-open-razorpay" class="btn btn-gold" style="padding: 16px 36px; font-size: 1.1rem; margin-bottom: 16px;">
+            Open Razorpay Checkout (@saakshisharma4719) &rarr;
+          </button>
+          <div style="font-size: 0.85rem; color: var(--text-muted);">Gateway Link: https://razorpay.me/@saakshisharma4719</div>
+        </div>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- STEP 8: Payment Verification & Provisioning -->
+      <!-- ========================================== -->
+      <div id="step-view-8" class="portal-step-view">
+        <div class="card text-center" style="padding: 48px 36px;">
+          <div style="font-size: 0.8rem; font-weight: 700; color: var(--gold-primary); text-transform: uppercase; margin-bottom: 8px;">Step 8 of 9 · Gateway Verification</div>
+          <h2 style="margin-bottom: 16px;">Verifying Payment & Authorizing Keys</h2>
+          <p style="color: var(--text-secondary); max-width: 550px; margin: 0 auto 28px auto;">Once you have completed your transaction on Razorpay, click below to immediately verify and generate your unique enterprise license key.</p>
+
+          <button type="button" id="btn-verify-payment" class="btn btn-gold" style="padding: 16px 40px; font-size: 1.1rem;">
+            ✓ Confirm Payment Completed & Generate Key &rarr;
+          </button>
+        </div>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- STEP 9: License Key Provisioning & Package Download -->
+      <!-- ========================================== -->
+      <div id="step-view-9" class="portal-step-view">
+        <div class="license-cert-box">
+          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin-bottom: 20px;">
+            <div style="font-size: 0.8rem; font-weight: 800; color: var(--gold-primary); text-transform: uppercase; letter-spacing: 0.1em;">
+              ✓ ACTIVE ENTERPRISE LICENSE CERTIFICATE
+            </div>
+            <div style="font-size: 0.75rem; color: var(--cyan-accent); font-family: monospace;">2026 COMMERCIAL RELEASE</div>
+          </div>
+
+          <h2 style="color: #FFFFFF; font-size: 1.8rem; margin-bottom: 6px;">SAVI Platform License Key</h2>
+          <p style="color: #CBD5E1; font-size: 0.95rem; margin-bottom: 20px;">
+            This cryptographic key is locked strictly to <strong id="license-org-name" style="color: var(--gold-light);"></strong>.
+          </p>
+
+          <div class="license-key-pill" id="generated-license-key">
+            SAVI-ENT-2026-GENERATING...
+          </div>
+
+          <div class="grid grid-2" style="font-size: 0.85rem; color: #94A3B8; margin-bottom: 28px;">
+            <div><strong>Authorized Rep:</strong> <span id="license-rep-name" style="color: #FFFFFF;"></span></div>
+            <div><strong>Platform Edition:</strong> <span id="license-platform-name" style="color: #FFFFFF;"></span></div>
+            <div><strong>Issued At:</strong> <span id="license-issue-date" style="color: #FFFFFF;"></span></div>
+            <div><strong>Vendor:</strong> <span style="color: #FFFFFF;">Vinayaka Financials</span></div>
+          </div>
+
+          <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+            <button id="btn-copy-license" class="btn btn-gold" style="padding: 12px 24px;">📋 Copy License Key</button>
+            <button id="btn-download-cert" class="btn btn-outline-gold" style="padding: 12px 24px; color: #FFFFFF; border-color: #FFFFFF;">📥 Download License Certificate (.json)</button>
+            <a href="https://github.com/Yatimehta/SAVI-WEBSITE/archive/refs/heads/main.zip" class="btn btn-primary" style="padding: 12px 24px;">📦 Download SAVI Runtime Package (.zip)</a>
+          </div>
+        </div>
+
+        <div class="card text-center" style="padding: 32px;">
+          <h3 style="font-size: 1.25rem; margin-bottom: 8px;">Deployment & Integration Support</h3>
+          <p style="color: var(--text-secondary); max-width: 600px; margin: 0 auto 20px auto;">Need assistance connecting SAVI to your on-premise SAP/Oracle databases or VPC clusters? Our implementation team is available on dedicated priority channels.</p>
+          <a href="mailto:saakshi@vinayakafinancials.com" class="btn btn-secondary">Contact Implementation Support</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-column-title">Product</div>
+          <ul class="footer-links">
+            <li><a href="/product">Overview</a></li>
+            <li><a href="/product/intelligence-platform">Intelligence Platform</a></li>
+            <li><a href="/product/full-platform">Full Platform</a></li>
+            <li><a href="/product/capabilities">Capabilities</a></li>
+            <li><a href="/how-it-works">How It Works</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-column-title">Company</div>
+          <ul class="footer-links">
+            <li><a href="/about">About</a></li>
+            <li><a href="/trust">Trust Centre</a></li>
+            <li><a href="/contact">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-column-title">Pricing & Licensing</div>
+          <ul class="footer-links">
+            <li><a href="/download">Download & Licensing</a></li>
+            <li><a href="/pricing">Request a Quote</a></li>
+            <li><a href="https://razorpay.me/@saakshisharma4719" target="_blank" rel="noopener">Pay Online (Razorpay)</a></li>
+            <li><a href="/legal/privacy">Privacy Policy</a></li>
+            <li><a href="/legal/terms">Terms of Use</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-column-title">Connect</div>
+          <ul class="footer-links">
+            <li><a href="mailto:saakshi@vinayakafinancials.com">saakshi@vinayakafinancials.com</a></li>
+            <li><a href="https://wa.me/918290006889" target="_blank" rel="noopener">WhatsApp +91 82900 06889</a></li>
+            <li><a href="https://instagram.com/vinayakafinancials" target="_blank" rel="noopener">Instagram @vinayakafinancials</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-baseline">
+        <div>SAVI is a product of Vinayaka Financials. &copy; 2026 Vinayaka Financials. All rights reserved. SAVI and the SAVI mark are trademarks of Vinayaka Financials.</div>
+        <div>
+          <a href="/legal/privacy" style="color: #848995; margin-right: 16px;">Privacy</a>
+          <a href="/legal/terms" style="color: #848995; margin-right: 16px;">Terms</a>
+          <a href="/legal/cookies" style="color: #848995;">Cookies</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+  <script src="/js/theme.js"></script>
+  <script src="/js/wave-bg.js"></script>
+  <script src="/js/floating-3d.js"></script>
+  <script src="/js/portal-flow.js"></script>
+</body>
+</html>
