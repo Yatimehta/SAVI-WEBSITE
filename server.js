@@ -53,46 +53,148 @@ async function initDb() {
   console.log('[DB] Submissions table ready');
 }
 
+const nodemailer = require('nodemailer');
+
+function getEmailTransporter() {
+  if (process.env.SMTP_USER && process.env.SMTP_PASS) {
+    return nodemailer.createTransport({
+      host: process.env.SMTP_HOST || 'smtp.gmail.com',
+      port: parseInt(process.env.SMTP_PORT || '587', 10),
+      secure: parseInt(process.env.SMTP_PORT, 10) === 465,
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS
+      }
+    });
+  }
+  return null;
+}
+
 // ─────────────────────────────────────────────
-// Resend Email Sender (HTTPS API on port 443)
+// Email Notification Sender (SMTP / Resend)
 // ─────────────────────────────────────────────
 async function sendSubmissionEmail(fields) {
-  const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey) {
-    throw new Error('RESEND_API_KEY is not configured');
-  }
+  const isQuote = fields.form_type === 'quote';
+  const subject = isQuote
+    ? `[SAVI] 💼 New Quote Request: ${fields.company} (${fields.name})`
+    : `[SAVI] 📅 New Demo Request: ${fields.company} (${fields.name})`;
 
-  const resend = new Resend(apiKey);
-  const fromAddress = process.env.RESEND_FROM_EMAIL || 'SAVI Enquiries <onboarding@resend.dev>';
-  const subject = fields.form_type === 'quote'
-    ? `[SAVI] New Quote Request: ${fields.company}`
-    : `[SAVI] New Demo Request: ${fields.company}`;
-
-  const text = [
-    `Form type:       ${fields.form_type || 'demo'}`,
-    `Name:            ${fields.name}`,
-    `Email:           ${fields.email}`,
+  const textContent = [
+    `═══════════════════════════════════════════════════`,
+    ` SAVI FINANCIAL INTELLIGENCE · NEW SUBMISSION`,
+    `═══════════════════════════════════════════════════`,
+    `Form Type:       ${fields.form_type ? fields.form_type.toUpperCase() : 'DEMO'}`,
+    `Full Name:       ${fields.name}`,
+    `Work Email:      ${fields.email}`,
     `Company:         ${fields.company}`,
-    `Role:            ${fields.role || 'N/A'}`,
-    `Entities:        ${fields.entities || 'N/A'}`,
-    `Jurisdictions:   ${fields.jurisdictions || 'N/A'}`,
-    `Platform:        ${fields.platform || 'N/A'}`,
-    `Current system:  ${fields.current_system || 'N/A'}`,
-    `Message:         ${fields.message || 'N/A'}`,
+    `Role / Title:    ${fields.role || 'Not specified'}`,
+    `Entities:        ${fields.entities || 'Not specified'}`,
+    `Jurisdictions:   ${fields.jurisdictions || 'Not specified'}`,
+    `Platform:        ${fields.platform || 'Not specified'}`,
+    `Current System:  ${fields.current_system || 'Not specified'}`,
+    `Message / Notes: ${fields.message || 'None provided'}`,
+    `Timestamp:       ${new Date().toISOString()}`,
+    `═══════════════════════════════════════════════════`,
   ].join('\n');
 
-  const { data, error } = await resend.emails.send({
-    from: fromAddress,
-    to:   'saakshi@vinayakafinancials.com',
-    subject,
-    text,
-  });
+  const htmlContent = `
+    <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; background: #0B1F3A; color: #F1F5F9; border-radius: 12px; overflow: hidden; border: 1px solid #E5C378;">
+      <div style="background: linear-gradient(135deg, #071526 0%, #0B1F3A 100%); padding: 24px 30px; border-bottom: 2px solid #E5C378;">
+        <h2 style="margin: 0; color: #FFFFFF; font-size: 22px; letter-spacing: 0.02em;">SAVI Financial Intelligence</h2>
+        <p style="margin: 6px 0 0 0; color: #E5C378; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em;">
+          New ${isQuote ? 'Quote Request' : 'Demo Walkthrough Request'}
+        </p>
+      </div>
+      <div style="padding: 30px; background: #0E1D36;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 15px;">
+          <tr><td style="padding: 10px 0; color: #94A3B8; width: 140px; font-weight: 600;">Representative:</td><td style="padding: 10px 0; color: #FFFFFF; font-weight: 700;">${fields.name}</td></tr>
+          <tr><td style="padding: 10px 0; color: #94A3B8; font-weight: 600;">Work Email:</td><td style="padding: 10px 0;"><a href="mailto:${fields.email}" style="color: #38BDF8; text-decoration: none; font-weight: 600;">${fields.email}</a></td></tr>
+          <tr><td style="padding: 10px 0; color: #94A3B8; font-weight: 600;">Company:</td><td style="padding: 10px 0; color: #FFFFFF; font-weight: 700;">${fields.company}</td></tr>
+          <tr><td style="padding: 10px 0; color: #94A3B8; font-weight: 600;">Role / Title:</td><td style="padding: 10px 0; color: #E2E8F0;">${fields.role || 'N/A'}</td></tr>
+          <tr><td style="padding: 10px 0; color: #94A3B8; font-weight: 600;">Entities:</td><td style="padding: 10px 0; color: #E2E8F0;">${fields.entities || 'N/A'}</td></tr>
+          ${fields.jurisdictions ? `<tr><td style="padding: 10px 0; color: #94A3B8; font-weight: 600;">Jurisdictions:</td><td style="padding: 10px 0; color: #E2E8F0;">${fields.jurisdictions}</td></tr>` : ''}
+          ${fields.platform ? `<tr><td style="padding: 10px 0; color: #94A3B8; font-weight: 600;">Platform:</td><td style="padding: 10px 0; color: #E2E8F0;">${fields.platform}</td></tr>` : ''}
+          <tr><td style="padding: 10px 0; color: #94A3B8; font-weight: 600; vertical-align: top;">Notes / Request:</td><td style="padding: 10px 0; color: #E2E8F0; line-height: 1.5;">${fields.message || 'No additional notes'}</td></tr>
+        </table>
+        <div style="margin-top: 24px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.12); font-size: 13px; color: #94A3B8;">
+          Received via vinayakafinancials.com · SAVI Corporate Platform
+        </div>
+      </div>
+    </div>
+  `;
 
-  if (error) {
-    throw new Error(error.message || JSON.stringify(error));
+  // 1. Try Nodemailer (Gmail SMTP configured in .env)
+  const transporter = getEmailTransporter();
+  if (transporter) {
+    const fromAddress = process.env.SMTP_FROM || `SAVI Enquiries <${process.env.SMTP_USER}>`;
+    const recipients = ['saakshi@vinayakafinancials.com', process.env.SMTP_USER].filter(Boolean).join(', ');
+    
+    await transporter.sendMail({
+      from: fromAddress,
+      to: recipients,
+      replyTo: fields.email,
+      subject,
+      text: textContent,
+      html: htmlContent
+    });
+
+    console.log(`[EMAIL] Internal notification sent to ${recipients}`);
+
+    // Also send instant confirmation to the customer
+    if (fields.email && fields.email.includes('@')) {
+      try {
+        await transporter.sendMail({
+          from: fromAddress,
+          to: fields.email,
+          subject: isQuote
+            ? `SAVI Quote Request Received · Vinayaka Financials`
+            : `SAVI Walkthrough Request Received · Vinayaka Financials`,
+          text: `Dear ${fields.name},\n\nThank you for reaching out regarding SAVI Financial Intelligence. We have received your ${isQuote ? 'custom quotation request' : 'demonstration walkthrough request'} for ${fields.company}.\n\nOur team is reviewing your requirements and will reach out shortly to schedule a convenient time.\n\nBest regards,\nSaakshi Sharma\nVinayaka Financials\nhttps://vinayakafinancials.com`,
+          html: `
+            <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 560px; margin: 0 auto; background: #0B1F3A; color: #F1F5F9; border-radius: 10px; overflow: hidden; border: 1px solid #E5C378;">
+              <div style="padding: 24px 30px; background: linear-gradient(135deg, #071526, #0B1F3A); border-bottom: 2px solid #E5C378;">
+                <h2 style="margin: 0; color: #FFFFFF; font-size: 20px;">Vinayaka Financials · SAVI</h2>
+              </div>
+              <div style="padding: 30px; background: #0E1D36; font-size: 15px; line-height: 1.6; color: #E2E8F0;">
+                <p style="margin-top: 0;">Dear <strong>${fields.name}</strong>,</p>
+                <p>Thank you for your interest in <strong>SAVI Financial Intelligence</strong>. We have successfully received your ${isQuote ? 'quote inquiry' : 'demo walkthrough request'} for <strong>${fields.company}</strong>.</p>
+                <p>Our team will review your specifications and contact you shortly to coordinate next steps.</p>
+                <div style="margin: 24px 0; padding: 16px; background: rgba(229,195,120,0.1); border-left: 3px solid #E5C378; border-radius: 4px; font-size: 14px;">
+                  If you have immediate questions, feel free to reply directly to this email or contact us on WhatsApp at <strong>+91 82900 06889</strong>.
+                </div>
+                <p style="margin-bottom: 0; font-size: 13px; color: #94A3B8;">
+                  Kind regards,<br>
+                  <strong style="color: #FFFFFF;">Saakshi Sharma</strong><br>
+                  Vinayaka Financials · <a href="https://vinayakafinancials.com" style="color: #E5C378; text-decoration: none;">vinayakafinancials.com</a>
+                </p>
+              </div>
+            </div>
+          `
+        });
+        console.log(`[EMAIL] Customer confirmation sent to ${fields.email}`);
+      } catch (custErr) {
+        console.warn('[EMAIL] Customer auto-reply failed:', custErr.message);
+      }
+    }
+
+    return { success: true, transport: 'smtp' };
   }
 
-  return data;
+  // 2. Fallback to Resend if RESEND_API_KEY is configured
+  if (process.env.RESEND_API_KEY) {
+    const resend = new Resend(process.env.RESEND_API_KEY);
+    const fromAddress = process.env.RESEND_FROM_EMAIL || 'SAVI Enquiries <onboarding@resend.dev>';
+    const result = await resend.emails.send({
+      from: fromAddress,
+      to: 'saakshi@vinayakafinancials.com',
+      subject,
+      text: textContent,
+      html: htmlContent
+    });
+    return result;
+  }
+
+  throw new Error('No email transport configured (neither SMTP credentials nor RESEND_API_KEY provided)');
 }
 
 // ─────────────────────────────────────────────

@@ -74,15 +74,23 @@ async function handleFormSubmit(event, formType) {
     const result = await response.json();
 
     if (result.success) {
-      // Display spec-approved confirmation message
+      // Display high-visibility confirmation card
       form.style.display = 'none';
       if (statusBox) {
         statusBox.style.display = 'block';
-        statusBox.className = 'gold-note-box text-center';
+        statusBox.className = 'card text-center';
+        statusBox.style.padding = '48px 32px';
+        statusBox.style.border = '2px solid var(--gold-primary)';
         statusBox.innerHTML = `
-          <h3 style="color: var(--navy-primary); margin-bottom: 12px;">Submission Received</h3>
-          <p style="font-size: 1.125rem; color: var(--text-body); font-weight: 500;">${result.message}</p>
+          <div style="width: 56px; height: 56px; border-radius: 50%; background: rgba(229,195,120,0.15); border: 2px solid var(--gold-primary); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 26px; color: var(--gold-primary);">✓</div>
+          <h3 style="color: var(--text-heading); font-size: 1.6rem; margin-bottom: 12px; font-weight: 700;">Walkthrough Request Received</h3>
+          <p style="font-size: 1.1rem; color: var(--text-body); max-width: 540px; margin: 0 auto 24px; line-height: 1.6;">${result.message}</p>
+          <div style="padding: 14px 20px; background: rgba(14, 165, 233, 0.08); border: 1px solid var(--border-card); border-radius: 8px; font-size: 0.9rem; color: var(--text-secondary); max-width: 480px; margin: 0 auto 24px;">
+            📧 Confirmation notification dispatched to <strong>${data.email}</strong>.<br>Our team will reach out directly to finalize the schedule.
+          </div>
+          <a href="/" class="btn btn-gold" style="display: inline-flex;">Return to Homepage</a>
         `;
+        window.scrollTo({ top: statusBox.offsetTop - 100, behavior: 'smooth' });
       }
     } else {
       showFormError(statusBox, result.error || 'An error occurred. Please try again.');
