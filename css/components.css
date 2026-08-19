@@ -417,6 +417,7 @@ body[data-theme="light"] .brand-logo-img {
   text-decoration: none;
   border: 2px solid transparent;
   letter-spacing: -0.01em;
+  white-space: nowrap !important;
 }
 
 .btn-primary {
@@ -1343,19 +1344,22 @@ textarea.form-control {
 
   .hero-ctas .btn,
   .cta-group .btn,
-  .btn-group .btn {
+  .btn-group .btn,
+  .mobile-menu-ctas .btn {
     width: 100% !important;
     max-width: 100% !important;
     margin: 0 !important;
     text-align: center !important;
     justify-content: center !important;
-    padding: 14px 20px !important;
-    font-size: 1rem !important;
+    padding: 14px 18px !important;
+    font-size: clamp(0.82rem, 3.6vw, 1rem) !important;
+    white-space: nowrap !important;
     box-sizing: border-box !important;
   }
 
   .btn {
     max-width: 100%;
+    white-space: nowrap !important;
     box-sizing: border-box;
   }
 

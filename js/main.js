@@ -26,8 +26,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const ctaContainer = document.createElement('li');
       ctaContainer.className = 'mobile-menu-ctas';
       ctaContainer.innerHTML = `
-        <a href="/demo" class="btn btn-gold">Book a Demo</a>
-        <a href="https://razorpay.me/@saakshisharma4719" target="_blank" rel="noopener" class="btn btn-outline-gold">Pay Online via Razorpay</a>
+        <a href="/demo" class="btn btn-gold" style="white-space: nowrap;">Book a Demo</a>
+        <a href="https://razorpay.me/@saakshisharma4719" target="_blank" rel="noopener" class="btn btn-outline-gold" style="white-space: nowrap;">Pay Online using Razorpay</a>
       `;
       mainNav.appendChild(ctaContainer);
     }
