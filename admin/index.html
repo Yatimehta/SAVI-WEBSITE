@@ -65,10 +65,11 @@
               <th>Role</th>
               <th>Entities</th>
               <th>Message</th>
+              <th>Email Status</th>
             </tr>
           </thead>
           <tbody id="leads-tbody">
-            <tr><td colspan="9" style="text-align: center; color: var(--text-muted); padding: 30px;">Loading submissions...</td></tr>
+            <tr><td colspan="10" style="text-align: center; color: var(--text-muted); padding: 30px;">Loading submissions...</td></tr>
           </tbody>
         </table>
       </div>
@@ -123,7 +124,7 @@
     function renderTable(list) {
       const tbody = document.getElementById('leads-tbody');
       if (!list || list.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="9" style="text-align: center; padding: 30px;">No submissions found yet.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="10" style="text-align: center; padding: 30px;">No submissions found yet.</td></tr>';
         return;
       }
 
@@ -132,6 +133,10 @@
         const typeBadge = item.form_type === 'quote' 
           ? '<span class="badge badge-quote">Quote</span>' 
           : '<span class="badge badge-demo">Demo</span>';
+        
+        const emailBadge = item.email_sent
+          ? '<span style="color: #10B981; font-weight: 700;">✓ Delivered</span>'
+          : `<span style="color: #F59E0B; font-size: 0.8rem;" title="${(item.email_error || '').replace(/"/g, '&quot;')}">Pending / Cloud Port</span>`;
         
         return `
           <tr>
@@ -143,7 +148,8 @@
             <td style="font-weight: 600;">${item.company}</td>
             <td style="color: var(--text-secondary);">${item.role || '—'}</td>
             <td>${item.entities || '—'}</td>
-            <td style="max-width: 250px; color: var(--text-body);">${item.message || '—'}</td>
+            <td style="max-width: 200px; color: var(--text-body);">${item.message || '—'}</td>
+            <td>${emailBadge}</td>
           </tr>
         `;
       }).join('');
@@ -151,7 +157,7 @@
 
     function exportCSV() {
       if (!submissionsData.length) return;
-      const headers = ['ID', 'Date', 'Type', 'Name', 'Email', 'Company', 'Role', 'Entities', 'Message'];
+      const headers = ['ID', 'Date', 'Type', 'Name', 'Email', 'Company', 'Role', 'Entities', 'Message', 'Email Sent', 'Email Error'];
       const rows = submissionsData.map(s => [
         s.id,
         new Date(s.created_at).toISOString(),
@@ -161,7 +167,9 @@
         `"${(s.company || '').replace(/"/g, '""')}"`,
         `"${(s.role || '').replace(/"/g, '""')}"`,
         `"${(s.entities || '').replace(/"/g, '""')}"`,
-        `"${(s.message || '').replace(/"/g, '""')}"`
+        `"${(s.message || '').replace(/"/g, '""')}"`,
+        s.email_sent ? 'TRUE' : 'FALSE',
+        `"${(s.email_error || '').replace(/"/g, '""')}"`
       ]);
 
       const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map(e => e.join(','))].join('\n');

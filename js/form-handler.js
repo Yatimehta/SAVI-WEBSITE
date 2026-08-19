@@ -68,14 +68,14 @@ async function handleFormSubmit(event, formType) {
   // Provide immediate visual feedback on button
   if (submitBtn) {
     submitBtn.disabled = true;
-    submitBtn.style.opacity = '0.85';
+    submitBtn.style.opacity = '0.8';
     submitBtn.style.cursor = 'not-allowed';
     submitBtn.innerHTML = `
       <span style="display: inline-block; animation: spin 1s infinite linear; margin-right: 8px;">⏳</span>
-      Sending Request...
+      Submitting...
     `;
   }
-  showToast('Sending your request securely...', 'info');
+  showToast('Submitting your request...', 'info');
 
   try {
     const response = await fetch('/api/submit-form', {

@@ -40,21 +40,32 @@ const pool = new Pool({
 async function initDb() {
   await pool.query(`
     CREATE TABLE IF NOT EXISTS submissions (
-      id             SERIAL PRIMARY KEY,
-      form_type      TEXT,
-      name           TEXT,
-      email          TEXT,
-      company        TEXT,
-      role           TEXT,
-      entities       TEXT,
-      jurisdictions  TEXT,
-      platform       TEXT,
-      current_system TEXT,
-      message        TEXT,
-      created_at     TIMESTAMPTZ DEFAULT NOW(),
-      email_sent     BOOLEAN NOT NULL DEFAULT FALSE
+      id                 SERIAL PRIMARY KEY,
+      form_type          TEXT,
+      name               TEXT,
+      email              TEXT,
+      company            TEXT,
+      role               TEXT,
+      entities           TEXT,
+      jurisdictions      TEXT,
+      platform           TEXT,
+      current_system     TEXT,
+      message            TEXT,
+      created_at         TIMESTAMPTZ DEFAULT NOW(),
+      email_sent         BOOLEAN NOT NULL DEFAULT FALSE,
+      email_error        TEXT,
+      email_attempted_at TIMESTAMPTZ
     );
   `);
+  // Ensure schema migrations for existing tables
+  try {
+    await pool.query(`
+      ALTER TABLE submissions ADD COLUMN IF NOT EXISTS email_error TEXT;
+      ALTER TABLE submissions ADD COLUMN IF NOT EXISTS email_attempted_at TIMESTAMPTZ;
+    `);
+  } catch (migErr) {
+    console.warn('[DB Migration note]:', migErr.message);
+  }
   console.log('[DB] Submissions table ready');
 }
 
@@ -81,7 +92,7 @@ function getEmailTransporter() {
 // ─────────────────────────────────────────────
 // Email Notification Sender (SMTP / Resend)
 // ─────────────────────────────────────────────
-async function sendSubmissionEmail(fields) {
+async function sendSubmissionEmail(fields, rowId) {
   const isQuote = fields.form_type === 'quote';
   const subject = isQuote
     ? `[SAVI] 💼 New Quote Request: ${fields.company} (${fields.name})`
@@ -91,6 +102,7 @@ async function sendSubmissionEmail(fields) {
     `═══════════════════════════════════════════════════`,
     ` SAVI FINANCIAL INTELLIGENCE · NEW SUBMISSION`,
     `═══════════════════════════════════════════════════`,
+    `Submission ID:   #${rowId}`,
     `Form Type:       ${fields.form_type ? fields.form_type.toUpperCase() : 'DEMO'}`,
     `Full Name:       ${fields.name}`,
     `Work Email:      ${fields.email}`,
@@ -110,12 +122,13 @@ async function sendSubmissionEmail(fields) {
       <div style="background: linear-gradient(135deg, #071526 0%, #0B1F3A 100%); padding: 24px 30px; border-bottom: 2px solid #E5C378;">
         <h2 style="margin: 0; color: #FFFFFF; font-size: 22px; letter-spacing: 0.02em;">SAVI Financial Intelligence</h2>
         <p style="margin: 6px 0 0 0; color: #E5C378; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em;">
-          New ${isQuote ? 'Quote Request' : 'Demo Walkthrough Request'}
+          New ${isQuote ? 'Quote Request' : 'Demo Walkthrough Request'} (#${rowId})
         </p>
       </div>
       <div style="padding: 30px; background: #0E1D36;">
         <table style="width: 100%; border-collapse: collapse; font-size: 15px;">
-          <tr><td style="padding: 10px 0; color: #94A3B8; width: 140px; font-weight: 600;">Representative:</td><td style="padding: 10px 0; color: #FFFFFF; font-weight: 700;">${fields.name}</td></tr>
+          <tr><td style="padding: 10px 0; color: #94A3B8; width: 140px; font-weight: 600;">Submission ID:</td><td style="padding: 10px 0; color: #E5C378; font-weight: 700;">#${rowId}</td></tr>
+          <tr><td style="padding: 10px 0; color: #94A3B8; font-weight: 600;">Representative:</td><td style="padding: 10px 0; color: #FFFFFF; font-weight: 700;">${fields.name}</td></tr>
           <tr><td style="padding: 10px 0; color: #94A3B8; font-weight: 600;">Work Email:</td><td style="padding: 10px 0;"><a href="mailto:${fields.email}" style="color: #38BDF8; text-decoration: none; font-weight: 600;">${fields.email}</a></td></tr>
           <tr><td style="padding: 10px 0; color: #94A3B8; font-weight: 600;">Company:</td><td style="padding: 10px 0; color: #FFFFFF; font-weight: 700;">${fields.company}</td></tr>
           <tr><td style="padding: 10px 0; color: #94A3B8; font-weight: 600;">Role / Title:</td><td style="padding: 10px 0; color: #E2E8F0;">${fields.role || 'N/A'}</td></tr>
@@ -137,7 +150,7 @@ async function sendSubmissionEmail(fields) {
     const fromAddress = process.env.SMTP_FROM || `SAVI Enquiries <${process.env.SMTP_USER}>`;
     const recipients = ['saakshi@vinayakafinancials.com', process.env.SMTP_USER].filter(Boolean).join(', ');
     
-    await transporter.sendMail({
+    const info = await transporter.sendMail({
       from: fromAddress,
       to: recipients,
       replyTo: fields.email,
@@ -146,7 +159,7 @@ async function sendSubmissionEmail(fields) {
       html: htmlContent
     });
 
-    console.log(`[EMAIL] Internal notification sent to ${recipients}`);
+    console.log(`[EMAIL SUCCESS] Timestamp=${new Date().toISOString()}, submission_id=${rowId}, recipients=${recipients}, messageId=${info.messageId}`);
 
     // Also send instant confirmation to the customer
     if (fields.email && fields.email.includes('@')) {
@@ -179,13 +192,13 @@ async function sendSubmissionEmail(fields) {
             </div>
           `
         });
-        console.log(`[EMAIL] Customer confirmation sent to ${fields.email}`);
+        console.log(`[EMAIL AUTO-REPLY] Customer confirmation sent to ${fields.email} for submission_id=${rowId}`);
       } catch (custErr) {
-        console.warn('[EMAIL] Customer auto-reply failed:', custErr.message);
+        console.warn(`[EMAIL AUTO-REPLY WARNING] Customer auto-reply failed for submission_id=${rowId}:`, custErr.message);
       }
     }
 
-    return { success: true, transport: 'smtp' };
+    return { success: true, messageId: info.messageId, transport: 'smtp' };
   }
 
   // 2. Fallback to Resend if RESEND_API_KEY is configured
@@ -199,21 +212,25 @@ async function sendSubmissionEmail(fields) {
       text: textContent,
       html: htmlContent
     });
-    return result;
+    if (result.error) {
+      throw new Error(result.error.message || JSON.stringify(result.error));
+    }
+    console.log(`[EMAIL SUCCESS via Resend] Timestamp=${new Date().toISOString()}, submission_id=${rowId}, data=`, result.data);
+    return { success: true, messageId: result.data?.id, transport: 'resend' };
   }
 
   throw new Error('No email transport configured (neither SMTP credentials nor RESEND_API_KEY provided)');
 }
 
 // ─────────────────────────────────────────────
-// Rate limiter: 50 submissions per IP per 15 min
+// Rate limiter: Max 1 submission per 10s per IP (Debounce & Flood Protection)
 // ─────────────────────────────────────────────
 const submitLimiter = rateLimit({
-  windowMs:        15 * 60 * 1000,
-  max:             50,
+  windowMs:        10 * 1000,
+  max:             1,
   standardHeaders: 'draft-7',
   legacyHeaders:   false,
-  message:         { success: false, error: 'Too many submissions in a short period. Please wait a minute and try again.' },
+  message:         { success: false, error: 'Please wait a few seconds before submitting again.' },
 });
 
 // ─────────────────────────────────────────────
@@ -250,7 +267,7 @@ app.post('/api/submit-form', submitLimiter, async (req, res) => {
     return res.status(400).json({ success: false, error: 'Please fill in all required fields.' });
   }
 
-  // (a) Server-side CAPTCHA check
+  // (b) Server-side CAPTCHA check
   if (!captchaToken || parseInt(captchaAnswer, 10) !== parseInt(captchaToken, 10)) {
     return res.status(400).json({ success: false, error: 'Spam protection check failed. Please solve the math challenge correctly.' });
   }
@@ -268,7 +285,30 @@ app.post('/api/submit-form', submitLimiter, async (req, res) => {
     message:        message       || '',
   };
 
-  // (b) Write to Postgres FIRST: safety net
+  // (c) Server-side Deduplication Check: reject/ignore if same email & company within last 30 seconds
+  try {
+    const existing = await pool.query(
+      `SELECT id FROM submissions
+       WHERE email = $1 AND company = $2 AND created_at > NOW() - INTERVAL '30 seconds'
+       ORDER BY id DESC LIMIT 1`,
+      [fields.email, fields.company]
+    );
+
+    if (existing.rows && existing.rows.length > 0) {
+      console.log(`[FORM DEDUP] Ignored duplicate submission from ${fields.email} for ${fields.company} within 30s (matches id=${existing.rows[0].id})`);
+      return res.json({
+        success:   true,
+        recipient: 'saakshi@vinayakafinancials.com',
+        message:   fields.form_type === 'quote'
+          ? "Thank you: we've received your details and will be in touch shortly to discuss what would work for your organisation."
+          : "Thank you: we've received your request and will be in touch shortly to arrange a time.",
+      });
+    }
+  } catch (dedupErr) {
+    console.warn('[FORM DEDUP Check Warning]:', dedupErr.message);
+  }
+
+  // (d) Write to Postgres FIRST: safety net
   let rowId;
   try {
     const result = await pool.query(
@@ -286,18 +326,38 @@ app.post('/api/submit-form', submitLimiter, async (req, res) => {
     return res.status(500).json({ success: false, error: 'Failed to save your submission. Please try again.' });
   }
 
-  // (c) Attempt email
+  // (e) Attempt email delivery with detailed logging and DB persistence
   try {
-    await sendSubmissionEmail(fields);
-    // (d) Mark email_sent = true
-    await pool.query('UPDATE submissions SET email_sent = TRUE WHERE id = $1', [rowId]);
-    console.log(`[FORM] Email sent for submission id=${rowId}`);
+    const emailResult = await sendSubmissionEmail(fields, rowId);
+    await pool.query(
+      'UPDATE submissions SET email_sent = TRUE, email_error = NULL, email_attempted_at = NOW() WHERE id = $1',
+      [rowId]
+    );
+    console.log(`[FORM] Email delivery recorded in DB for submission id=${rowId}, messageId=${emailResult.messageId}`);
   } catch (emailErr) {
-    // (f) Log server-side only: never expose SMTP details to client
-    console.error(`[FORM] Email delivery failed for submission id=${rowId}:`, emailErr.message);
+    const fullErrorDetails = {
+      message: emailErr.message,
+      code: emailErr.code || null,
+      command: emailErr.command || null,
+      response: emailErr.response || null,
+      responseCode: emailErr.responseCode || null,
+      stack: emailErr.stack || null
+    };
+    const errorString = JSON.stringify(fullErrorDetails);
+
+    console.error(`[FORM EMAIL ERROR] Timestamp=${new Date().toISOString()}, submission_id=${rowId}:`, fullErrorDetails);
+
+    try {
+      await pool.query(
+        'UPDATE submissions SET email_sent = FALSE, email_error = $1, email_attempted_at = NOW() WHERE id = $2',
+        [errorString, rowId]
+      );
+    } catch (updateErr) {
+      console.error('[FORM DB Update Error]:', updateErr.message);
+    }
   }
 
-  // (e) Always respond success if DB write succeeded
+  // (f) Always respond success if DB write succeeded
   return res.json({
     success:   true,
     recipient: 'saakshi@vinayakafinancials.com',
