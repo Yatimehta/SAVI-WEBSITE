@@ -59,14 +59,21 @@
 .brand-logo-text {
   font-family: var(--font-serif);
   font-weight: 800;
-  font-size: 1.4rem;
-  letter-spacing: 0.06em;
+  font-size: 1.25rem;
+  letter-spacing: 0.03em;
   color: var(--text-heading);
   display: inline-block;
   background: linear-gradient(135deg, #FFFFFF 30%, var(--gold-light) 70%, var(--cyan-accent) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   white-space: nowrap;
+}
+
+@media (max-width: 576px) {
+  .brand-logo-text {
+    font-size: 1.05rem;
+    letter-spacing: 0.01em;
+  }
 }
 
 .main-nav {
