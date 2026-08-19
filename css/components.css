@@ -264,8 +264,17 @@ body[data-theme="light"] .brand-logo-img {
     font-size: 1.1rem;
   }
 
-  .header-actions .btn {
+  .header-actions .btn-primary {
     display: none !important;
+  }
+
+  .header-actions .btn-outline-gold {
+    display: inline-flex !important;
+    padding: 7px 12px !important;
+    font-size: 0.8rem !important;
+    white-space: nowrap !important;
+    border-radius: 8px !important;
+    font-weight: 700 !important;
   }
 
   .mobile-nav-toggle {
@@ -448,6 +457,7 @@ body[data-theme="light"] .brand-logo-img {
 .btn-gold {
   background-color: var(--gold-primary);
   color: #050B17;
+  border-color: var(--gold-primary);
   font-weight: 700;
 }
 
@@ -459,17 +469,30 @@ body[data-theme="light"] .brand-logo-img {
 }
 
 .btn-outline-gold {
-  background-color: transparent;
+  background-color: rgba(229, 195, 120, 0.1);
   color: var(--gold-primary);
-  border-color: var(--gold-primary);
-  font-weight: 600;
+  border: 1.5px solid var(--gold-primary);
+  font-weight: 700;
 }
 
 .btn-outline-gold:hover {
   background-color: var(--gold-primary);
   color: #050B17;
+  border-color: var(--gold-primary);
   transform: translateY(-2px);
   box-shadow: var(--shadow-gold);
+}
+
+[data-theme="light"] .btn-outline-gold {
+  color: #8B682E !important;
+  border-color: #B38E4F !important;
+  background-color: rgba(179, 142, 79, 0.08) !important;
+}
+
+[data-theme="light"] .btn-outline-gold:hover {
+  background-color: #B38E4F !important;
+  color: #FFFFFF !important;
+  border-color: #B38E4F !important;
 }
 
 /* 3. Cards & Modules (Glassmorphism & Depth) */

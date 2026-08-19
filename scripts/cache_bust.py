@@ -30,9 +30,9 @@ for file_path in html_files:
         content = f.read()
 
     # Cache bust css
-    content = re.sub(r'href="/css/([^"?]+)(\?v=[^"]*)?"', r'href="/css/\1?v=2.8"', content)
+    content = re.sub(r'href="/css/([^"?]+)(\?v=[^"]*)?"', r'href="/css/\1?v=2.9"', content)
     # Cache bust js
-    content = re.sub(r'src="/js/([^"?]+)(\?v=[^"]*)?"', r'src="/js/\1?v=2.8"', content)
+    content = re.sub(r'src="/js/([^"?]+)(\?v=[^"]*)?"', r'src="/js/\1?v=2.9"', content)
 
     with open(file_path, "w", encoding="utf-8") as f:
         f.write(content)
