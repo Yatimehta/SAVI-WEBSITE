@@ -355,6 +355,7 @@ const routes = {
   '/about/company':                 'about/company/index.html',
   '/contact':                       'contact/index.html',
   '/demo':                          'demo/index.html',
+  '/admin':                         'admin/index.html',
   '/legal/privacy':                 'legal/privacy/index.html',
   '/legal/terms':                   'legal/terms/index.html',
   '/legal/cookies':                 'legal/cookies/index.html',
