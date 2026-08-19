@@ -1,10 +1,5 @@
-// Load environment variables from .env (no-op if file absent: env vars still work)
+require('dns').setDefaultResultOrder('ipv4first');
 require('dotenv').config();
-
-const dns = require('dns');
-if (dns.setDefaultResultOrder) {
-  dns.setDefaultResultOrder('ipv4first');
-}
 
 const express    = require('express');
 const path       = require('path');
@@ -77,6 +72,7 @@ function getEmailTransporter() {
       host: process.env.SMTP_HOST || 'smtp.gmail.com',
       port: 465,
       secure: true,
+      family: 4,
       auth: {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS
