@@ -131,6 +131,8 @@ html {
   font-size: 16px;
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 body {
@@ -141,6 +143,9 @@ body {
   background-color: var(--bg-page);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  max-width: 100%;
+  overflow-x: hidden;
+  position: relative;
 }
 
 /* 3. Accessibility Focus States (WCAG 2.1 AA) */
@@ -248,6 +253,13 @@ p, .body-text {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   display: inline-block;
+}
+
+[data-theme="light"] .editorial-accent {
+  background: linear-gradient(135deg, #0B1F3A 20%, #8B682E 65%, #0284C7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: #0B1F3A;
 }
 
 .stat-value {

@@ -15,15 +15,61 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 2. Mobile Navigation Toggle
+  // 2. Mobile Navigation Toggle & Drawer Actions
   const mobileToggle = document.querySelector('.mobile-nav-toggle');
   const mainNav = document.querySelector('.main-nav');
+  const siteHeader = document.querySelector('.site-header');
 
   if (mobileToggle && mainNav) {
-    mobileToggle.addEventListener('click', () => {
-      const isOpen = mainNav.classList.toggle('open');
-      mobileToggle.setAttribute('aria-expanded', isOpen);
-      mobileToggle.innerHTML = isOpen ? '&#10005;' : '&#9776;';
+    // Append mobile action buttons if not already present in the drawer
+    if (!mainNav.querySelector('.mobile-menu-ctas')) {
+      const ctaContainer = document.createElement('li');
+      ctaContainer.className = 'mobile-menu-ctas';
+      ctaContainer.innerHTML = `
+        <a href="/demo" class="btn btn-gold">Book a Demo</a>
+        <a href="https://razorpay.me/@saakshisharma4719" target="_blank" rel="noopener" class="btn btn-outline-gold">Pay Online via Razorpay</a>
+      `;
+      mainNav.appendChild(ctaContainer);
+    }
+
+    const toggleNav = (open) => {
+      const willOpen = typeof open === 'boolean' ? open : !mainNav.classList.contains('open');
+      mainNav.classList.toggle('open', willOpen);
+      mobileToggle.setAttribute('aria-expanded', willOpen);
+      mobileToggle.innerHTML = willOpen ? '&#10005;' : '&#9776;';
+      if (willOpen) {
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = '';
+      }
+    };
+
+    mobileToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleNav();
+    });
+
+    // Close when clicking any nav item or link
+    mainNav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth <= 992) {
+          toggleNav(false);
+        }
+      });
+    });
+
+    // Close on click outside header
+    document.addEventListener('click', (e) => {
+      if (mainNav.classList.contains('open') && siteHeader && !siteHeader.contains(e.target)) {
+        toggleNav(false);
+      }
+    });
+
+    // Close on escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && mainNav.classList.contains('open')) {
+        toggleNav(false);
+      }
     });
   }
 

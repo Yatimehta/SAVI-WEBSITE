@@ -69,10 +69,17 @@
   white-space: nowrap;
 }
 
+[data-theme="light"] .brand-logo-text {
+  color: var(--navy-primary);
+  background: linear-gradient(135deg, #0B1F3A 25%, #8B682E 70%, #0284C7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 @media (max-width: 576px) {
   .brand-logo-text {
     font-size: 1.05rem;
-    letter-spacing: 0.01em;
+    letter-spacing: 0;
   }
 }
 
@@ -159,7 +166,8 @@
 .header-actions {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
+  flex-shrink: 0;
 }
 
 /* Theme Switcher Button */
@@ -177,6 +185,7 @@
   cursor: pointer;
   transition: all var(--transition-fast);
   backdrop-filter: blur(8px);
+  white-space: nowrap;
 }
 
 .theme-toggle-btn:hover {
@@ -200,35 +209,96 @@
 
 .mobile-nav-toggle {
   display: none;
-  background: none;
-  border: none;
-  font-size: 1.75rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  width: 40px;
+  height: 40px;
+  font-size: 1.4rem;
+  line-height: 1;
   color: var(--text-heading);
   cursor: pointer;
-  padding: 8px;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+}
+
+.mobile-nav-toggle:hover {
+  background: rgba(229, 195, 120, 0.15);
+  border-color: var(--gold-primary);
+  color: var(--gold-primary);
 }
 
 @media (max-width: 992px) {
+  .header-inner {
+    height: 68px;
+    gap: 8px;
+  }
+
+  .brand-logo {
+    margin-right: 0;
+    gap: 8px;
+  }
+
+  .brand-logo-img {
+    height: 34px;
+  }
+
+  .brand-logo-text {
+    font-size: 1.1rem;
+  }
+
+  .header-actions .btn {
+    display: none !important;
+  }
+
   .mobile-nav-toggle {
-    display: block;
+    display: flex;
   }
 
   .main-nav {
     position: fixed;
-    top: 84px;
+    top: 68px;
     left: 0;
+    right: 0;
     width: 100%;
+    height: calc(100dvh - 68px);
+    max-height: calc(100dvh - 68px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     background-color: var(--bg-page);
     flex-direction: column;
-    align-items: flex-start;
-    padding: 32px;
+    align-items: stretch;
+    padding: 20px 20px 48px;
     border-bottom: 1px solid var(--border-color);
     box-shadow: var(--shadow-lg);
     display: none;
+    gap: 6px;
+    z-index: 999;
   }
 
   .main-nav.open {
     display: flex;
+  }
+
+  .nav-item {
+    width: 100%;
+  }
+
+  .nav-link {
+    font-size: 1.05rem;
+    padding: 12px 14px;
+    width: 100%;
+    border-radius: 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  [data-theme="light"] .nav-link {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
   }
 
   .dropdown-menu {
@@ -237,8 +307,75 @@
     visibility: visible;
     transform: none;
     box-shadow: none;
-    border: none;
-    padding-left: 20px;
+    border: 1px solid var(--border-color);
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    padding: 6px 0;
+    margin: 4px 0 8px 12px;
+  }
+
+  [data-theme="light"] .dropdown-menu {
+    background: rgba(0, 0, 0, 0.03);
+  }
+
+  .dropdown-link {
+    padding: 10px 16px;
+    font-size: 0.95rem;
+  }
+
+  /* Mobile Drawer CTAs */
+  .mobile-menu-ctas {
+    display: flex !important;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-color);
+    width: 100%;
+  }
+
+  .mobile-menu-ctas .btn {
+    width: 100%;
+    padding: 14px 20px;
+    font-size: 1rem;
+    text-align: center;
+    justify-content: center;
+    box-sizing: border-box;
+  }
+}
+
+@media (max-width: 576px) {
+  .site-header .container {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .header-inner {
+    height: 62px;
+  }
+
+  .brand-logo-img {
+    height: 30px;
+  }
+
+  .brand-logo-text {
+    font-size: 1rem;
+  }
+
+  .theme-toggle-btn {
+    padding: 8px 10px;
+    font-size: 0.8rem;
+    border-radius: 12px;
+  }
+
+  .theme-label-text {
+    display: none;
+  }
+
+  .main-nav {
+    top: 62px;
+    height: calc(100dvh - 62px);
+    max-height: calc(100dvh - 62px);
   }
 }
 
@@ -1149,3 +1286,88 @@ textarea.form-control {
   0% { transform: translateY(0) rotate(0deg); }
   100% { transform: translateY(-16px) rotate(4deg); }
 }
+
+/* ==========================================================================
+   10. Mobile Responsiveness & Button Alignment Optimization
+   ========================================================================== */
+@media (max-width: 768px) {
+  .hero-ctas,
+  .cta-group,
+  .btn-group {
+    display: flex;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    width: 100% !important;
+    gap: 12px !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  .hero-ctas .btn,
+  .cta-group .btn,
+  .btn-group .btn {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    text-align: center !important;
+    justify-content: center !important;
+    padding: 14px 20px !important;
+    font-size: 1rem !important;
+    box-sizing: border-box !important;
+  }
+
+  .btn {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Form & Card Mobile Styling */
+  .card,
+  .form-card,
+  .flashcard,
+  .definition-list,
+  .fraud-showcase-container,
+  .trace-container {
+    padding: 24px 18px !important;
+  }
+
+  .form-control {
+    font-size: 16px !important; /* Prevents auto-zoom on mobile Safari */
+    padding: 14px 16px !important;
+  }
+
+  /* Multi-Step Wizard & Form Actions on Mobile */
+  .portal-step-view div[style*="justify-content: space-between"],
+  .portal-step-view div[style*="justify-content:space-between"],
+  form div[style*="justify-content: space-between"],
+  form div[style*="justify-content:space-between"] {
+    display: flex !important;
+    flex-direction: column-reverse !important;
+    gap: 12px !important;
+    width: 100% !important;
+    margin-top: 24px !important;
+  }
+
+  .portal-step-view div[style*="justify-content: space-between"] .btn,
+  .portal-step-view div[style*="justify-content:space-between"] .btn,
+  form div[style*="justify-content: space-between"] .btn,
+  form div[style*="justify-content:space-between"] .btn {
+    width: 100% !important;
+    text-align: center !important;
+    justify-content: center !important;
+  }
+
+  /* Edition selection cards on mobile */
+  .edition-select-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  /* Tables & Horizontal Containers */
+  .table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
