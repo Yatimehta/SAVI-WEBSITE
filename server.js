@@ -1,6 +1,11 @@
 // Load environment variables from .env (no-op if file absent: env vars still work)
 require('dotenv').config();
 
+const dns = require('dns');
+if (dns.setDefaultResultOrder) {
+  dns.setDefaultResultOrder('ipv4first');
+}
+
 const express    = require('express');
 const path       = require('path');
 const fs         = require('fs');
@@ -53,7 +58,6 @@ async function initDb() {
   console.log('[DB] Submissions table ready');
 }
 
-const dns        = require('dns');
 const nodemailer = require('nodemailer');
 
 function getEmailTransporter() {
@@ -62,9 +66,6 @@ function getEmailTransporter() {
       host: process.env.SMTP_HOST || 'smtp.gmail.com',
       port: 465,
       secure: true,
-      lookup: (hostname, options, callback) => {
-        dns.lookup(hostname, { family: 4 }, callback);
-      },
       auth: {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS
