@@ -86,7 +86,7 @@ function getEmailTransporter() {
 }
 
 // ─────────────────────────────────────────────
-// Email Notification Sender (SMTP / Resend)
+// Email Notification Sender (Brevo HTTP API / Resend / SMTP)
 // ─────────────────────────────────────────────
 async function sendSubmissionEmail(fields, rowId) {
   const isQuote = fields.form_type === 'quote';
@@ -140,61 +140,93 @@ async function sendSubmissionEmail(fields, rowId) {
     </div>
   `;
 
-  // 1. Try Nodemailer (Gmail SMTP configured in .env)
-  const transporter = getEmailTransporter();
-  if (transporter) {
-    const fromAddress = process.env.SMTP_FROM || `SAVI Enquiries <${process.env.SMTP_USER}>`;
-    const recipients = ['saakshi@vinayakafinancials.com', process.env.SMTP_USER].filter(Boolean).join(', ');
-    
-    const info = await transporter.sendMail({
-      from: fromAddress,
-      to: recipients,
-      replyTo: fields.email,
-      subject,
-      text: textContent,
-      html: htmlContent
+  const customerHtml = `
+    <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 560px; margin: 0 auto; background: #0B1F3A; color: #F1F5F9; border-radius: 10px; overflow: hidden; border: 1px solid #E5C378;">
+      <div style="padding: 24px 30px; background: linear-gradient(135deg, #071526, #0B1F3A); border-bottom: 2px solid #E5C378;">
+        <h2 style="margin: 0; color: #FFFFFF; font-size: 20px;">Vinayaka Financials · SAVI</h2>
+      </div>
+      <div style="padding: 30px; background: #0E1D36; font-size: 15px; line-height: 1.6; color: #E2E8F0;">
+        <p style="margin-top: 0;">Dear <strong>${fields.name}</strong>,</p>
+        <p>Thank you for your interest in <strong>SAVI Financial Intelligence</strong>. We have successfully received your ${isQuote ? 'quote inquiry' : 'demo walkthrough request'} for <strong>${fields.company}</strong>.</p>
+        <p>Our team will review your specifications and contact you shortly to coordinate next steps.</p>
+        <div style="margin: 24px 0; padding: 16px; background: rgba(229,195,120,0.1); border-left: 3px solid #E5C378; border-radius: 4px; font-size: 14px;">
+          If you have immediate questions, feel free to reply directly to this email or contact us on WhatsApp at <strong>+91 82900 06889</strong>.
+        </div>
+        <p style="margin-bottom: 0; font-size: 13px; color: #94A3B8;">
+          Kind regards,<br>
+          <strong style="color: #FFFFFF;">Saakshi Sharma</strong><br>
+          Vinayaka Financials · <a href="https://vinayakafinancials.com" style="color: #E5C378; text-decoration: none;">vinayakafinancials.com</a>
+        </p>
+      </div>
+    </div>
+  `;
+
+  // 1. Prioritize Brevo (Sendinblue) Transactional HTTP API over Port 443 (Immune to SMTP port blocking)
+  if (process.env.BREVO_API_KEY) {
+    const senderEmail = process.env.BREVO_SENDER_EMAIL || 'saakshi@vinayakafinancials.com';
+    const senderName  = process.env.BREVO_SENDER_NAME  || 'SAVI Enquiries';
+
+    const brevoPayload = {
+      sender: { name: senderName, email: senderEmail },
+      to: [
+        { email: 'saakshi@vinayakafinancials.com', name: 'Saakshi Sharma' },
+        { email: 'saakshi7354@gmail.com', name: 'SAVI Notifications' }
+      ],
+      replyTo: { email: fields.email, name: fields.name },
+      subject: subject,
+      textContent: textContent,
+      htmlContent: htmlContent
+    };
+
+    const res = await fetch('https://api.brevo.com/v3/smtp/email', {
+      method: 'POST',
+      headers: {
+        'accept': 'application/json',
+        'api-key': process.env.BREVO_API_KEY,
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify(brevoPayload)
     });
 
-    console.log(`[EMAIL SUCCESS] Timestamp=${new Date().toISOString()}, submission_id=${rowId}, recipients=${recipients}, messageId=${info.messageId}`);
+    const resData = await res.json().catch(() => ({}));
 
-    // Also send instant confirmation to the customer
+    if (!res.ok) {
+      const err = new Error(resData.message || `Brevo HTTP API failed with status ${res.status}`);
+      err.code = resData.code || `BREVO_${res.status}`;
+      err.response = resData;
+      throw err;
+    }
+
+    const messageId = resData.messageId || resData.id || `brevo-${Date.now()}`;
+    console.log(`[EMAIL SUCCESS via Brevo HTTP] Timestamp=${new Date().toISOString()}, submission_id=${rowId}, messageId=${messageId}`);
+
+    // Dispatch auto-reply to customer
     if (fields.email && fields.email.includes('@')) {
       try {
-        await transporter.sendMail({
-          from: fromAddress,
-          to: fields.email,
-          subject: isQuote
-            ? `SAVI Quote Request Received · Vinayaka Financials`
-            : `SAVI Walkthrough Request Received · Vinayaka Financials`,
-          text: `Dear ${fields.name},\n\nThank you for reaching out regarding SAVI Financial Intelligence. We have received your ${isQuote ? 'custom quotation request' : 'demonstration walkthrough request'} for ${fields.company}.\n\nOur team is reviewing your requirements and will reach out shortly to schedule a convenient time.\n\nBest regards,\nSaakshi Sharma\nVinayaka Financials\nhttps://vinayakafinancials.com`,
-          html: `
-            <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 560px; margin: 0 auto; background: #0B1F3A; color: #F1F5F9; border-radius: 10px; overflow: hidden; border: 1px solid #E5C378;">
-              <div style="padding: 24px 30px; background: linear-gradient(135deg, #071526, #0B1F3A); border-bottom: 2px solid #E5C378;">
-                <h2 style="margin: 0; color: #FFFFFF; font-size: 20px;">Vinayaka Financials · SAVI</h2>
-              </div>
-              <div style="padding: 30px; background: #0E1D36; font-size: 15px; line-height: 1.6; color: #E2E8F0;">
-                <p style="margin-top: 0;">Dear <strong>${fields.name}</strong>,</p>
-                <p>Thank you for your interest in <strong>SAVI Financial Intelligence</strong>. We have successfully received your ${isQuote ? 'quote inquiry' : 'demo walkthrough request'} for <strong>${fields.company}</strong>.</p>
-                <p>Our team will review your specifications and contact you shortly to coordinate next steps.</p>
-                <div style="margin: 24px 0; padding: 16px; background: rgba(229,195,120,0.1); border-left: 3px solid #E5C378; border-radius: 4px; font-size: 14px;">
-                  If you have immediate questions, feel free to reply directly to this email or contact us on WhatsApp at <strong>+91 82900 06889</strong>.
-                </div>
-                <p style="margin-bottom: 0; font-size: 13px; color: #94A3B8;">
-                  Kind regards,<br>
-                  <strong style="color: #FFFFFF;">Saakshi Sharma</strong><br>
-                  Vinayaka Financials · <a href="https://vinayakafinancials.com" style="color: #E5C378; text-decoration: none;">vinayakafinancials.com</a>
-                </p>
-              </div>
-            </div>
-          `
+        await fetch('https://api.brevo.com/v3/smtp/email', {
+          method: 'POST',
+          headers: {
+            'accept': 'application/json',
+            'api-key': process.env.BREVO_API_KEY,
+            'content-type': 'application/json'
+          },
+          body: JSON.stringify({
+            sender: { name: 'Saakshi Sharma · Vinayaka Financials', email: senderEmail },
+            to: [{ email: fields.email, name: fields.name }],
+            subject: isQuote
+              ? `SAVI Quote Request Received · Vinayaka Financials`
+              : `SAVI Walkthrough Request Received · Vinayaka Financials`,
+            textContent: `Dear ${fields.name},\n\nThank you for reaching out regarding SAVI Financial Intelligence. We have received your request for ${fields.company}.\n\nBest regards,\nSaakshi Sharma\nVinayaka Financials`,
+            htmlContent: customerHtml
+          })
         });
-        console.log(`[EMAIL AUTO-REPLY] Customer confirmation sent to ${fields.email} for submission_id=${rowId}`);
+        console.log(`[EMAIL AUTO-REPLY via Brevo] Customer confirmation sent to ${fields.email} for submission_id=${rowId}`);
       } catch (custErr) {
-        console.warn(`[EMAIL AUTO-REPLY WARNING] Customer auto-reply failed for submission_id=${rowId}:`, custErr.message);
+        console.warn(`[EMAIL AUTO-REPLY WARNING via Brevo]:`, custErr.message);
       }
     }
 
-    return { success: true, messageId: info.messageId, transport: 'smtp' };
+    return { success: true, messageId: messageId, transport: 'brevo_http' };
   }
 
   // 2. Fallback to Resend if RESEND_API_KEY is configured
@@ -215,7 +247,26 @@ async function sendSubmissionEmail(fields, rowId) {
     return { success: true, messageId: result.data?.id, transport: 'resend' };
   }
 
-  throw new Error('No email transport configured (neither SMTP credentials nor RESEND_API_KEY provided)');
+  // 3. Fallback to Nodemailer (works in local development)
+  const transporter = getEmailTransporter();
+  if (transporter) {
+    const fromAddress = process.env.SMTP_FROM || `SAVI Enquiries <${process.env.SMTP_USER}>`;
+    const recipients = ['saakshi@vinayakafinancials.com', process.env.SMTP_USER].filter(Boolean).join(', ');
+    
+    const info = await transporter.sendMail({
+      from: fromAddress,
+      to: recipients,
+      replyTo: fields.email,
+      subject,
+      text: textContent,
+      html: htmlContent
+    });
+
+    console.log(`[EMAIL SUCCESS via SMTP] Timestamp=${new Date().toISOString()}, submission_id=${rowId}, recipients=${recipients}, messageId=${info.messageId}`);
+    return { success: true, messageId: info.messageId, transport: 'smtp' };
+  }
+
+  throw new Error('No email transport configured (set BREVO_API_KEY, RESEND_API_KEY, or SMTP credentials)');
 }
 
 // ─────────────────────────────────────────────
