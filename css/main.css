@@ -255,11 +255,11 @@ p, .body-text {
   display: inline-block;
 }
 
-[data-theme="light"] .editorial-accent {
-  background: linear-gradient(135deg, #0B1F3A 20%, #8B682E 65%, #0284C7 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: #0B1F3A;
+[data-theme="light"] .editorial-accent,
+html[data-theme="light"] .editorial-accent {
+  color: #0B1F3A !important;
+  -webkit-text-fill-color: #0B1F3A !important;
+  background: none !important;
 }
 
 .stat-value {

@@ -63,23 +63,32 @@
   letter-spacing: 0.03em;
   color: var(--text-heading);
   display: inline-block;
-  background: linear-gradient(135deg, #FFFFFF 30%, var(--gold-light) 70%, var(--cyan-accent) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   white-space: nowrap;
 }
 
+/* Midnight Theme: Metallic White/Gold/Cyan Gradient */
+[data-theme="midnight"] .brand-logo-text,
+:root:not([data-theme="light"]) .brand-logo-text {
+  background: linear-gradient(135deg, #FFFFFF 30%, #FDF3D6 70%, #38BDF8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Light Theme: 100% Solid Deep Navy (Crisp & High Contrast) */
 [data-theme="light"] .brand-logo-text,
-html[data-theme="light"] .brand-logo-text {
+html[data-theme="light"] .brand-logo-text,
+body[data-theme="light"] .brand-logo-text {
   color: #071526 !important;
-  background: linear-gradient(135deg, #071526 20%, #8B682E 65%, #0284C7 100%) !important;
-  -webkit-background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
+  -webkit-text-fill-color: #071526 !important;
+  background: none !important;
+  font-weight: 800 !important;
+  text-shadow: none !important;
 }
 
 [data-theme="light"] .brand-logo-img,
-html[data-theme="light"] .brand-logo-img {
-  filter: drop-shadow(0 2px 8px rgba(11, 31, 58, 0.25)) !important;
+html[data-theme="light"] .brand-logo-img,
+body[data-theme="light"] .brand-logo-img {
+  filter: brightness(0.85) contrast(1.2) drop-shadow(0 2px 6px rgba(11, 31, 58, 0.25)) !important;
 }
 
 @media (max-width: 576px) {
