@@ -53,6 +53,7 @@ async function initDb() {
   console.log('[DB] Submissions table ready');
 }
 
+const dns        = require('dns');
 const nodemailer = require('nodemailer');
 
 function getEmailTransporter() {
@@ -61,7 +62,9 @@ function getEmailTransporter() {
       host: process.env.SMTP_HOST || 'smtp.gmail.com',
       port: 465,
       secure: true,
-      family: 4, // Force IPv4 on Railway cloud containers
+      lookup: (hostname, options, callback) => {
+        dns.lookup(hostname, { family: 4 }, callback);
+      },
       auth: {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS
