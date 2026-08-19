@@ -198,14 +198,14 @@ async function sendSubmissionEmail(fields) {
 }
 
 // ─────────────────────────────────────────────
-// Rate limiter: 5 submissions per IP per 15 min
+// Rate limiter: 50 submissions per IP per 15 min
 // ─────────────────────────────────────────────
 const submitLimiter = rateLimit({
   windowMs:        15 * 60 * 1000,
-  max:             5,
+  max:             50,
   standardHeaders: 'draft-7',
   legacyHeaders:   false,
-  message:         { success: false, error: 'Too many submissions from this IP: please try again later.' },
+  message:         { success: false, error: 'Too many submissions in a short period. Please wait a minute and try again.' },
 });
 
 // ─────────────────────────────────────────────
