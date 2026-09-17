@@ -48,20 +48,23 @@ async function initDb() {
       message            TEXT,
       created_at         TIMESTAMPTZ DEFAULT NOW(),
       email_sent         BOOLEAN NOT NULL DEFAULT FALSE,
-      email_error        TEXT,
-      email_attempted_at TIMESTAMPTZ
     );
   `);
-  // Ensure schema migrations for existing tables
-  try {
-    await pool.query(`
-      ALTER TABLE submissions ADD COLUMN IF NOT EXISTS email_error TEXT;
-      ALTER TABLE submissions ADD COLUMN IF NOT EXISTS email_attempted_at TIMESTAMPTZ;
-    `);
-  } catch (migErr) {
-    console.warn('[DB Migration note]:', migErr.message);
-  }
-  console.log('[DB] Submissions table ready');
+
+  // Page views traffic table
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS page_views (
+      id          SERIAL PRIMARY KEY,
+      path        TEXT NOT NULL,
+      ip          TEXT,
+      user_agent  TEXT,
+      referrer    TEXT,
+      created_at  TIMESTAMPTZ DEFAULT NOW()
+    );
+    CREATE INDEX IF NOT EXISTS idx_page_views_created_at ON page_views (created_at);
+    CREATE INDEX IF NOT EXISTS idx_page_views_path ON page_views (path);
+  `);
+  console.log('[DB] Submissions and Page Views tables ready');
 }
 
 const nodemailer = require('nodemailer');
@@ -286,6 +289,12 @@ const submitLimiter = rateLimit({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// ─────────────────────────────────────────────
+// In-Memory Traffic Buffer (Fallback & fast cache)
+// ─────────────────────────────────────────────
+const localPageViews = [];
+const MAX_LOCAL_LOGS = 1000;
+
 // Mandatory Security Headers (Section 19 Technical Build Requirements)
 app.use((req, res, next) => {
   res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
@@ -296,6 +305,50 @@ app.use((req, res, next) => {
     'Content-Security-Policy',
     "default-src 'self'; font-src 'self' https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data:; script-src 'self' 'unsafe-inline'; connect-src 'self';"
   );
+  next();
+});
+
+// ─────────────────────────────────────────────
+// Traffic Logger Middleware
+// ─────────────────────────────────────────────
+app.use((req, res, next) => {
+  const reqPath = req.path;
+  const isAsset = reqPath.startsWith('/css') ||
+                  reqPath.startsWith('/js') ||
+                  reqPath.startsWith('/images') ||
+                  reqPath.startsWith('/admin') ||
+                  reqPath.startsWith('/api') ||
+                  reqPath.endsWith('.ico') ||
+                  reqPath.endsWith('.png') ||
+                  reqPath.endsWith('.jpg') ||
+                  reqPath.endsWith('.svg') ||
+                  reqPath.endsWith('.css') ||
+                  reqPath.endsWith('.js') ||
+                  reqPath.endsWith('.txt');
+
+  if (!isAsset && req.method === 'GET') {
+    const rawIp = req.headers['x-forwarded-for']?.split(',')[0].trim() || req.socket.remoteAddress || '127.0.0.1';
+    const ip = rawIp.replace(/^.*:/, ''); // strip ipv6 prefix
+    const userAgent = req.headers['user-agent'] || 'Unknown';
+    const referrer = req.headers['referer'] || req.headers['referrer'] || 'Direct';
+    const nowIso = new Date().toISOString();
+
+    // In-memory buffer
+    localPageViews.unshift({
+      path: reqPath,
+      ip,
+      user_agent: userAgent,
+      referrer,
+      created_at: nowIso
+    });
+    if (localPageViews.length > MAX_LOCAL_LOGS) localPageViews.pop();
+
+    // Async write to Postgres
+    pool.query(
+      'INSERT INTO page_views (path, ip, user_agent, referrer) VALUES ($1, $2, $3, $4)',
+      [reqPath, ip, userAgent.substring(0, 255), referrer.substring(0, 255)]
+    ).catch(() => { /* silent fallback */ });
+  }
   next();
 });
 
@@ -433,6 +486,70 @@ app.get('/admin/submissions', async (req, res) => {
     return res.json({ count: result.rows.length, submissions: result.rows });
   } catch (err) {
     return res.status(500).json({ error: 'Database query failed.' });
+  }
+});
+
+// ─────────────────────────────────────────────
+// GET /admin/traffic-data (password-protected or local stats)
+// ─────────────────────────────────────────────
+app.get('/admin/traffic-data', async (req, res) => {
+  const providedKey = req.query.key || req.headers['x-admin-key'];
+  const secretKey   = process.env.ADMIN_SECRET;
+
+  if (secretKey && (!providedKey || providedKey !== secretKey)) {
+    return res.status(401).json({ error: 'Unauthorized.' });
+  }
+
+  try {
+    const totalRes = await pool.query('SELECT COUNT(*) AS total FROM page_views');
+    const uniqueVisitorsRes = await pool.query('SELECT COUNT(DISTINCT ip) AS unique_visitors FROM page_views');
+    const todayRes = await pool.query('SELECT COUNT(*) AS today_views FROM page_views WHERE created_at >= CURRENT_DATE');
+    const topPagesRes = await pool.query(`
+      SELECT path, COUNT(*) AS views 
+      FROM page_views 
+      GROUP BY path 
+      ORDER BY views DESC 
+      LIMIT 10
+    `);
+    const recentRes = await pool.query(`
+      SELECT path, ip, referrer, user_agent, created_at 
+      FROM page_views 
+      ORDER BY created_at DESC 
+      LIMIT 100
+    `);
+
+    return res.json({
+      source: 'database',
+      totalViews: parseInt(totalRes.rows[0]?.total || 0, 10),
+      uniqueVisitors: parseInt(uniqueVisitorsRes.rows[0]?.unique_visitors || 0, 10),
+      todayViews: parseInt(todayRes.rows[0]?.today_views || 0, 10),
+      topPages: topPagesRes.rows,
+      recentVisits: recentRes.rows
+    });
+  } catch (err) {
+    // Fallback to in-memory stats if Postgres is unavailable
+    const totalViews = localPageViews.length;
+    const uniqueIps = new Set(localPageViews.map(v => v.ip)).size;
+    const today = new Date().toISOString().slice(0, 10);
+    const todayViews = localPageViews.filter(v => v.created_at.startsWith(today)).length;
+    
+    const pageCounts = {};
+    localPageViews.forEach(v => {
+      pageCounts[v.path] = (pageCounts[v.path] || 0) + 1;
+    });
+    const topPages = Object.entries(pageCounts)
+      .map(([path, views]) => ({ path, views }))
+      .sort((a, b) => b.views - a.views)
+      .slice(0, 10);
+
+    return res.json({
+      source: 'memory_buffer',
+      totalViews,
+      uniqueVisitors: uniqueIps,
+      todayViews,
+      topPages,
+      recentVisits: localPageViews.slice(0, 100)
+    });
   }
 });
 

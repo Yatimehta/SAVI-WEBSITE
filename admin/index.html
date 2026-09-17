@@ -3,19 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SAVI Lead Dashboard · Vinayaka Financials</title>
+  <title>SAVI Admin & Analytics · Vinayaka Financials</title>
   <link rel="stylesheet" href="/css/main.css?v=3.7">
   <link rel="stylesheet" href="/css/components.css?v=3.7">
   <style>
     .admin-container { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
-    .lead-table { width: 100%; border-collapse: collapse; margin-top: 20px; background: var(--bg-card); border-radius: 12px; overflow: hidden; border: 1px solid var(--border-card); }
+    .lead-table { width: 100%; border-collapse: collapse; margin-top: 16px; background: var(--bg-card); border-radius: 12px; overflow: hidden; border: 1px solid var(--border-card); }
     .lead-table th, .lead-table td { padding: 14px 18px; text-align: left; border-bottom: 1px solid var(--border-card); font-size: 0.9rem; }
     .lead-table th { background: rgba(255,255,255,0.04); color: var(--gold-primary); font-weight: 700; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.05em; }
     .lead-table tr:hover { background: rgba(255,255,255,0.02); }
     .badge { display: inline-block; padding: 4px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
     .badge-demo { background: rgba(14,165,233,0.15); color: #38BDF8; border: 1px solid rgba(14,165,233,0.3); }
     .badge-quote { background: rgba(229,195,120,0.15); color: #E5C378; border: 1px solid rgba(229,195,120,0.3); }
+    .badge-page { background: rgba(255,255,255,0.08); color: #E2E8F0; border: 1px solid rgba(255,255,255,0.15); font-family: monospace; }
     .auth-box { max-width: 420px; margin: 80px auto; padding: 36px; border: 1.5px solid var(--gold-primary); border-radius: 12px; background: var(--bg-card); text-align: center; }
+
+    .admin-tabs { display: flex; gap: 8px; border-bottom: 1px solid var(--border-card); margin-bottom: 24px; }
+    .admin-tab-btn { background: transparent; border: none; padding: 12px 20px; color: var(--text-secondary); font-size: 0.95rem; font-weight: 600; cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s; }
+    .admin-tab-btn:hover { color: var(--text-heading); }
+    .admin-tab-btn.active { color: var(--gold-primary); border-bottom-color: var(--gold-primary); }
+
+    .metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 24px; }
+    .metric-card { background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 12px; padding: 20px; position: relative; overflow: hidden; }
+    .metric-card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--gold-primary), transparent); }
+    .metric-title { font-size: 0.85rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; font-weight: 600; }
+    .metric-value { font-size: 2rem; font-weight: 800; color: var(--text-heading); }
   </style>
 </head>
 <body class="theme-midnight">
@@ -34,44 +46,122 @@
   <main class="admin-container">
     <div id="auth-section" class="auth-box">
       <h2 style="color: var(--text-heading); margin-bottom: 12px;">Admin Authentication</h2>
-      <p style="color: var(--text-secondary); margin-bottom: 24px; font-size: 0.9rem;">Enter your admin secret key to access lead submissions.</p>
+      <p style="color: var(--text-secondary); margin-bottom: 24px; font-size: 0.9rem;">Enter your admin secret key to access website analytics & lead submissions.</p>
       <input type="password" id="admin-key-input" class="form-control" placeholder="Enter Admin Secret..." style="margin-bottom: 16px;">
-      <button type="button" id="btn-login" class="btn btn-gold" style="width: 100%;">Access Submissions</button>
+      <button type="button" id="btn-login" class="btn btn-gold" style="width: 100%;">Access Dashboard</button>
       <div id="auth-error" style="color: #EF4444; margin-top: 12px; font-size: 0.85rem; display: none;"></div>
     </div>
 
     <div id="dashboard-section" style="display: none;">
-      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: 24px;">
-        <div>
-          <h1 style="color: var(--text-heading); font-size: 1.8rem; margin-bottom: 4px;">Walkthrough & Quote Inquiries</h1>
-          <p style="color: var(--text-secondary); font-size: 0.95rem;">Real-time database of all demo bookings and quote requests.</p>
+      <!-- Tab Navigation -->
+      <div class="admin-tabs">
+        <button type="button" class="admin-tab-btn active" id="tab-btn-traffic" onclick="switchTab('traffic')">📊 Traffic & Visitors</button>
+        <button type="button" class="admin-tab-btn" id="tab-btn-leads" onclick="switchTab('leads')">📋 Inquiries & Quotes (<span id="leads-count-badge">0</span>)</button>
+      </div>
+
+      <!-- TRAFFIC TAB -->
+      <div id="tab-content-traffic">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: 24px;">
+          <div>
+            <h1 style="color: var(--text-heading); font-size: 1.8rem; margin-bottom: 4px;">Website Traffic & Analytics</h1>
+            <p style="color: var(--text-secondary); font-size: 0.95rem;">Real-time visitor counts, page views, and top traffic paths.</p>
+          </div>
+          <div style="display: flex; gap: 12px;">
+            <button type="button" onclick="loadTraffic()" class="btn btn-secondary" style="padding: 10px 18px; font-size: 0.85rem;">Refresh Traffic</button>
+          </div>
         </div>
-        <div style="display: flex; gap: 12px;">
-          <button type="button" id="btn-refresh" class="btn btn-secondary" style="padding: 10px 18px; font-size: 0.85rem;">Refresh</button>
-          <button type="button" id="btn-export-csv" class="btn btn-gold" style="padding: 10px 18px; font-size: 0.85rem;">Export CSV</button>
+
+        <!-- Metrics Cards -->
+        <div class="metric-grid">
+          <div class="metric-card">
+            <div class="metric-title">Total Page Views</div>
+            <div class="metric-value" id="stat-total-views">0</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-title">Unique Visitors</div>
+            <div class="metric-value" id="stat-unique-visitors" style="color: var(--gold-primary);">0</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-title">Views Today</div>
+            <div class="metric-value" id="stat-today-views" style="color: #38BDF8;">0</div>
+          </div>
+        </div>
+
+        <!-- Top Pages & Recent Visitors Grid -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 24px; margin-bottom: 30px;">
+          <!-- Top Pages -->
+          <div>
+            <h3 style="color: var(--text-heading); font-size: 1.1rem; margin-bottom: 12px;">🔥 Top Viewed Pages</h3>
+            <div style="overflow-x: auto;">
+              <table class="lead-table" style="margin-top: 0;">
+                <thead>
+                  <tr>
+                    <th>Page Route</th>
+                    <th style="text-align: right;">Total Views</th>
+                  </tr>
+                </thead>
+                <tbody id="top-pages-tbody">
+                  <tr><td colspan="2" style="text-align: center; color: var(--text-muted); padding: 20px;">Loading top pages...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Live Recent Activity -->
+          <div>
+            <h3 style="color: var(--text-heading); font-size: 1.1rem; margin-bottom: 12px;">⚡ Recent Page Visits</h3>
+            <div style="overflow-x: auto; max-height: 400px;">
+              <table class="lead-table" style="margin-top: 0;">
+                <thead>
+                  <tr>
+                    <th>Page</th>
+                    <th>Time</th>
+                    <th>Source</th>
+                  </tr>
+                </thead>
+                <tbody id="recent-visits-tbody">
+                  <tr><td colspan="3" style="text-align: center; color: var(--text-muted); padding: 20px;">Loading recent visits...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div style="overflow-x: auto;">
-        <table class="lead-table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Date / Time</th>
-              <th>Type</th>
-              <th>Name</th>
-              <th>Work Email</th>
-              <th>Company</th>
-              <th>Role</th>
-              <th>Entities</th>
-              <th>Message</th>
-              <th>Email Status</th>
-            </tr>
-          </thead>
-          <tbody id="leads-tbody">
-            <tr><td colspan="10" style="text-align: center; color: var(--text-muted); padding: 30px;">Loading submissions...</td></tr>
-          </tbody>
-        </table>
+      <!-- LEADS TAB -->
+      <div id="tab-content-leads" style="display: none;">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: 24px;">
+          <div>
+            <h1 style="color: var(--text-heading); font-size: 1.8rem; margin-bottom: 4px;">Walkthrough & Quote Inquiries</h1>
+            <p style="color: var(--text-secondary); font-size: 0.95rem;">Real-time database of all demo bookings and quote requests.</p>
+          </div>
+          <div style="display: flex; gap: 12px;">
+            <button type="button" id="btn-refresh" class="btn btn-secondary" style="padding: 10px 18px; font-size: 0.85rem;">Refresh</button>
+            <button type="button" id="btn-export-csv" class="btn btn-gold" style="padding: 10px 18px; font-size: 0.85rem;">Export CSV</button>
+          </div>
+        </div>
+
+        <div style="overflow-x: auto;">
+          <table class="lead-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Date / Time</th>
+                <th>Type</th>
+                <th>Name</th>
+                <th>Work Email</th>
+                <th>Company</th>
+                <th>Role</th>
+                <th>Entities</th>
+                <th>Message</th>
+                <th>Email Status</th>
+              </tr>
+            </thead>
+            <tbody id="leads-tbody">
+              <tr><td colspan="10" style="text-align: center; color: var(--text-muted); padding: 30px;">Loading submissions...</td></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </main>
@@ -85,7 +175,7 @@
       const val = document.getElementById('admin-key-input').value.trim();
       if (val) {
         currentKey = val;
-        loadSubmissions();
+        initDashboard();
       }
     });
 
@@ -94,7 +184,68 @@
 
     if (currentKey) {
       document.getElementById('admin-key-input').value = currentKey;
+      initDashboard();
+    }
+
+    function switchTab(tab) {
+      const isTraffic = tab === 'traffic';
+      document.getElementById('tab-btn-traffic').classList.toggle('active', isTraffic);
+      document.getElementById('tab-btn-leads').classList.toggle('active', !isTraffic);
+      document.getElementById('tab-content-traffic').style.display = isTraffic ? 'block' : 'none';
+      document.getElementById('tab-content-leads').style.display = !isTraffic ? 'block' : 'none';
+      if (isTraffic) loadTraffic(); else loadSubmissions();
+    }
+
+    async function initDashboard() {
+      localStorage.setItem('savi_admin_key', currentKey);
+      document.getElementById('auth-section').style.display = 'none';
+      document.getElementById('dashboard-section').style.display = 'block';
+      loadTraffic();
       loadSubmissions();
+    }
+
+    async function loadTraffic() {
+      try {
+        const res = await fetch(`/admin/traffic-data?key=${encodeURIComponent(currentKey)}`);
+        const data = await res.json();
+        if (res.ok) {
+          document.getElementById('stat-total-views').textContent = (data.totalViews || 0).toLocaleString();
+          document.getElementById('stat-unique-visitors').textContent = (data.uniqueVisitors || 0).toLocaleString();
+          document.getElementById('stat-today-views').textContent = (data.todayViews || 0).toLocaleString();
+
+          // Top pages table
+          const topPagesTbody = document.getElementById('top-pages-tbody');
+          if (!data.topPages || data.topPages.length === 0) {
+            topPagesTbody.innerHTML = '<tr><td colspan="2" style="text-align: center; padding: 20px; color: var(--text-muted);">No page view data recorded yet.</td></tr>';
+          } else {
+            topPagesTbody.innerHTML = data.topPages.map(p => `
+              <tr>
+                <td><span class="badge badge-page">${p.path || '/'}</span></td>
+                <td style="text-align: right; font-weight: 700; color: var(--gold-primary);">${parseInt(p.views, 10).toLocaleString()}</td>
+              </tr>
+            `).join('');
+          }
+
+          // Recent visits table
+          const recentTbody = document.getElementById('recent-visits-tbody');
+          if (!data.recentVisits || data.recentVisits.length === 0) {
+            recentTbody.innerHTML = '<tr><td colspan="3" style="text-align: center; padding: 20px; color: var(--text-muted);">No recent visits.</td></tr>';
+          } else {
+            recentTbody.innerHTML = data.recentVisits.slice(0, 20).map(v => {
+              const timeStr = new Date(v.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+              return `
+                <tr>
+                  <td><span class="badge badge-page">${v.path || '/'}</span></td>
+                  <td style="color: var(--text-secondary); font-size: 0.8rem; white-space: nowrap;">${timeStr}</td>
+                  <td style="color: var(--text-muted); font-size: 0.8rem; max-width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${v.referrer || 'Direct'}</td>
+                </tr>
+              `;
+            }).join('');
+          }
+        }
+      } catch (err) {
+        console.warn('Failed to load traffic stats:', err);
+      }
     }
 
     async function loadSubmissions() {
@@ -106,10 +257,8 @@
         const json = await res.json();
 
         if (res.ok && json.submissions) {
-          localStorage.setItem('savi_admin_key', currentKey);
-          document.getElementById('auth-section').style.display = 'none';
-          document.getElementById('dashboard-section').style.display = 'block';
           submissionsData = json.submissions;
+          document.getElementById('leads-count-badge').textContent = json.count || json.submissions.length;
           renderTable(submissionsData);
         } else {
           errBox.textContent = json.error || 'Authentication failed. Please check key.';
